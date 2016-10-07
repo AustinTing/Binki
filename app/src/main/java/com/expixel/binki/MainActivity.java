@@ -103,7 +103,7 @@ public class MainActivity extends BaseActivity {
                                 .load(post.userImg)
                                 .crossFade()
                                 .into(viewHolder.imgUser);
-                        viewHolder.bookName.setText(post.bookName);git
+                        viewHolder.bookName.setText(post.bookName);
 
                         //  取得這個item的key
 //                        getRef(i).getKey()

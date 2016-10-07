@@ -16,12 +16,15 @@
             app:layout_heightPercent="100%"
             app:layout_widthPercent="5%" />
 
+
         <TextView
             android:id="@+id/title_post"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/btnOK_post"
             android:layout_alignBottom="@+id/btnOK_post"
             android:layout_toEndOf="@+id/blank1_post"
+
+            android:textStyle="bold"
             android:text="Add a book"
             android:textColor="#FFFFFF"
             android:textSize="25sp"
@@ -38,7 +41,6 @@
 
 
     </android.support.percent.PercentRelativeLayout>
-    >
 
     <EditText
         android:id="@+id/etBookName_post"
