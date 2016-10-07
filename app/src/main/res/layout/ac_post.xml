@@ -19,6 +19,7 @@
         android:textSize="25sp"
         />
     <Button
+        android:id="@+id/btnOK_post"
         app:layout_heightPercent="10%"
         app:layout_widthPercent="25%"
         android:layout_toEndOf="@id/title_post"
@@ -27,17 +28,17 @@
         />
 
     <EditText
-        android:id="@+id/addBookName_post"
+        android:id="@+id/etBookName_post"
         app:layout_heightPercent="30%"
         app:layout_widthPercent="100%"
         android:layout_below="@id/blank1_post"
         android:hint="input book name"
         />
     <EditText
-        android:id="@+id/addBookInfo_post"
+        android:id="@+id/etBookInfo_post"
         app:layout_heightPercent="50%"
         app:layout_widthPercent="100%"
-        android:layout_below="@id/addBookName_post"
+        android:layout_below="@id/etBookName_post"
         android:hint="Write something about the book..."
         />
 
