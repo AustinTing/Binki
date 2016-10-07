@@ -21,6 +21,9 @@
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             />
+        <activity android:name=".PostActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"
+            />
     </application>
 
 </manifest>
