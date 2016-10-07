@@ -3,21 +3,22 @@ package com.expixel.binki;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.TextView;
 
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.OnItemClickListener;
+import com.bumptech.glide.Glide;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends BaseActivity {
 
@@ -84,36 +85,53 @@ public class MainActivity extends BaseActivity {
         intent.setClass(this, PostActivity.class);
         startActivity(intent);
     }
-//
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        FirebaseRecyclerAdapter<Event, ItemViewHolder> adapter =
-//                new FirebaseRecyclerAdapter<Event, ItemViewHolder>(
-//                        Event.class,
-//                        ItemViewHolder.layoutResId,
-//                        ItemViewHolder.class,
-//                        dbRef.child("post")
-//                ) {
-//                    @Override
-//                    protected void populateViewHolder(ItemViewHolder viewHolder, Event event, int position) {
-//                        ImageLoader.getInstance().displayImage(event.getUserImgUrl(), viewHolder.userImage);
-//                        //  取得這個item的key
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseRecyclerAdapter<Post, ItemViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Post, ItemViewHolder>(
+                        Post.class,
+                        ItemViewHolder.layoutResId,
+                        ItemViewHolder.class,
+                        dbRef.child("post")
+                ) {
+                    @Override
+                    protected void populateViewHolder(ItemViewHolder viewHolder, Post post, int position) {
+                        viewHolder.userName.setText(post.userName);
+                        Glide.with(MainActivity.this)
+                                .load(post.userImg)
+                                .crossFade()
+                                .into(viewHolder.imgUser);
+                        viewHolder.bookName.setText(post.bookName);git
+
+                        //  取得這個item的key
 //                        getRef(i).getKey()
-//                    }
-//                };
-//        recyclerView.setAdapter(adapter);
-//    }
-//
-//
-//    public static class ItemViewHolder extends RecyclerView.ViewHolder {
-//
-//        public final static int layoutResId = R.layout.ac_main_item;
-//        CircleImageView userImg;
-//
-//        public ItemViewHolder(View view) {
-//            super(view);
-//            userImg = (CircleImageView) view.findViewById(R.id.userImage);
-//        }
-//}
+                    }
+                };
+        recyclerView.setAdapter(adapter);
+    }
+
+
+    public static class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        public final static int layoutResId = R.layout.item_post;
+
+        CircleImageView imgUser;
+        TextView userName;
+        TextView bookName;
+        Button btnLike;
+        Button btnHide;
+
+        public ItemViewHolder(View view) {
+            super(view);
+            imgUser = (CircleImageView) view.findViewById(R.id.imgUser_main);
+            userName = (TextView) view.findViewById(R.id.userName_main);
+            bookName = (TextView) view.findViewById(R.id.bookName_main);
+            btnLike = (Button) view.findViewById(R.id.btnLike_main);
+            btnHide = (Button) view.findViewById(R.id.btnHide_main);
+
+
+        }
+    }
 }
