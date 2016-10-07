@@ -70,16 +70,19 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.fab)
     public void onClick() {
-        DialogPlus dialogPuls = DialogPlus.newDialog(this)
-                .setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new String[]{"asdfa"}))
-                .setOnItemClickListener(new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
-                    }
-                })
-                .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
-                .create();
-        dialogPuls.show();
+//        DialogPlus dialogPuls = DialogPlus.newDialog(this)
+//                .setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new String[]{"asdfa"}))
+//                .setOnItemClickListener(new OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
+//                    }
+//                })
+//                .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
+//                .create();
+//        dialogPuls.show();
+        Intent intent = new Intent();
+        intent.setClass(this, PostActivity.class);
+        startActivity(intent);
     }
 //
 //    @Override
