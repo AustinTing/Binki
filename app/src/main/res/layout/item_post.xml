@@ -40,20 +40,30 @@
         app:layout_widthPercent="40%"
         android:layout_toEndOf="@id/blank2_main"
         android:layout_alignTop="@id/imgUser_main"
-        android:textSize="15sp"
+        android:textSize="10sp"
         />
+
+
+
+    <ImageView
+        app:layout_heightPercent="5%"
+        app:layout_widthPercent="100%"
+        android:background="#11880000"
+        android:layout_alignParentBottom="true"
+        />
+
     <TextView
         android:id="@+id/bookName_main"
         android:hint="bookname"
         app:layout_widthPercent="40%"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_toEndOf="@id/blank2_main"
-
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        />
-
+        android:gravity="center_vertical"
+        android:layout_alignBottom="@+id/imgUser_main"
+        android:layout_alignStart="@+id/userName_main"
+        android:layout_below="@id/userName_main"/>
     <TextView
         android:id="@+id/blank3_main"
         app:layout_heightPercent="5%"
@@ -74,21 +84,14 @@
         />
     <Button
         android:id="@+id/btnHide_main"
-        android:layout_toEndOf="@id/blank3_main"
         app:layout_heightPercent="25%"
         app:layout_widthPercent="23%"
-        android:layout_alignBottom="@id/imgUser_main"
         android:background="#00FFFFFF"
         android:text="Hide"
         android:textAllCaps="false"
         android:textColor="#555555"
-        />
-    <ImageView
-        app:layout_heightPercent="5%"
-        app:layout_widthPercent="100%"
-        android:background="#11880000"
-        android:layout_alignParentBottom="true"
-        />
+        android:layout_alignBottom="@+id/bookName_main"
+        android:layout_alignStart="@+id/btnLike_main" />
 
 
 </android.support.percent.PercentRelativeLayout>
