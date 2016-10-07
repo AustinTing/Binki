@@ -41,6 +41,8 @@ dependencies {
     compile 'com.android.support:percent:24.2.1'
 //    CircleImageView
     compile 'de.hdodenhof:circleimageview:2.1.0'
+
+    compile 'com.orhanobut:dialogplus:1.11@aar'
 }
 apply plugin: 'com.google.gms.google-services'
 
