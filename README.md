@@ -4,5 +4,3 @@
     - 9:50 Init App
     - 10:30 Login
 ##To-do
-
-
