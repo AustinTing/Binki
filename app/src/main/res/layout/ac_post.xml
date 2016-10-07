@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/blank1_post"
+        app:layout_heightPercent="10%"
+        app:layout_widthPercent="5%"
+        />
+    <TextView
+        android:id="@+id/title_post"
+        app:layout_heightPercent="10%"
+        app:layout_widthPercent="65%"
+        android:layout_toEndOf="@id/blank1_post"
+        android:text="Add a book"
+        android:textSize="25sp"
+        />
+    <Button
+        app:layout_heightPercent="10%"
+        app:layout_widthPercent="25%"
+        android:layout_toEndOf="@id/title_post"
+        android:text="OK"
+        android:textSize="25sp"
+        />
+
+    <EditText
+        android:id="@+id/addBookName_post"
+        app:layout_heightPercent="30%"
+        app:layout_widthPercent="100%"
+        android:layout_below="@id/blank1_post"
+        android:hint="input book name"
+        />
+    <EditText
+        android:id="@+id/addBookInfo_post"
+        app:layout_heightPercent="50%"
+        app:layout_widthPercent="100%"
+        android:layout_below="@id/addBookName_post"
+        android:hint="Write something about the book..."
+        />
+
+</android.support.percent.PercentRelativeLayout>
