@@ -1,5 +1,8 @@
 package com.expixel.binki;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by cellbody on 2016/10/7.
  */
@@ -10,6 +13,7 @@ public class Post {
     public String bookName;
     public String bookInfo;
     public Long postTime;
+    public Map<String, Boolean> liker = new HashMap<>();
 
     public Post() {
     }
@@ -21,5 +25,6 @@ public class Post {
         this.bookInfo = bookInfo;
         this.postTime = postTime;
     }
+
 }
 

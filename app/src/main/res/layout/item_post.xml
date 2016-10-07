@@ -24,7 +24,6 @@
         app:layout_heightPercent="70%"
         app:layout_widthPercent="20%"
         android:layout_centerVertical="true"
-        android:background="@color/colorPrimary"
         android:layout_toEndOf="@id/blank1_main"/>
 
     <TextView
