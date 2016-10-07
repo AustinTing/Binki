@@ -5,39 +5,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/wrapTitle_post"
+        app:layout_heightPercent="10%"
+        app:layout_widthPercent="100%"
+        android:background="@color/colorPrimary">
+
+
     <TextView
         android:id="@+id/blank1_post"
-        app:layout_heightPercent="10%"
+        app:layout_heightPercent="100%"
         app:layout_widthPercent="5%"
         />
-    <TextView
-        android:id="@+id/title_post"
-        app:layout_heightPercent="10%"
-        app:layout_widthPercent="65%"
-        android:layout_toEndOf="@id/blank1_post"
-        android:text="Add a book"
-        android:textSize="25sp"
-        />
-    <Button
-        app:layout_heightPercent="10%"
+
+        <Button
+        android:id="@+id/btnOK_post"
+        app:layout_heightPercent="100%"
         app:layout_widthPercent="25%"
         android:layout_toEndOf="@id/title_post"
         android:text="OK"
         android:textSize="25sp"
         />
 
+        <TextView
+            android:id="@+id/title_post"
+            android:layout_height="wrap_content"
+            app:layout_widthPercent="65%"
+            android:text="Add a book"
+            android:textSize="25sp"
+            android:textColor="#FFFFFF"
+            android:layout_alignBaseline="@+id/btnOK_post"
+            android:layout_alignBottom="@+id/btnOK_post"
+            android:layout_toEndOf="@+id/blank1_post" />
+
+    </android.support.percent.PercentRelativeLayout>>
+
     <EditText
-        android:id="@+id/addBookName_post"
+        android:id="@+id/etBookName_post"
         app:layout_heightPercent="30%"
         app:layout_widthPercent="100%"
-        android:layout_below="@id/blank1_post"
+        android:layout_below="@id/wrapTitle_post"
         android:hint="input book name"
         />
     <EditText
-        android:id="@+id/addBookInfo_post"
+        android:id="@+id/etBookInfo_post"
         app:layout_heightPercent="50%"
         app:layout_widthPercent="100%"
-        android:layout_below="@id/addBookName_post"
+        android:layout_below="@id/etBookName_post"
         android:hint="Write something about the book..."
         />
 
