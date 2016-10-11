@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/title_liked_shelf"
+        app:layout_heightPercent="5%"
+        app:layout_widthPercent="100%"
+        android:text="PEOPLE WHO LIKE"
+        android:gravity="center"
+        android:background="#a5a5f1"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        />
+    <TextView
+        android:id="@+id/bookName_liked_shelf"
+        tools:text="蘋果橘子經濟學"
+        app:layout_heightPercent="5%"
+        app:layout_widthPercent="100%"
+        android:gravity="center"
+        android:background="#a5a5f1"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_below="@id/title_liked_shelf"
+        />
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/liker_liked_shelf"
+        android:layout_below="@id/bookName_liked_shelf"
+        app:layout_heightPercent="15%"
+        app:layout_widthPercent="100%"
+        tools:background="#33008888"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgUser_liked_shelf"
+            app:layout_heightPercent="70%"
+            app:layout_widthPercent="15%"
+            android:layout_centerVertical="true"
+            tools:src="@color/authui_colorAccent"
+            />
+
+        <TextView
+            android:id="@+id/userName_liked_shelf"
+            app:layout_heightPercent="70%"
+            app:layout_widthPercent="55%"
+            android:layout_toEndOf="@id/imgUser_liked_shelf"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textSize="20sp"
+            tools:text="陳豐盟"
+            />
+
+
+    </android.support.percent.PercentRelativeLayout>
+
+</android.support.percent.PercentRelativeLayout>

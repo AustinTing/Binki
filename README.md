@@ -8,4 +8,7 @@
     - 15:30 Post
     - 16:05 Finish item_shelf.xml
     - 17:00 Post List
+- 2016.10.11
+    - 11:30 Start ac_liked_shelf.xml
+    - 13:10 Finish ac_liked_shelf.xml & item_shelf_xml
 ##To-do

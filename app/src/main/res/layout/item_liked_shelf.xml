@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/liker_liked_shelf"
+    android:layout_height="100dp"
+    android:layout_width="match_parent"
+    tools:background="#33008888"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    >
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgUser_liked_shelf"
+        app:layout_heightPercent="70%"
+        app:layout_widthPercent="15%"
+        android:layout_centerVertical="true"
+        tools:src="@color/authui_colorAccent"
+        />
+
+    <TextView
+        android:id="@+id/userName_liked_shelf"
+        app:layout_heightPercent="70%"
+        app:layout_widthPercent="45%"
+        android:layout_toEndOf="@id/imgUser_liked_shelf"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:textSize="20sp"
+        tools:text="陳豐盟"
+        />
+    <ImageView
+        android:id="@+id/imgLink_liked_shelf"
+        app:layout_heightPercent="50%"
+        app:layout_widthPercent="15%"
+        android:layout_toEndOf="@id/userName_liked_shelf"
+        android:layout_centerVertical="true"
+        android:src="@drawable/link"
+        />
+    <TextView
+        android:id="@+id/blank1_liked_shelf"
+        app:layout_heightPercent="60%"
+        app:layout_widthPercent="10%"
+        android:layout_toEndOf="@id/imgLink_liked_shelf"
+        />
+
+    <ImageView
+        android:id="@+id/imgChat_liked_shelf"
+        app:layout_heightPercent="60%"
+        app:layout_widthPercent="15%"
+        android:src="@drawable/chat"
+        android:layout_alignTop="@+id/imgLink_liked_shelf"
+        android:layout_alignParentEnd="true" />
+
+
+</android.support.percent.PercentRelativeLayout>
