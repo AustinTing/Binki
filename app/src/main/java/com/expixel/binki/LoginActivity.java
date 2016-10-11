@@ -142,7 +142,9 @@ public class LoginActivity extends BaseActivity {
                             User user = new User(name, imgUrl);
                             String uid = auth.getCurrentUser().getUid();
 
+
                             dbRef.child("users").child(uid).setValue(user);
+
 
                             LoginActivity.this.nextActivity();
                             LoginActivity.this.finish();
