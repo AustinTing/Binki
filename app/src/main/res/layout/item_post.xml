@@ -6,11 +6,20 @@
     android:background="#55880000">
 
     <ImageView
+        android:id="@+id/topShadow_main"
         app:layout_heightPercent="5%"
         app:layout_widthPercent="100%"
         android:background="#22880000"
         android:layout_alignParentTop="true"
         />
+    <ImageView
+        android:id="@+id/bottomShadow_main"
+        app:layout_heightPercent="5%"
+        app:layout_widthPercent="100%"
+        android:background="#11880000"
+        android:layout_alignParentBottom="true"
+        />
+
 
     <TextView
         android:id="@+id/blank1_main"
@@ -18,64 +27,57 @@
         app:layout_widthPercent="5%"
         />
 
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgUser_main"
-        app:layout_heightPercent="70%"
-        app:layout_widthPercent="20%"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@id/blank1_main"/>
+        app:layout_heightPercent="30%"
+        app:layout_widthPercent="10%"
+        android:layout_toEndOf="@+id/blank1_main"
+        android:layout_below="@id/topShadow_main"/>
 
     <TextView
         android:id="@+id/blank2_main"
         app:layout_heightPercent="5%"
         app:layout_widthPercent="5%"
         android:layout_toEndOf="@id/imgUser_main"
-        />
-
-    <TextView
-        android:id="@+id/userName_main"
-        android:hint="username"
-        android:layout_height="wrap_content"
-        app:layout_widthPercent="40%"
-        android:layout_toEndOf="@id/blank2_main"
-        android:layout_alignTop="@id/imgUser_main"
-        android:textSize="10sp"
+        android:layout_below="@id/topShadow_main"
         />
 
 
-
-    <ImageView
-        app:layout_heightPercent="5%"
-        app:layout_widthPercent="100%"
-        android:background="#11880000"
-        android:layout_alignParentBottom="true"
-        />
 
     <TextView
         android:id="@+id/bookName_main"
         android:hint="bookname"
-        app:layout_widthPercent="40%"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_widthPercent="70%"
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center_vertical"
-        android:layout_alignBottom="@+id/imgUser_main"
-        android:layout_alignStart="@+id/userName_main"
-        android:layout_below="@id/userName_main"/>
+        android:layout_alignStart="@+id/imgUser_main"
+        android:layout_below="@id/imgUser_main"
+        android:layout_above="@id/bottomShadow_main"/>
+
+    <TextView
+        android:id="@+id/userName_main"
+        android:hint="username"
+        app:layout_heightPercent="30%"
+        app:layout_widthPercent="50%"
+        android:textSize="17sp"
+        android:gravity="center_vertical"
+        android:layout_alignTop="@+id/blank2_main"
+        android:layout_toEndOf="@+id/blank2_main" />
+
     <TextView
         android:id="@+id/blank3_main"
         app:layout_heightPercent="5%"
         app:layout_widthPercent="5%"
-        android:layout_toEndOf="@id/bookName_main"
+        android:layout_toEndOf="@id/userName_main"
         />
     <Button
         android:id="@+id/btnLike_main"
         android:layout_toEndOf="@id/blank3_main"
         app:layout_heightPercent="40%"
         app:layout_widthPercent="23%"
-        android:layout_alignTop="@id/imgUser_main"
+        android:layout_centerVertical="true"
         android:background="#555555"
         android:textSize="25sp"
         android:text="Like"
@@ -92,6 +94,10 @@
         android:textColor="#555555"
         android:layout_alignBottom="@+id/bookName_main"
         android:layout_alignStart="@+id/btnLike_main" />
+
+
+
+
 
 
 </android.support.percent.PercentRelativeLayout>
