@@ -28,34 +28,5 @@
         android:layout_below="@id/title_liked_shelf"
         />
 
-    <android.support.percent.PercentRelativeLayout
-        android:id="@+id/liker_liked_shelf"
-        android:layout_below="@id/bookName_liked_shelf"
-        app:layout_heightPercent="15%"
-        app:layout_widthPercent="100%"
-        tools:background="#33008888"
-        >
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgUser_liked_shelf"
-            app:layout_heightPercent="70%"
-            app:layout_widthPercent="15%"
-            android:layout_centerVertical="true"
-            tools:src="@color/authui_colorAccent"
-            />
-
-        <TextView
-            android:id="@+id/userName_liked_shelf"
-            app:layout_heightPercent="70%"
-            app:layout_widthPercent="55%"
-            android:layout_toEndOf="@id/imgUser_liked_shelf"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:textSize="20sp"
-            tools:text="陳豐盟"
-            />
-
-
-    </android.support.percent.PercentRelativeLayout>
 
 </android.support.percent.PercentRelativeLayout>

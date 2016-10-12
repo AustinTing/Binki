@@ -12,4 +12,7 @@
     - 11:30 Start ac_liked_shelf.xml
     - 13:10 Finish ac_liked_shelf.xml & item_shelf_xml
     - 17:00 Finish ac_liker.xml
+    
+- 2016.10.12
+    - 12:30 finish item_like (also for hide)
 ##To-do
