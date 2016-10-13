@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -70,13 +71,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         showcaseView = new ShowcaseView.Builder(this)
                 .setTarget(new ViewTarget(fab))
                 .setOnClickListener(this)
-                .setStyle(R.style.CustomShowcaseTheme2)
+//                .setStyle(R.style.CustomShowcaseTheme2)
                 .build();
         showcaseView.setContentTitle("Add Button");
         showcaseView.setContentText("Add your book to exchange");
+//        showcaseView.forceTextPosition(ShowcaseView.AB);
+
 
         showcaseView.setButtonPosition(lps);
         showcaseView.setButtonText(getString(R.string.next));
+        setAlpha(0.1f, findViewById(R.id.recyclerView_main));
+        setAlpha(0.1f, findViewById(R.id.appBar_main));
+
 
     }
 
@@ -93,12 +99,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (counter) {
             case 0:
-                showcaseView.setShowcase(new ViewTarget(fab), true);
-                break;
-
-            case 1:
+                setAlpha(0.1f, fab);
                 showcaseView.setShowcase(new ViewTarget(findViewById(R.id.toolbar)), true);
                 break;
+
+
+//            case 1:
+//                showcaseView.setShowcase(new ViewTarget(fab), true);
+//                break;
 
 //            case 2:
 //                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.liked)), true);
@@ -112,7 +120,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                setAlpha(0.4f, textView1, textView2, textView3);
 //                break;
 //
-            case 2:
+            case 1:
+                setAlpha(1.0f, findViewById(R.id.recyclerView_main));
+                setAlpha(1.0f, findViewById(R.id.appBar_main));
+                setAlpha(1.0f, fab);
                 showcaseView.hide();
 //                setAlpha(1.0f, textView1, textView2, textView3);
                 break;
