@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp">
+
+    <TextView
+        android:id="@+id/blank1_liker"
+        app:layout_heightPercent="10%"
+        app:layout_widthPercent="5%"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgUser_liker"
+        app:layout_heightPercent="10%"
+        app:layout_widthPercent="15%"
+        tools:src="@color/authui_colorAccent"
+        android:layout_toEndOf="@id/blank1_liker"
+        />
+
+    <TextView
+        android:id="@+id/userName_liker"
+        app:layout_heightPercent="10%"
+        app:layout_widthPercent="45%"
+        android:layout_toEndOf="@id/imgUser_liker"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        tools:text="陳豐盟"/>
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/link_liker"
+        app:layout_heightPercent="15%"
+        app:layout_widthPercent="100%"
+        android:layout_below="@id/userName_liker">
+        <ImageView
+            android:id="@+id/imgLink_liker"
+            android:src="@drawable/link"
+            app:layout_heightPercent="50%"
+            app:layout_widthPercent="20%"
+            android:layout_centerVertical="true"
+            />
+        <TextView
+            android:id="@+id/bookLinkTitle_liker"
+            android:layout_toEndOf="@id/imgLink_liker"
+            app:layout_heightPercent="30%"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignTop="@id/imgLink_liker"
+            android:text="Owner of this book you liked:"
+            />
+        <TextView
+            android:id="@+id/bookLink_liker"
+            android:layout_below="@id/bookLinkTitle_liker"
+            android:layout_alignLeft="@id/bookLinkTitle_liker"
+            app:layout_heightPercent="40%"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            tools:text="西線無戰事"
+            android:textStyle="bold"
+            />
+
+    </android.support.percent.PercentRelativeLayout>
+
+    <TextView
+        android:id="@+id/message_liker"
+        android:layout_below="@id/link_liker"
+        android:layout_centerHorizontal="true"
+        app:layout_heightPercent="70%"
+        app:layout_widthPercent="90%"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        tools:background="#11000088"
+        tools:text="Hi, may I have a chance to change this book?"
+
+        />
+</android.support.percent.PercentRelativeLayout>

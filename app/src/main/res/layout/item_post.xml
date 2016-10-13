@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="#55880000">
+    android:background="@drawable/shape_item_post"
+    android:backgroundTint="#11000088">
 
     <ImageView
         android:id="@+id/topShadow_main"
         app:layout_heightPercent="5%"
         app:layout_widthPercent="100%"
-        android:background="#22880000"
+        android:background="#00880000"
         android:layout_alignParentTop="true"
         />
     <ImageView
         android:id="@+id/bottomShadow_main"
         app:layout_heightPercent="5%"
         app:layout_widthPercent="100%"
-        android:background="#11880000"
+        android:background="#00880000"
         android:layout_alignParentBottom="true"
         />
 
