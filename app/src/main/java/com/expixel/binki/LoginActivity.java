@@ -25,6 +25,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class LoginActivity extends BaseActivity {
@@ -137,13 +143,40 @@ public class LoginActivity extends BaseActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "Firebase: signInWithCredential: onComplete: " + task.isSuccessful());
                         if (task.isSuccessful()) {
-                            String name = auth.getCurrentUser().getDisplayName();
-                            String imgUrl = auth.getCurrentUser().getPhotoUrl().toString();
+                            String name = getUserName();
+                            String imgUrl = getUserImgeUrl();
                             User user = new User(name, imgUrl);
-                            String uid = auth.getCurrentUser().getUid();
-
-
+                            final String uid = getUid();
                             dbRef.child("users").child(uid).setValue(user);
+
+//                            初始化客製化書單
+                            dbRef.child("post").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Log.d(TAG, "MainActivity: Download and Upload: data have "+dataSnapshot.getChildrenCount()+"children");
+                                    dbRef.child("users").child(uid).child("main").setValue(dataSnapshot.getValue());
+
+                                    dbRef.child("users").child(uid).child("main").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            for (DataSnapshot postData : dataSnapshot.getChildren()){
+                                                Post post = postData.getValue(Post.class);
+                                                dbRef.child("users").child(uid).child("lastLoad").setValue(post.postTime);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+                                            Log.e(TAG, "LoginActivity: Save lastLoad: "+ databaseError.getMessage() );
+                                        }
+                                    });
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    Log.e(TAG, "LoginActivity: Save main post: "+ databaseError.getMessage() );
+                                }
+                            });
+
 
 
                             LoginActivity.this.nextActivity();

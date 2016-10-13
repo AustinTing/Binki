@@ -1,11 +1,13 @@
 package com.expixel.binki;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,13 +16,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
+import com.github.amlcurran.showcaseview.targets.Target;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener{
 
 
     @BindView(R.id.recyclerView_main)
@@ -28,6 +37,11 @@ public class MainActivity extends BaseActivity {
     LinearLayoutManager linearLayoutManager;
     @BindView(R.id.fab)
     FloatingActionButton fab;
+
+    DataSnapshot  allPost;
+
+    private ShowcaseView showcaseView;
+    private int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +51,6 @@ public class MainActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         linearLayoutManager = new LinearLayoutManager(this);
         // 讓列表資料反轉 THIS ALSO SETS setStackFromBottom to true
         linearLayoutManager.setReverseLayout(true);
@@ -45,6 +58,54 @@ public class MainActivity extends BaseActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        showcaseView = new ShowcaseView.Builder(this)
+                .setTarget(new ViewTarget(fab))
+                .setOnClickListener(this)
+
+
+                .build();
+//        showcaseView.setButtonText(getString(R.string.next));
+
+    }
+
+
+    private void setAlpha(float alpha, View... views) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            for (View view : views) {
+                view.setAlpha(alpha);
+            }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (counter%3) {
+            case 0:
+                showcaseView.setShowcase(new ViewTarget(fab), true);
+                break;
+
+            case 1:
+                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.toolbar)), true);
+                break;
+
+            case 2:
+                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.action_settings)), true);
+                break;
+//
+//            case 2:
+//                showcaseView.setTarget(Target.NONE);
+//                showcaseView.setContentTitle("Check it out");
+//                showcaseView.setContentText("You don't always need a target to showcase");
+//                showcaseView.setButtonText(getString(R.string.close));
+//                setAlpha(0.4f, textView1, textView2, textView3);
+//                break;
+//
+            case 4:
+                showcaseView.hide();
+//                setAlpha(1.0f, textView1, textView2, textView3);
+                break;
+        }
+        counter++;
     }
 
     @Override
@@ -90,12 +151,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        final String uid = auth.getCurrentUser().getUid();
+
         FirebaseRecyclerAdapter<Post, ItemViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Post, ItemViewHolder>(
                         Post.class,
                         ItemViewHolder.layoutResId,
                         ItemViewHolder.class,
-                        dbRef.child("post")
+                        dbRef.child("users").child(uid).child("main")
                 ) {
                     @Override
                     protected void populateViewHolder(ItemViewHolder viewHolder, Post post, int position) {
@@ -131,7 +194,6 @@ public class MainActivity extends BaseActivity {
             bookName = (TextView) view.findViewById(R.id.bookName_main);
             btnLike = (Button) view.findViewById(R.id.btnLike_main);
             btnHide = (Button) view.findViewById(R.id.btnHide_main);
-
 
         }
     }
