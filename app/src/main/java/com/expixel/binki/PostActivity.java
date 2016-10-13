@@ -44,7 +44,6 @@ public class PostActivity extends BaseDialogActivity {
             String userImg = auth.getCurrentUser().getPhotoUrl().toString();
             Post post = new Post(userName, userImg, bookName, bookInfo, System.currentTimeMillis());
             dbRef.child("post").child(key).setValue(post);
-            dbRef.child("user-post").child(key).setValue(post);
             Toast.makeText(this, "Book Added", Toast.LENGTH_SHORT).show();
             this.finish();
         }
