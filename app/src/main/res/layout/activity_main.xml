@@ -18,7 +18,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:navigationIcon="@drawable/link"/>
+            app:navigationIcon="@drawable/open_book"
+            />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -34,10 +35,13 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        android:src="@drawable/add"
+        android:scaleType="center"
+        app:borderWidth="0dp"
+        />
 
 </android.support.design.widget.CoordinatorLayout>
