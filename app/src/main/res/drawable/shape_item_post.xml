@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item>
         <shape xmlns:android="http://schemas.android.com/apk/res/android"
@@ -8,17 +7,20 @@
             <solid android:color="#00FFFFFF" />
             <stroke
                 android:width="3dip"
-                android:color="#91bdc6" />
+                android:color="#737373" />
             <corners android:radius="10dip" />
             <padding
-                android:bottom="15dip"
-                android:left="15dip"
-                android:right="15dip"
-                android:top="15dip" />
+                android:bottom="3dip"
+                android:left="3dip"
+                android:right="3dip"
+                android:top="3dip" />
         </shape>
     </item>
-    <item
-            android:drawable="@drawable/bottom_polygonn">
+    <item>
+        <bitmap
+            android:src="@drawable/floral"
+            android:alpha="0.1">
+        </bitmap>
 
     </item>
 

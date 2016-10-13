@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    tools:background="#33000088">
+    android:background="@drawable/shape_item_post">
     <!--Hide的背景色改為暖色系-->
     <ImageView
         android:id="@+id/topShadow_like"

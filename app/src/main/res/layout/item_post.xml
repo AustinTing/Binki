@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:background="@drawable/shape_item_post"
-    android:backgroundTint="#11000088">
+    android:layout_marginTop="5dp">
 
     <ImageView
         android:id="@+id/topShadow_main"
@@ -81,10 +81,11 @@
         app:layout_widthPercent="23%"
         android:layout_centerVertical="true"
         android:background="#555555"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:text="Like"
         android:textColor="#EEEEEE"
         android:textStyle="bold"
+        android:gravity="center"
         />
     <Button
         android:id="@+id/btnHide_main"
