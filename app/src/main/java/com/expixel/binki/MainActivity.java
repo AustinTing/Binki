@@ -58,12 +58,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        showcaseView = new ShowcaseView.Builder(this)
-                .setTarget(new ViewTarget(fab))
-                .setOnClickListener(this)
-
-
-                .build();
+//        showcaseView = new ShowcaseView.Builder(this)
+//                .setTarget(new ViewTarget(fab))
+//                .setOnClickListener(this)
+//
+//
+//                .build();
 //        showcaseView.setButtonText(getString(R.string.next));
 
     }

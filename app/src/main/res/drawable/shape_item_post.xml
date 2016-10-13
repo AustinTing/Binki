@@ -16,12 +16,14 @@
                 android:top="3dip" />
         </shape>
     </item>
-    <item>
-        <bitmap
-            android:src="@drawable/floral"
-            android:alpha="0.1">
-        </bitmap>
 
+
+    <item>
+        <nine-patch
+            android:src="@drawable/floral"
+            android:alpha="0.1"
+            android:dither="true"
+            />
     </item>
 
 </layer-list>
