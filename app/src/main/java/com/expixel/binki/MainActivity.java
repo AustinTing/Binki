@@ -11,7 +11,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     @BindView(R.id.recyclerView_main)
@@ -38,7 +40,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
-    DataSnapshot  allPost;
+    DataSnapshot allPost;
 
     private ShowcaseView showcaseView;
     private int counter = 0;
@@ -58,13 +60,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-//        showcaseView = new ShowcaseView.Builder(this)
-//                .setTarget(new ViewTarget(fab))
-//                .setOnClickListener(this)
-//
-//
-//                .build();
-//        showcaseView.setButtonText(getString(R.string.next));
+
+        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+        lps.setMargins(margin, margin, margin, margin);
+
+        showcaseView = new ShowcaseView.Builder(this)
+                .setTarget(new ViewTarget(fab))
+                .setOnClickListener(this)
+                .setStyle(R.style.CustomShowcaseTheme2)
+                .build();
+        showcaseView.setContentTitle("Add Button");
+        showcaseView.setContentText("Add your book to exchange");
+
+        showcaseView.setButtonPosition(lps);
+        showcaseView.setButtonText(getString(R.string.next));
 
     }
 
@@ -79,7 +91,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (counter%3) {
+        switch (counter) {
             case 0:
                 showcaseView.setShowcase(new ViewTarget(fab), true);
                 break;
@@ -88,9 +100,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 showcaseView.setShowcase(new ViewTarget(findViewById(R.id.toolbar)), true);
                 break;
 
-            case 2:
-                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.action_settings)), true);
-                break;
+//            case 2:
+//                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.liked)), true);
+//                break;
 //
 //            case 2:
 //                showcaseView.setTarget(Target.NONE);
@@ -100,7 +112,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 //                setAlpha(0.4f, textView1, textView2, textView3);
 //                break;
 //
-            case 4:
+            case 2:
                 showcaseView.hide();
 //                setAlpha(1.0f, textView1, textView2, textView3);
                 break;

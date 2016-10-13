@@ -100,9 +100,4 @@
         android:layout_alignBottom="@+id/bookName_main"
         android:layout_alignStart="@+id/btnLike_main" />
 
-
-
-
-
-
 </android.support.percent.PercentRelativeLayout>
