@@ -8,4 +8,10 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/liked"
+        android:icon="@drawable/like_clicked"
+        app:showAsAction="ifRoom|withText"
+        android:title="Profile">
+    </item>
 </menu>
