@@ -18,6 +18,7 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
+    
     <style name="CustomShowcaseTheme2" parent="ShowcaseView">
         <item name="sv_backgroundColor">#aa3f51b5</item>
         <item name="sv_showcaseColor">#aaff4081</item>
