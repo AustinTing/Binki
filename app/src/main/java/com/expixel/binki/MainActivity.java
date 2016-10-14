@@ -1,6 +1,7 @@
 package com.expixel.binki;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.firebase.database.DataSnapshot;
 
@@ -40,6 +42,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     DataSnapshot allPost;
     @BindView(R.id.tabs_main)
     TabLayout tabLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private ShowcaseView showcaseView;
     private int counter = 0;
@@ -49,7 +53,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
 
         tabLayout.addTab(tabLayout.newTab().setText("我是一"));
@@ -133,7 +137,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (counter) {
             case 0:
                 setAlpha(0.1f, fab);
-                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.toolbar)), true);
+//                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.toolbar)), true);
+//                showcaseView.setShowcaseX(10);
+                showcaseView.setShowcase(new Target() {
+                    @Override
+                    public Point getPoint() {
+                        // Get approximate position of home icon's center
+                        int actionBarHeight = toolbar.getHeight();
+                        int actionBarWidth = toolbar.getWidth();
+                        int x = actionBarWidth;
+                        int y =  actionBarHeight / 2 ;
+                        return new Point(x, y);
+                    }
+                }, true);
+
                 break;
 
 
