@@ -4,11 +4,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,16 +15,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
-import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +38,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     FloatingActionButton fab;
 
     DataSnapshot allPost;
+    @BindView(R.id.tabs_main)
+    TabLayout tabLayout;
 
     private ShowcaseView showcaseView;
     private int counter = 0;
@@ -52,6 +50,42 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
+        tabLayout.addTab(tabLayout.newTab().setText("我是一"));
+        tabLayout.addTab(tabLayout.newTab().setText("我是二"));
+        tabLayout.addTab(tabLayout.newTab().setText("我是三"));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {//ListView效果
+//                    recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+//                    recyclerView.setAdapter(listAdapter);
+                    Toast.makeText(MainActivity.this, "我是一", Toast.LENGTH_SHORT).show();
+                }
+                if (tab.getPosition() == 1) {//GridView效果
+//                    recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
+//                    recyclerView.setAdapter(gridAdapter);
+                    Toast.makeText(MainActivity.this, "我是二", Toast.LENGTH_SHORT).show();
+                }
+                if (tab.getPosition() == 2) {//Flow效果
+                    //StaggeredGridLayoutManager.VERTICAL此处表示有多少列
+//                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+//                    recyclerView.setAdapter(flowViewAdapter);
+                    Toast.makeText(MainActivity.this, "我是三", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         setSupportActionBar(toolbar);
 
@@ -77,8 +111,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         showcaseView.setContentTitle("Add Button");
         showcaseView.setContentText("Add your book to exchange");
 //        showcaseView.forceTextPosition(ShowcaseView.AB);
-
-
         showcaseView.setButtonPosition(lps);
         showcaseView.setButtonText(getString(R.string.next));
         setAlpha(0.1f, findViewById(R.id.recyclerView_main));
