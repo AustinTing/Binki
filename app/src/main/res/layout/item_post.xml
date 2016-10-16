@@ -1,103 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentRelativeLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="72dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     android:background="@drawable/shape_item_post"
-    android:padding="0dip"
-    android:layout_marginTop="5dp"
-    >
+    android:descendantFocusability="blocksDescendants">
 
-    <ImageView
-        android:id="@+id/topShadow_main"
-        app:layout_heightPercent="5%"
-        app:layout_widthPercent="100%"
-        android:background="#00880000"
-        android:layout_alignParentTop="true"
-        />
-    <ImageView
-        android:id="@+id/bottomShadow_main"
-        app:layout_heightPercent="5%"
-        app:layout_widthPercent="100%"
-        android:background="#00880000"
-        android:layout_alignParentBottom="true"
-        />
-
-
-    <TextView
-        android:id="@+id/blank1_main"
-        app:layout_heightPercent="5%"
-        app:layout_widthPercent="5%"
-        />
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_height="40dp"
+        android:layout_width="40dp"
         android:id="@+id/imgUser_main"
-        app:layout_heightPercent="30%"
-        app:layout_widthPercent="10%"
-        android:layout_toEndOf="@+id/blank1_main"
-        android:layout_below="@id/topShadow_main"/>
-
-    <TextView
-        android:id="@+id/blank2_main"
-        app:layout_heightPercent="5%"
-        app:layout_widthPercent="5%"
-        android:layout_toEndOf="@id/imgUser_main"
-        android:layout_below="@id/topShadow_main"
+        tools:src="@color/authui_colorAccent"
+        android:layout_centerVertical="true"
         />
 
 
 
-    <TextView
-        android:id="@+id/bookName_main"
-        android:hint="bookname"
-        android:layout_height="match_parent"
-        app:layout_widthPercent="70%"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:layout_alignStart="@+id/imgUser_main"
-        android:layout_below="@id/imgUser_main"
-        android:layout_above="@id/bottomShadow_main"/>
 
     <TextView
         android:id="@+id/userName_main"
-        android:hint="username"
-        app:layout_heightPercent="30%"
-        app:layout_widthPercent="50%"
-        android:textSize="17sp"
-        android:gravity="center_vertical"
-        android:layout_alignTop="@+id/blank2_main"
-        android:layout_toEndOf="@+id/blank2_main" />
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        tools:text="username"
+        android:textSize="14sp"
+        android:layout_marginLeft="56dp"
+        android:layout_alignTop="@id/imgUser_main"
+        android:gravity="center_vertical" />
 
     <TextView
-        android:id="@+id/blank3_main"
-        app:layout_heightPercent="5%"
-        app:layout_widthPercent="5%"
-        android:layout_toEndOf="@id/userName_main"
-        />
+        android:id="@+id/bookName_main"
+        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:hint="bookname"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="56dp"
+        android:gravity="center_vertical"
+        android:layout_alignBottom="@+id/imgUser_main"
+        android:scrollHorizontally="true"
+        android:maxLines="1"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:focusableInTouchMode="true"
+        android:focusable="true"/>
+
+
+
+
     <Button
         android:id="@+id/btnLike_main"
-        android:layout_toEndOf="@id/blank3_main"
-        app:layout_heightPercent="40%"
-        app:layout_widthPercent="23%"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_centerVertical="true"
-        android:background="#555555"
+        android:background="@drawable/like"
         android:textSize="20sp"
-        android:text="Like"
         android:textColor="#EEEEEE"
         android:textStyle="bold"
         android:gravity="center"
+        android:layout_alignParentRight="true"
         />
+
     <Button
         android:id="@+id/btnHide_main"
-        app:layout_heightPercent="25%"
-        app:layout_widthPercent="23%"
-        android:background="#00FFFFFF"
-        android:text="Hide"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/hide"
         android:textAllCaps="false"
         android:textColor="#555555"
-        android:layout_alignBottom="@+id/bookName_main"
-        android:layout_alignStart="@+id/btnLike_main" />
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="56dp"
+         />
 
-</android.support.percent.PercentRelativeLayout>
+</RelativeLayout>
