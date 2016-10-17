@@ -54,11 +54,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setTitle("");
 
 
-        tabLayout.addTab(tabLayout.newTab().setText("我是一"));
-        tabLayout.addTab(tabLayout.newTab().setText("我是二"));
-        tabLayout.addTab(tabLayout.newTab().setText("我是三"));
+        tabLayout.addTab(tabLayout.newTab().setText("Main"));
+        tabLayout.addTab(tabLayout.newTab().setText("My Bookshelf"));
+        tabLayout.addTab(tabLayout.newTab().setText("Liked"));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

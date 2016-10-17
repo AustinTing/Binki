@@ -61,7 +61,6 @@ public class LoginActivity extends BaseActivity {
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
 //        Set AuthListener
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -75,6 +74,7 @@ public class LoginActivity extends BaseActivity {
                 }
             }
         };
+
 
         SignInButton bt = (SignInButton) findViewById(R.id.btn_login_google_sign_in);
         bt.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +92,7 @@ public class LoginActivity extends BaseActivity {
         Intent intent = new Intent();
         intent.setClass(this, MainActivity.class);
         startActivity(intent);
+
     }
 
     public void onBtnClick(View view) {
@@ -176,7 +177,6 @@ public class LoginActivity extends BaseActivity {
                                     Log.e(TAG, "LoginActivity: Save main post: "+ databaseError.getMessage() );
                                 }
                             });
-
 
 
                             LoginActivity.this.nextActivity();
