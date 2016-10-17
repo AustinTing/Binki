@@ -1,7 +1,6 @@
 package com.expixel.binki;
 
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -29,11 +27,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Map;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class LoginActivity extends BaseActivity {
+
+    @BindView(R.id.btn_login_google_sign_in)
+    SignInButton btnLoginGoogleSignIn;
+
     private GoogleApiClient googleApiClient;
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth.AuthStateListener authListener;
@@ -44,6 +47,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 //        Google Config
         setContentView(R.layout.ac_login);
+        ButterKnife.bind(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -75,45 +79,29 @@ public class LoginActivity extends BaseActivity {
             }
         };
 
+    }
 
-        SignInButton bt = (SignInButton) findViewById(R.id.btn_login_google_sign_in);
-        bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "LoginActivity: onClick: ");
-                onBtnClick(view);
-
-            }
-        });
+    @OnClick(R.id.btn_login_google_sign_in)
+    public void onClick() {
+        Log.d(TAG, "LoginActivity: onClickSignIn: ");
+        if (googleApiClient != null && googleApiClient.isConnected()) {
+            Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+            LoginActivity.this.startActivityForResult(signInIntent, RC_SIGN_IN);
+        } else {
+            Log.d(TAG, "LoginActivity: onClick: mGoogleApiClient is null ? " + googleApiClient.toString());
+            Log.d(TAG, "LoginActivity: onClickSignin: mGoogleApiClient connect ? " + googleApiClient.isConnected());
+        }
     }
 
 
     protected void nextActivity() {
         Intent intent = new Intent();
-        intent.setClass(this, MainActivity.class);
+        intent.setClass(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-
+        finish();
     }
 
-    public void onBtnClick(View view) {
-        int i = view.getId();
-        switch (i) {
-            case R.id.btn_login_google_sign_in:
-                Log.d(TAG, "LoginActivity: click: google sign in ");
-                Log.d(TAG, "LoginActivity: onClickSignIn: ");
-                if (googleApiClient != null && googleApiClient.isConnected()) {
-                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-                    this.startActivityForResult(signInIntent, RC_SIGN_IN);
-                } else {
-                    Log.d(TAG, "LoginActivity: onClick: mGoogleApiClient is null ? " + googleApiClient.toString());
-                    Log.d(TAG, "LoginActivity: onClickSignin: mGoogleApiClient connect ? " + googleApiClient.isConnected());
-                }
-                break;
-            default:
-                Log.e(TAG, "LoginActivity: onClick: Something wrong");
 
-        }
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -154,13 +142,13 @@ public class LoginActivity extends BaseActivity {
                             dbRef.child("post").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    Log.d(TAG, "MainActivity: Download and Upload: data have "+dataSnapshot.getChildrenCount()+"children");
+                                    Log.d(TAG, "MainActivity: Download and Upload: data have " + dataSnapshot.getChildrenCount() + "children");
                                     dbRef.child("users").child(uid).child("main").setValue(dataSnapshot.getValue());
 
                                     dbRef.child("users").child(uid).child("main").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
-                                            for (DataSnapshot postData : dataSnapshot.getChildren()){
+                                            for (DataSnapshot postData : dataSnapshot.getChildren()) {
                                                 Post post = postData.getValue(Post.class);
                                                 dbRef.child("users").child(uid).child("lastLoad").setValue(post.postTime);
                                             }
@@ -168,13 +156,14 @@ public class LoginActivity extends BaseActivity {
 
                                         @Override
                                         public void onCancelled(DatabaseError databaseError) {
-                                            Log.e(TAG, "LoginActivity: Save lastLoad: "+ databaseError.getMessage() );
+                                            Log.e(TAG, "LoginActivity: Save lastLoad: " + databaseError.getMessage());
                                         }
                                     });
                                 }
+
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
-                                    Log.e(TAG, "LoginActivity: Save main post: "+ databaseError.getMessage() );
+                                    Log.e(TAG, "LoginActivity: Save main post: " + databaseError.getMessage());
                                 }
                             });
 
@@ -203,6 +192,7 @@ public class LoginActivity extends BaseActivity {
             auth.removeAuthStateListener(authListener);
         }
     }
+
 
 }
 

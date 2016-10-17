@@ -40,8 +40,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     LinearLayoutManager linearLayoutManager;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-
-    DataSnapshot allPost;
     @BindView(R.id.tabs_main)
     TabLayout tabLayout;
     @BindView(R.id.toolbar)
@@ -57,7 +55,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         ButterKnife.bind(this);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setTitle("");
-
+        setSupportActionBar(toolbar);
 
         tabLayout.addTab(tabLayout.newTab().setText("Main"));
         tabLayout.addTab(tabLayout.newTab().setText("My Bookshelf"));
@@ -94,8 +92,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         });
 
-        setSupportActionBar(toolbar);
-
         linearLayoutManager = new LinearLayoutManager(this);
         // 讓列表資料反轉 THIS ALSO SETS setStackFromBottom to true
         linearLayoutManager.setReverseLayout(true);
@@ -104,13 +100,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
 
-
+//        Tutorial
         RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
         lps.setMargins(margin, margin, margin, margin);
-
         showcaseView = new ShowcaseView.Builder(this)
                 .setTarget(new ViewTarget(fab))
                 .setOnClickListener(this)
