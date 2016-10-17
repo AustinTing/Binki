@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -100,6 +102,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
 
 
         RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -121,7 +124,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setAlpha(0.1f, findViewById(R.id.recyclerView_main));
         setAlpha(0.1f, findViewById(R.id.appBar_main));
 
-
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+        fab.startAnimation(myAnim);
     }
 
 
@@ -216,6 +220,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
 //                .create();
 //        dialogPuls.show();
+
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+        BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+        myAnim.setInterpolator(interpolator);
+        fab.startAnimation(myAnim);
         Intent intent = new Intent();
         intent.setClass(this, PostActivity.class);
         startActivity(intent);

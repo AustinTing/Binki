@@ -1,37 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:background="#55000088">
-
-    <ImageView
-        android:layout_height="5dp"
-        android:layout_width="match_parent"
-        android:background="#22000088"
-        android:layout_alignParentTop="true"
-        />
+    android:layout_height="72dp">
 
     <TextView
         android:id="@+id/bookName_shelf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:hint="國家為什麼會失敗"
-        android:textSize="25sp"
-        android:layout_toLeftOf="@+id/clickLayout_shelf"
-        android:layout_alignParentLeft="true"/>
+        android:layout_marginLeft="16dp"
+        tools:text="國家為什麼會失敗"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="16dp"/>
 
     <RelativeLayout
         android:id="@+id/clickLayout_shelf"
-        android:layout_height="40dp"
-        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:background="#55008888"
-        android:layout_marginRight="20dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp">
+        android:layout_marginRight="16dp">
 
         <ImageView
             android:id="@+id/imgLike_shelf"
@@ -42,12 +34,10 @@
             />
         <TextView
             android:id="@+id/likeCount_shelf"
-            android:layout_width="wrap_content"
+            android:layout_width="56dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:hint="999+"
-            android:textColorHint="#555555"
-            android:textSize="15sp"
+            tools:text="999+"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="#555555"
             android:layout_toRightOf="@+id/imgLike_shelf"
@@ -57,11 +47,5 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:layout_height="5dp"
-        android:layout_width="match_parent"
-        android:background="#11000088"
-        android:layout_alignParentBottom="true"
-        />
 
 </RelativeLayout>

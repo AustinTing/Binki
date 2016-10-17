@@ -4,86 +4,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="72dp"
     android:background="@drawable/shape_item_post">
     <!--Hide的背景色改為暖色系-->
-    <ImageView
-        android:id="@+id/topShadow_like"
-        app:layout_heightPercent="5%"
-        app:layout_widthPercent="100%"
-        android:background="#22880000"
-        android:layout_alignParentTop="true"
-        />
 
-    <ImageView
-        android:id="@+id/bottomShadow_like"
-        app:layout_heightPercent="5%"
-        app:layout_widthPercent="100%"
-        android:background="#11880000"
-        android:layout_alignParentBottom="true"
-        />
-
-
-    <TextView
-        android:id="@+id/blank1_like"
-        app:layout_heightPercent="5%"
-        app:layout_widthPercent="5%"
-        />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgUser_like"
-        app:layout_heightPercent="30%"
-        app:layout_widthPercent="10%"
-        android:layout_toEndOf="@+id/blank1_like"
-        android:layout_below="@id/topShadow_like"
-        tools:src="@color/colorAccent"/>
+        android:layout_height="40dp"
+        android:layout_width="40dp"
+        android:layout_marginLeft="16dp"
+        tools:src="@color/colorAccent"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"/>
 
-    <TextView
-        android:id="@+id/blank2_like"
-        app:layout_heightPercent="5%"
-        app:layout_widthPercent="5%"
-        android:layout_toEndOf="@id/imgUser_like"
-        android:layout_below="@id/topShadow_like"
-        />
 
     <TextView
         android:id="@+id/userName_like"
-        android:hint="username"
-        app:layout_heightPercent="30%"
-        app:layout_widthPercent="50%"
-        android:textSize="17sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        android:textSize="14sp"
+        android:layout_alignTop="@id/imgUser_like"
+        android:layout_toEndOf="@id/imgUser_like"
         android:gravity="center_vertical"
-        android:layout_alignTop="@+id/blank2_like"
-        android:layout_toEndOf="@+id/blank2_like" />
+ />
 
-    <TextView
-        android:id="@+id/blank3_like"
-        app:layout_heightPercent="5%"
-        app:layout_widthPercent="5%"
-        android:layout_toEndOf="@id/userName_like"
-        />
+
     <Button
         android:id="@+id/btnRemove_like"
-        android:layout_toEndOf="@id/blank3_like"
-        app:layout_heightPercent="40%"
-        app:layout_widthPercent="23%"
+        android:layout_height="40dp"
+        android:layout_width="40dp"
         android:layout_centerVertical="true"
-        android:background="#555555"
-        android:textSize="20sp"
-        android:text="Remove"
-        android:textColor="#EEEEEE"
-        android:textStyle="bold"/>
+        android:background="@drawable/cancel"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        />
 
     <TextView
         android:id="@+id/bookName_like"
-        android:hint="bookname"
-        android:layout_height="match_parent"
-        app:layout_widthPercent="70%"
-        android:textSize="20sp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        tools:text="Bookname"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/imgUser_like"
+        android:layout_alignBottom="@id/imgUser_like"
+        android:layout_toEndOf="@id/imgUser_like"
         android:layout_toStartOf="@+id/btnRemove_like" />
-    <!--在Hide把Button裡的text改成Recover-->
 </android.support.percent.PercentRelativeLayout>
 
