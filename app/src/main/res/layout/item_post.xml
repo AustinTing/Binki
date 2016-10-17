@@ -6,9 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:background="@drawable/shape_item_post"
-    android:descendantFocusability="blocksDescendants">
+    android:background="@drawable/shape_item_post">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -46,18 +44,20 @@
         android:textStyle="bold"
         android:gravity="center"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
         />
 
     <Button
         android:id="@+id/btnHide_main"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="@drawable/hide"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:textAllCaps="false"
         android:textColor="#555555"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="56dp"
+        android:layout_marginRight="72dp"
+        android:background="@drawable/hide"
+
          />
 
     <TextView

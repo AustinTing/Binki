@@ -33,6 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
+
     @BindView(R.id.recyclerView_main)
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
@@ -45,6 +46,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private ShowcaseView showcaseView;
     private int counter = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,9 +122,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setAlpha(0.1f, findViewById(R.id.recyclerView_main));
         setAlpha(0.1f, findViewById(R.id.appBar_main));
 
-        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
-        fab.startAnimation(myAnim);
+
     }
+
+
 
 
     private void setAlpha(float alpha, View... views) {
@@ -204,11 +207,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                .create();
 //        dialogPuls.show();
 
-        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+
         // Use bounce interpolator with amplitude 0.2 and frequency 20
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
         BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
         myAnim.setInterpolator(interpolator);
         fab.startAnimation(myAnim);
+
         Intent intent = new Intent();
         intent.setClass(this, PostActivity.class);
         startActivity(intent);
@@ -217,6 +222,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onStart() {
+
+
+
         super.onStart();
         final String uid = auth.getCurrentUser().getUid();
 
@@ -228,13 +236,47 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         dbRef.child("users").child(uid).child("main")
                 ) {
                     @Override
-                    protected void populateViewHolder(ItemViewHolder viewHolder, Post post, int position) {
+                    protected void populateViewHolder(final ItemViewHolder viewHolder, Post post, int position) {
                         viewHolder.userName.setText(post.userName);
+                        viewHolder.bookName.setSelected(true);
+                        viewHolder.bookName.requestFocus();
                         Glide.with(MainActivity.this)
                                 .load(post.userImg)
                                 .crossFade()
                                 .into(viewHolder.imgUser);
                         viewHolder.bookName.setText(post.bookName);
+                        viewHolder.btnLike.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
+
+                                // Use bounce interpolator with amplitude 0.2 and frequency 20
+                                BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+
+                                myAnim.setInterpolator(interpolator);
+
+                                viewHolder.btnLike.startAnimation(myAnim);
+                            }
+
+
+                        });
+
+                        viewHolder.btnHide.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
+
+                                // Use bounce interpolator with amplitude 0.2 and frequency 20
+                                BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+
+                                myAnim.setInterpolator(interpolator);
+
+                                viewHolder.btnHide.startAnimation(myAnim);
+                            }
+
+
+                        });
+
 
                         //  取得這個item的key
 //                        getRef(i).getKey()
@@ -244,7 +286,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
+
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
+
+
 
         public final static int layoutResId = R.layout.item_post;
 
@@ -254,7 +299,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Button btnLike;
         Button btnHide;
 
+
         public ItemViewHolder(View view) {
+
             super(view);
             imgUser = (CircleImageView) view.findViewById(R.id.imgUser_main);
             userName = (TextView) view.findViewById(R.id.userName_main);
@@ -263,5 +310,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             btnHide = (Button) view.findViewById(R.id.btnHide_main);
 
         }
+
+        }
     }
-}
+
+
