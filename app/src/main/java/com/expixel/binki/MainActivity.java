@@ -1,6 +1,7 @@
 package com.expixel.binki;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.firebase.database.DataSnapshot;
 
@@ -39,10 +41,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     LinearLayoutManager linearLayoutManager;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-
-    DataSnapshot allPost;
     @BindView(R.id.tabs_main)
     TabLayout tabLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private ShowcaseView showcaseView;
     private int counter = 0;
@@ -53,9 +55,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setTitle("");
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        setSupportActionBar(toolbar);
 
         tabLayout.addTab(tabLayout.newTab().setText("Main"));
         tabLayout.addTab(tabLayout.newTab().setText("My Bookshelf"));
@@ -92,8 +94,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         });
 
-        setSupportActionBar(toolbar);
-
         linearLayoutManager = new LinearLayoutManager(this);
         // 讓列表資料反轉 THIS ALSO SETS setStackFromBottom to true
         linearLayoutManager.setReverseLayout(true);
@@ -102,13 +102,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
 
-
+//        Tutorial
         RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
         lps.setMargins(margin, margin, margin, margin);
-
         showcaseView = new ShowcaseView.Builder(this)
                 .setTarget(new ViewTarget(fab))
                 .setOnClickListener(this)
@@ -141,7 +140,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (counter) {
             case 0:
                 setAlpha(0.1f, fab);
-                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.toolbar)), true);
+//                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.toolbar)), true);
+//                showcaseView.setShowcaseX(10);
+                showcaseView.setShowcase(new Target() {
+                    @Override
+                    public Point getPoint() {
+                        // Get approximate position of home icon's center
+                        int actionBarHeight = toolbar.getHeight();
+                        int actionBarWidth = toolbar.getWidth();
+                        int x = actionBarWidth;
+                        int y =  actionBarHeight / 2 ;
+                        return new Point(x, y);
+                    }
+                }, true);
+
                 break;
 
 
