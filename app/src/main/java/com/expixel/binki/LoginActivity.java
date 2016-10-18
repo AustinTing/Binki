@@ -144,7 +144,7 @@ public class LoginActivity extends BaseActivity {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     Log.d(TAG, "MainActivity: Download and Upload: data have " + dataSnapshot.getChildrenCount() + "children");
                                     dbRef.child("users").child(uid).child("main").setValue(dataSnapshot.getValue());
-
+                                    //  記錄更新的最後一筆
                                     dbRef.child("users").child(uid).child("main").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
