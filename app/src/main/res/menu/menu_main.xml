@@ -3,15 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.expixel.binki.MainActivity"
     >
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:id="@+id/message_menu"
+        android:orderInCategory="1"
+        android:title="Message"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/hide_menu"
+        android:orderInCategory="2"
+        android:title="Hidden Books"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/settings_menu"
+        android:orderInCategory="3"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+        />
     <item
-        android:id="@+id/liked"
-        android:icon="@drawable/like_clicked"
+        android:id="@+id/logout_menu"
+        android:orderInCategory="4"
+        android:title="Logout"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/search_menu"
+        android:icon="@drawable/searcher"
         app:showAsAction="ifRoom|withText"
-        android:title="Profile">
+        android:title="Search">
     </item>
+
+
 </menu>

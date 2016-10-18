@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setTitle("");
+        setTitle("BINKI");
         setSupportActionBar(toolbar);
 
         tabLayout.addTab(tabLayout.newTab().setText("Main"));
@@ -199,7 +199,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.settings_menu) {
             return true;
         }
 

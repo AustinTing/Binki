@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentRelativeLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,25 +8,30 @@
 
     <TextView
         android:id="@+id/title_liked_shelf"
-        app:layout_heightPercent="5%"
-        app:layout_widthPercent="100%"
+        android:layout_height="48dp"
+        android:layout_width="match_parent"
         android:text="PEOPLE WHO LIKE"
+        android:textSize="14sp"
         android:gravity="center"
-        android:background="#a5a5f1"
+        android:background="@color/colorPrimaryDark"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
+        android:padding="8dp"
         />
     <TextView
         android:id="@+id/bookName_liked_shelf"
         tools:text="蘋果橘子經濟學"
-        app:layout_heightPercent="5%"
-        app:layout_widthPercent="100%"
+        android:layout_height="32dp"
+        android:layout_width="match_parent"
         android:gravity="center"
-        android:background="#a5a5f1"
+        android:textSize="16sp"
+        android:background="@color/colorPrimary"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
+        android:maxLines="1"
         android:layout_below="@id/title_liked_shelf"
+        android:padding="8dp"
         />
 
 
-</android.support.percent.PercentRelativeLayout>
+</RelativeLayout>
