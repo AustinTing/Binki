@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:background="@drawable/shape_item_post">
-    <!--Hide的背景色改為暖色系-->
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -39,6 +38,8 @@
         android:background="@drawable/cancel"
         android:layout_alignParentRight="true"
         android:layout_marginRight="16dp"
+
+
         />
 
     <TextView

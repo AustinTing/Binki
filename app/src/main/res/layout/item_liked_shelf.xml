@@ -6,7 +6,6 @@
     android:id="@+id/liker_liked_shelf"
     android:layout_height="72dp"
     android:layout_width="match_parent"
-    tools:background="#33008888"
     >
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -40,11 +39,13 @@
         android:layout_marginRight="72dp"
         />
 
+    <!--TODO:看過訊息後把圖換成android:src="@drawable/read"-->
+
     <ImageView
         android:id="@+id/imgChat_liked_shelf"
-        android:layout_height="40dp"
-        android:layout_width="40dp"
-        android:src="@drawable/chat"
+        android:layout_height="32dp"
+        android:layout_width="32dp"
+        android:src="@drawable/unread"
         android:layout_alignTop="@+id/imgUser_liked_shelf"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="16dp"/>
