@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +28,7 @@ public class BaseActivity extends AppCompatActivity {
     protected FirebaseAuth auth;
     protected DatabaseReference dbRef;
 
+    private FirebaseAnalytics analytics;
 
     public void showProgressDialog(String message) {
         if (progressDialog == null) {
@@ -53,6 +55,7 @@ public class BaseActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         dbRef = FirebaseDatabase.getInstance().getReference();
+        analytics = FirebaseAnalytics.getInstance(this);
 
     }
 

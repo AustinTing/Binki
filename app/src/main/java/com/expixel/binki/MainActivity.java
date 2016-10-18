@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,11 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,8 +39,6 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
-
-
 
     @BindView(R.id.recyclerView_main)
     RecyclerView recyclerView;
@@ -48,7 +52,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private ShowcaseView showcaseView;
     private int counter = 0;
-
+    Long lastLoadTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,11 +125,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setAlpha(0.1f, findViewById(R.id.recyclerView_main));
         setAlpha(0.1f, findViewById(R.id.appBar_main));
 
-
     }
-
-
-
 
     private void setAlpha(float alpha, View... views) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -153,9 +153,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         return new Point(x, y);
                     }
                 }, true);
-
                 break;
-
 
 //            case 1:
 //                showcaseView.setShowcase(new ViewTarget(fab), true);
@@ -202,7 +200,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (id == R.id.settings_menu) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -219,7 +216,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                .create();
 //        dialogPuls.show();
 
-
         // Use bounce interpolator with amplitude 0.2 and frequency 20
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
         BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
@@ -231,14 +227,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startActivity(intent);
     }
 
-
     @Override
     protected void onStart() {
-
-
-
         super.onStart();
         final String uid = auth.getCurrentUser().getUid();
+
 
         FirebaseRecyclerAdapter<Post, ItemViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Post, ItemViewHolder>(
@@ -261,15 +254,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             @Override
                             public void onClick(View v) {
                                 final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
-
                                 // Use bounce interpolator with amplitude 0.2 and frequency 20
                                 BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
-
                                 myAnim.setInterpolator(interpolator);
-
                                 viewHolder.btnLike.startAnimation(myAnim);
                             }
-
 
                         });
 
@@ -277,40 +266,67 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             @Override
                             public void onClick(View v) {
                                 final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
-
                                 // Use bounce interpolator with amplitude 0.2 and frequency 20
                                 BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
-
                                 myAnim.setInterpolator(interpolator);
-
                                 viewHolder.btnHide.startAnimation(myAnim);
                             }
-
-
                         });
-
-
                         //  取得這個item的key
 //                        getRef(i).getKey()
                     }
                 };
         recyclerView.setAdapter(adapter);
+
+        //  把之前紀錄最後一筆更新的時間之後的書單再撈進main
+        dbRef.child("users").child(uid).child("lastLoad").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                lastLoadTime = dataSnapshot.getValue(Long.class);
+                Log.d(TAG, "lastLoadTime is: " + lastLoadTime);
+                dbRef.child("post").orderByChild("postTime").startAt(lastLoadTime).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                            //  把post裡面，自己的書踢掉
+                            if(!getUserName().equals(postSnapshot.child("userName").getValue())){
+                                Log.d(TAG, "MainActivity: onDataChange: "+postSnapshot.child("userName").getValue());
+                                childUpdates.put(postSnapshot.getKey(),postSnapshot.getValue());
+                                lastLoadTime = postSnapshot.child("postTime").getValue(Long.class);
+                            }
+                        }
+                        dbRef.child("users").child(uid).child("main").updateChildren(childUpdates);
+                        dbRef.child("users").child(uid).child("lastLoad").setValue(lastLoadTime);
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, "MainActivity: loadLastTime: "+databaseError.getMessage());
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "MainActivity: loadLastTime: "+databaseError.getMessage());
+
+            }
+        });
     }
 
 
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
 
-
-
         public final static int layoutResId = R.layout.item_post;
-
         CircleImageView imgUser;
         TextView userName;
         TextView bookName;
         Button btnLike;
         Button btnHide;
-
 
         public ItemViewHolder(View view) {
 
@@ -322,7 +338,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             btnHide = (Button) view.findViewById(R.id.btnHide_main);
 
         }
-
         }
     }
 
