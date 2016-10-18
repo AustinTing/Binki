@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +24,7 @@ public class BaseActivity extends AppCompatActivity {
     protected FirebaseAuth auth;
     protected DatabaseReference dbRef;
 
+    private FirebaseAnalytics analytics;
 
     public void showProgressDialog(String message) {
         if (progressDialog == null) {
@@ -48,6 +50,7 @@ public class BaseActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         dbRef = FirebaseDatabase.getInstance().getReference();
+        analytics = FirebaseAnalytics.getInstance(this);
 
     }
 

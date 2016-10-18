@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,8 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -231,6 +234,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onStart() {
         super.onStart();
         final String uid = auth.getCurrentUser().getUid();
+        Long lastPostTime;
 
         FirebaseRecyclerAdapter<Post, ItemViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Post, ItemViewHolder>(
@@ -247,12 +251,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 .crossFade()
                                 .into(viewHolder.imgUser);
                         viewHolder.bookName.setText(post.bookName);
-
                         //  取得這個item的key
 //                        getRef(i).getKey()
                     }
                 };
         recyclerView.setAdapter(adapter);
+
+        dbRef.child("users").child(uid).child("lastLoad").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Long lastLoadTime = dataSnapshot.getValue(Long.class);
+                Log.d(TAG, "lastLoadTime is: " + lastLoadTime);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 
