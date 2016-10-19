@@ -18,7 +18,7 @@
         android:layout_marginStart="16dp"/>
 
     <RelativeLayout
-        android:id="@+id/clickLayout_shelf"
+        android:id="@+id/showLikedLayout_shelf"
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:layout_centerVertical="true"

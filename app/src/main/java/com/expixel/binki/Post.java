@@ -13,7 +13,8 @@ public class Post {
     public String bookName;
     public String bookInfo;
     public Long postTime;
-    public Map<String, Boolean> liker = new HashMap<>();
+    public int starCount = 0;
+    public Map<String, Boolean> likers = new HashMap<>();
 
     public Post() {
     }
@@ -24,6 +25,20 @@ public class Post {
         this.bookName = bookName;
         this.bookInfo = bookInfo;
         this.postTime = postTime;
+    }
+
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("userName", userName);
+        result.put("userImg", userImg);
+        result.put("bookName", bookName);
+        result.put("bookInfo", bookInfo);
+        result.put("postTime", postTime);
+        result.put("starCount", starCount);
+        result.put("likers", likers);
+
+        return result;
     }
 
 }

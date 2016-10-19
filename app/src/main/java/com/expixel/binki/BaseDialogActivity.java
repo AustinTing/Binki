@@ -38,6 +38,35 @@ public class BaseDialogActivity extends Activity {
         }
     }
 
+
+    protected String getUserName(){
+        if(auth.getCurrentUser() == null){
+            Log.e(TAG, this.getClass().getSimpleName()+": getUserName(): CurrentUser == NULL");
+        }else if (auth.getCurrentUser().getDisplayName() == null){
+            Log.e(TAG, this.getClass().getSimpleName()+": getUserName(): DisplayName == NULL");
+        }
+
+        return auth.getCurrentUser().getDisplayName();
+    }
+
+    protected String getUid(){
+        if(auth.getCurrentUser() == null){
+            Log.e(TAG, this.getClass().getSimpleName()+": getUid(): CurrentUser == NULL");
+        }
+
+        return auth.getCurrentUser().getUid();
+    }
+    protected String getUserImgeUrl(){
+        if(auth.getCurrentUser() == null){
+            Log.e(TAG, this.getClass().getSimpleName()+": getUserImgUrl(): CurrentUser == NULL");
+        }else if (auth.getCurrentUser().getPhotoUrl() == null){
+            Log.e(TAG, this.getClass().getSimpleName()+": getUserImgUrl(): ImgUrl == NULL");
+        }
+
+        return auth.getCurrentUser().getPhotoUrl().toString();
+    }
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

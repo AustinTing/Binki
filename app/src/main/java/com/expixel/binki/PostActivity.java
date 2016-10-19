@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -45,10 +47,14 @@ public class PostActivity extends BaseDialogActivity {
         }else if (!FastClickSensor.isFastDoubleClick()) {
             String bookInfo = etBookInfo.getText().toString();
             String key = dbRef.child("post").push().getKey();
-            String userName = auth.getCurrentUser().getDisplayName().toString();
-            String userImg = auth.getCurrentUser().getPhotoUrl().toString();
+            String userName = getUserName();
+            String userImg = getUserImgeUrl();
             Post post = new Post(userName, userImg, bookName, bookInfo, System.currentTimeMillis());
-            dbRef.child("post").child(key).setValue(post);
+            Map<String, Object> postValues = post.toMap();
+
+
+            dbRef.child("post").child(key).setValue(postValues);
+            dbRef.child("users").child(getUid()).child("shelf").child(key).setValue(true);
             Toast.makeText(this, "Book Added", Toast.LENGTH_SHORT).show();
             this.finish();
         }
