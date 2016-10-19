@@ -54,7 +54,7 @@ public class PostActivity extends BaseDialogActivity {
 
 
             dbRef.child("post").child(key).setValue(postValues);
-            dbRef.child("users").child(getUid()).child("shelf").child(key).setValue(true);
+            dbRef.child("users").child(getUid()).child("shelf").child(key).setValue(post.postTime);
             Toast.makeText(this, "Book Added", Toast.LENGTH_SHORT).show();
             this.finish();
         }
