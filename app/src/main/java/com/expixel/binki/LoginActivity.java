@@ -27,6 +27,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -74,7 +77,7 @@ public class LoginActivity extends BaseActivity {
                     nextActivity();
                     Log.d(TAG, "LoginActivity: onAuthStateChanged: signed_IN: " + user.getUid());
                 } else {
-                    Log.d(TAG, "LoginActivity: onAuthStateChanged: signed_OUT " + firebaseAuth.toString());
+                    Log.w(TAG, "LoginActivity: onCreate: onAuthStateChanged: signed_OUT ");
                 }
             }
         };
@@ -135,30 +138,23 @@ public class LoginActivity extends BaseActivity {
                             String name = getUserName();
                             String imgUrl = getUserImgeUrl();
                             User user = new User(name, imgUrl);
-                            final String uid = getUid();
-                            dbRef.child("users").child(uid).setValue(user);
+                            dbRef.child("users").child(getUid()).setValue(user);
 
-//                            初始化客製化書單
+                            //  初始化客製化書單
                             dbRef.child("post").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     Log.d(TAG, "MainActivity: Download and Upload: data have " + dataSnapshot.getChildrenCount() + "children");
-                                    dbRef.child("users").child(uid).child("main").setValue(dataSnapshot.getValue());
-                                    //  記錄更新的最後一筆
-                                    dbRef.child("users").child(uid).child("main").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            for (DataSnapshot postData : dataSnapshot.getChildren()) {
-                                                Post post = postData.getValue(Post.class);
-                                                dbRef.child("users").child(uid).child("lastLoad").setValue(post.postTime);
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-                                            Log.e(TAG, "LoginActivity: Save lastLoad: " + databaseError.getMessage());
-                                        }
-                                    });
+                                    Long lastLoadTime = Long.valueOf(0);
+                                    Map<String, Long> mainValues = new HashMap<>();
+                                    for (DataSnapshot postData : dataSnapshot.getChildren()){
+                                        // (key, postTime)
+                                        mainValues.put(postData.getKey(), postData.child("postTime").getValue(Long.class));
+                                        //  記錄最後一筆
+                                        lastLoadTime = postData.child("postTime").getValue(Long.class);
+                                    }
+                                    dbRef.child("users").child(getUid()).child("main").setValue(mainValues);
+                                    dbRef.child("users").child(getUid()).child("lastLoadTime").setValue(lastLoadTime);
                                 }
 
                                 @Override

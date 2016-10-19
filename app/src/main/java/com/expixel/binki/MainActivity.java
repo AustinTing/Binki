@@ -154,7 +154,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         // Get approximate position of home icon's center
                         int actionBarHeight = toolbar.getHeight();
                         int actionBarWidth = toolbar.getWidth();
-                        int x = actionBarWidth / 2 ;
+                        int x = actionBarWidth / 2;
                         int y = actionBarHeight * 2;
                         return new Point(x, y);
                     }
@@ -201,10 +201,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        switch (id) {
+            case R.id.message_menu:
+                Toast.makeText(this, "message", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.hide_menu:
+                Toast.makeText(this, "hide", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.settings_menu:
+                Toast.makeText(this, "setting", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.logout_menu:
+                auth.signOut();
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.settings_menu) {
-            return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -266,23 +281,40 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void loadMainList() {
-        FirebaseRecyclerAdapter<Post, MainItemViewHolder> adapter =
-                new FirebaseRecyclerAdapter<Post, MainItemViewHolder>(
-                        Post.class,
+        FirebaseRecyclerAdapter<Long, MainItemViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Long, MainItemViewHolder>(
+                        Long.class,
                         MainItemViewHolder.layoutResId,
                         MainItemViewHolder.class,
                         dbRef.child("users").child(getUid()).child("main")
                 ) {
                     @Override
-                    protected void populateViewHolder(final MainItemViewHolder viewHolder, Post post, int position) {
-                        viewHolder.userName.setText(post.userName);
-                        viewHolder.bookName.setSelected(true);
-                        viewHolder.bookName.requestFocus();
-                        Glide.with(MainActivity.this)
-                                .load(post.userImg)
-                                .crossFade()
-                                .into(viewHolder.imgUser);
-                        viewHolder.bookName.setText(post.bookName);
+                    protected void populateViewHolder(final MainItemViewHolder viewHolder, Long postTime, int position) {
+//                      取得這個item的key
+//                        getRef(position).getKey()
+
+                        dbRef.child("post").orderByKey().equalTo(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Log.d(TAG, "MainActivity: onDataChange: "+dataSnapshot.getChildrenCount());
+                                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                    Post post = postSnapshot.getValue(Post.class);
+                                    viewHolder.userName.setText(post.userName);
+                                    Glide.with(MainActivity.this)
+                                            .load(post.userImg)
+                                            .crossFade()
+                                            .into(viewHolder.imgUser);
+                                    viewHolder.bookName.setText(post.bookName);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e(TAG, "MainActivity: loadMainList(): DB: onCancelled: " + databaseError.getMessage());
+
+                            }
+                        });
+
                         viewHolder.btnLike.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -305,14 +337,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 viewHolder.btnHide.startAnimation(myAnim);
                             }
                         });
-                        //  取得這個item的key
-//                        getRef(i).getKey()
+
                     }
                 };
         recyclerView.setAdapter(adapter);
 
         //  把之前紀錄最後一筆更新的時間之後的書單再撈進main
-        dbRef.child("users").child(getUid()).child("lastLoad").addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef.child("users").child(getUid()).child("lastLoadTime").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 lastLoadTime = dataSnapshot.getValue(Long.class);
@@ -324,13 +355,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             //  把post裡面，自己的書踢掉
                             if (!getUserName().equals(postSnapshot.child("userName").getValue())) {
-                                Log.d(TAG, "MainActivity: onDataChange: " + postSnapshot.child("userName").getValue());
-                                childUpdates.put(postSnapshot.getKey(), postSnapshot.getValue());
+                                Log.d(TAG, "MainActivity: loadMainList: " + postSnapshot.getKey());
+                                childUpdates.put(postSnapshot.getKey(), postSnapshot.child("postTime").getValue(Long.class));
                                 lastLoadTime = postSnapshot.child("postTime").getValue(Long.class);
                             }
                         }
                         dbRef.child("users").child(getUid()).child("main").updateChildren(childUpdates);
-                        dbRef.child("users").child(getUid()).child("lastLoad").setValue(lastLoadTime);
+                        dbRef.child("users").child(getUid()).child("lastLoadTime").setValue(lastLoadTime);
 
                     }
 
