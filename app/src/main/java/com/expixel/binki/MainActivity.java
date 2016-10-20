@@ -324,7 +324,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 myAnim.setInterpolator(interpolator);
                                 viewHolder.btnHide.startAnimation(myAnim);
                                 dbRef.child("users").child(getUid()).child("main").child(key).removeValue();
-                                dbRef.child("users").child(getUid()).child("liked").child(key).setValue(postTime);
+                                dbRef.child("users").child(getUid()).child("hided").child(key).setValue(postTime);
 
 
                             }
