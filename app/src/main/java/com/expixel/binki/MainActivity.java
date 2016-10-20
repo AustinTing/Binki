@@ -1,5 +1,6 @@
 package com.expixel.binki;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -8,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -469,8 +471,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
                                 myAnim.setInterpolator(interpolator);
                                 viewHolder.btnRemove.startAnimation(myAnim);
-                                dbRef.child("users").child(getUid()).child("liked").child(key).removeValue();
-                                dbRef.child("users").child(getUid()).child("main").child(key).setValue(postTime);
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle("Remove this book from your favorite?");
+                                builder.setMessage("NOTICE: Removed books will be sent back to the Main page.");
+                                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int i) {
+                                        dbRef.child("users").child(getUid()).child("liked").child(key).removeValue();
+                                        dbRef.child("users").child(getUid()).child("main").child(key).setValue(postTime);
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int i) {
+                                        dialog.dismiss();
+                                    }
+                                });
+
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+
                             }
                         });
                     }
