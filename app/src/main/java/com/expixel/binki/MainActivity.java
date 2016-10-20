@@ -61,26 +61,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setTitle("BINKI");
+        setTitle("Main");
         setSupportActionBar(toolbar);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Main"));
+        tabLayout.addTab(tabLayout.newTab().setText("Main").setIcon(R.drawable.add));
         tabLayout.addTab(tabLayout.newTab().setText("My Shelf"));
         tabLayout.addTab(tabLayout.newTab().setText("Liked"));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                setTitle(tab.getText());
                 if (tab.getPosition() == 0) {
                     loadMainList();
+                    setTitle("Main");
                 }
                 if (tab.getPosition() == 1) {//GridView效果
                     loadShelfList();
+                    setTitle("My Bookshelf");
                 }
                 if (tab.getPosition() == 2) {//Flow效果
                     //StaggeredGridLayoutManager.VERTICAL此处表示有多少列
 //                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
 //                    recyclerView.setAdapter(flowViewAdapter);
-                    Toast.makeText(MainActivity.this, "我是三", Toast.LENGTH_SHORT).show();
+                    setTitle("My Favorites");
                 }
             }
 
