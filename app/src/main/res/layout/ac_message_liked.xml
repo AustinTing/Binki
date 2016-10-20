@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/wrapTitle_message_liked"
+        android:background="@color/colorPrimary"
+        android:layout_height="48dp"
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true">
+
+
+        <TextView
+            android:id="@+id/title_message_liked"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:text="Send message"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="16dp"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"/>
+
+        <Button
+            android:id="@+id/btnOK_message_liked"
+            android:layout_height="16dp"
+            android:layout_width="16dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ok_button"
+            android:layout_marginRight="16dp"/>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:id="@+id/imgUser_message_liked"
+            tools:src="@color/authui_colorAccent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"/>
+        <TextView
+            android:id="@+id/userName_message_liked"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            tools:text="username"
+            android:textSize="16sp"
+            android:layout_marginLeft="16dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical" />
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        tools:text="BookName"
+        android:gravity="center_vertical"
+        android:textSize="16sp"
+        android:paddingLeft="16dp"/>
+    <EditText
+        android:padding="16dp"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Say something to the owner...."
+        android:gravity="start"/>
+
+</LinearLayout>
