@@ -64,26 +64,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setTitle("Main");
         setSupportActionBar(toolbar);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Main").setIcon(R.drawable.add));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.favorite));
         tabLayout.addTab(tabLayout.newTab().setText("My Shelf"));
         tabLayout.addTab(tabLayout.newTab().setText("Liked"));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                setTitle(tab.getText());
+
                 if (tab.getPosition() == 0) {
                     loadMainList();
                     setTitle("Main");
                 }
-                if (tab.getPosition() == 1) {//GridView效果
+                if (tab.getPosition() == 1) {
                     loadShelfList();
                     setTitle("My Bookshelf");
                 }
-                if (tab.getPosition() == 2) {//Flow效果
-                    //StaggeredGridLayoutManager.VERTICAL此处表示有多少列
-//                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
-//                    recyclerView.setAdapter(flowViewAdapter);
+                if (tab.getPosition() == 2) {
+                    loadLikedList();
                     setTitle("My Favorites");
+
                 }
             }
 
@@ -259,48 +258,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
-    private void loadShelfList() {
-        FirebaseRecyclerAdapter<Long, ShelfItemViewHolder> adapter =
-                new FirebaseRecyclerAdapter<Long, ShelfItemViewHolder>(
-                        Long.class,
-                        ShelfItemViewHolder.layoutResId,
-                        ShelfItemViewHolder.class,
-                        dbRef.child("users").child(getUid()).child("shelf")
-                ) {
-                    @Override
-                    protected void populateViewHolder(final ShelfItemViewHolder viewHolder, Long postTime, int position) {
-                        dbRef.child("post").orderByKey().equalTo(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                    Log.i(TAG, "MainActivity: loadShelf: item: " + postSnapshot.getKey());
-                                    Post post = postSnapshot.getValue(Post.class);
-                                    viewHolder.bookName.setText(post.bookName);
-                                    viewHolder.likeCount.setText(String.valueOf(post.starCount));
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                Log.e(TAG, "MainActivity: loadMainList(): DB: onCancelled: " + databaseError.getMessage());
-
-                            }
-                        });
-                        viewHolder.showLikedLayout.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
-                                // Use bounce interpolator with amplitude 0.2 and frequency 20
-                                BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
-                                myAnim.setInterpolator(interpolator);
-                                viewHolder.showLikedLayout.startAnimation(myAnim);
-
-                            }
-                        });
-                    }
-                };
-        recyclerView.setAdapter(adapter);
-    }
 
     private void loadMainList() {
         FirebaseRecyclerAdapter<Long, MainItemViewHolder> adapter =
@@ -311,7 +268,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         dbRef.child("users").child(getUid()).child("main")
                 ) {
                     @Override
-                    protected void populateViewHolder(final MainItemViewHolder viewHolder, Long postTime, int position) {
+                    protected void populateViewHolder(final MainItemViewHolder viewHolder, final Long postTime, int position) {
+//                        TODO: 刪除的方法重複寫了三次,一樣的動畫也寫了多次
                         //  取得這個item的key
                         //  getRef(position).getKey()
                         final String key = getRef(position).getKey();
@@ -351,6 +309,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
                                 myAnim.setInterpolator(interpolator);
                                 viewHolder.btnLike.startAnimation(myAnim);
+                                dbRef.child("users").child(getUid()).child("main").child(key).removeValue();
+                                dbRef.child("users").child(getUid()).child("liked").child(key).setValue(postTime);
                             }
 
                         });
@@ -363,6 +323,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
                                 myAnim.setInterpolator(interpolator);
                                 viewHolder.btnHide.startAnimation(myAnim);
+                                dbRef.child("users").child(getUid()).child("main").child(key).removeValue();
+                                dbRef.child("users").child(getUid()).child("liked").child(key).setValue(postTime);
+
+
                             }
                         });
 
@@ -375,7 +339,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 lastLoadTime = dataSnapshot.getValue(Long.class);
-                dbRef.child("post").orderByChild("postTime").startAt(lastLoadTime).addListenerForSingleValueEvent(new ValueEventListener() {
+                dbRef.child("post").orderByChild("postTime").startAt(lastLoadTime+1).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Map<String, Object> childUpdates = new HashMap<>();
@@ -409,6 +373,108 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
+
+    private void loadShelfList() {
+        FirebaseRecyclerAdapter<Long, ShelfItemViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Long, ShelfItemViewHolder>(
+                        Long.class,
+                        ShelfItemViewHolder.layoutResId,
+                        ShelfItemViewHolder.class,
+                        dbRef.child("users").child(getUid()).child("shelf")
+                ) {
+                    @Override
+                    protected void populateViewHolder(final ShelfItemViewHolder viewHolder, Long postTime, int position) {
+                        dbRef.child("post").orderByKey().equalTo(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                    Log.i(TAG, "MainActivity: loadShelf: item: " + postSnapshot.getKey());
+                                    Post post = postSnapshot.getValue(Post.class);
+                                    viewHolder.bookName.setText(post.bookName);
+                                    viewHolder.likeCount.setText(String.valueOf(post.starCount));
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e(TAG, "MainActivity: loadMainList(): DB: onCancelled: " + databaseError.getMessage());
+
+                            }
+                        });
+                        viewHolder.showLikedLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
+                                // Use bounce interpolator with amplitude 0.2 and frequency 20
+                                BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+                                myAnim.setInterpolator(interpolator);
+                                viewHolder.showLikedLayout.startAnimation(myAnim);
+
+
+
+                            }
+                        });
+                    }
+                };
+        recyclerView.setAdapter(adapter);
+    }
+
+
+    private void loadLikedList() {
+        FirebaseRecyclerAdapter<Long, LikedItemViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Long, LikedItemViewHolder>(
+                        Long.class,
+                        LikedItemViewHolder.layoutResId,
+                        LikedItemViewHolder.class,
+                        dbRef.child("users").child(getUid()).child("liked")
+                ) {
+                    @Override
+                    protected void populateViewHolder(final LikedItemViewHolder viewHolder, final Long postTime, final int position) {
+                        final String key = getRef(position).getKey();
+                        dbRef.child("post").orderByKey().equalTo(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.getChildrenCount() != 0) {
+                                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                        Log.i(TAG, "MainActivity: loadMain: item: " + postSnapshot.getKey());
+                                        Post post = postSnapshot.getValue(Post.class);
+                                        viewHolder.userName.setText(post.userName);
+                                        Glide.with(MainActivity.this)
+                                                .load(post.userImg)
+                                                .crossFade()
+                                                .into(viewHolder.imgUser);
+                                        viewHolder.bookName.setText(post.bookName);
+                                    }
+                                } else { //  可能被刪掉了
+                                    dbRef.child("users").child(getUid()).child("liked").child(key).removeValue();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e(TAG, "MainActivity: loadMainList(): DB: onCancelled: " + databaseError.getMessage());
+
+                            }
+                        });
+                        viewHolder.btnRemove.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
+                                // Use bounce interpolator with amplitude 0.2 and frequency 20
+                                BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+                                myAnim.setInterpolator(interpolator);
+                                viewHolder.btnRemove.startAnimation(myAnim);
+                                dbRef.child("users").child(getUid()).child("liked").child(key).removeValue();
+                                dbRef.child("users").child(getUid()).child("main").child(key).setValue(postTime);
+
+
+                            }
+                        });
+                    }
+                };
+        recyclerView.setAdapter(adapter);
+    }
 
     public static class MainItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -445,6 +511,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             bookName = (TextView) view.findViewById(R.id.bookName_shelf);
             showLikedLayout = (RelativeLayout) view.findViewById(R.id.showLikedLayout_shelf);
             likeCount = (TextView) view.findViewById(R.id.likeCount_shelf);
+        }
+    }
+
+    public static class LikedItemViewHolder extends RecyclerView.ViewHolder {
+
+        public final static int layoutResId = R.layout.item_like;
+
+        CircleImageView imgUser;
+        TextView userName;
+        TextView bookName;
+        Button btnRemove;
+
+        public LikedItemViewHolder(View view) {
+
+            super(view);
+            imgUser = (CircleImageView) view.findViewById(R.id.imgUser_item_like);
+            userName = (TextView) view.findViewById(R.id.userName_item_like);
+            bookName = (TextView) view.findViewById(R.id.bookName_item_like);
+            btnRemove = (Button) view.findViewById(R.id.btnRemove_item_like);
         }
     }
 

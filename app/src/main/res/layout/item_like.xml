@@ -9,7 +9,7 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgUser_like"
+        android:id="@+id/imgUser_item_like"
         android:layout_height="40dp"
         android:layout_width="40dp"
         android:layout_marginLeft="16dp"
@@ -19,19 +19,19 @@
 
 
     <TextView
-        android:id="@+id/userName_like"
+        android:id="@+id/userName_item_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Username"
         android:textSize="14sp"
-        android:layout_alignTop="@id/imgUser_like"
-        android:layout_toEndOf="@id/imgUser_like"
+        android:layout_alignTop="@id/imgUser_item_like"
+        android:layout_toEndOf="@id/imgUser_item_like"
         android:gravity="center_vertical"
  />
 
 
     <Button
-        android:id="@+id/btnRemove_like"
+        android:id="@+id/btnRemove_item_like"
         android:layout_height="40dp"
         android:layout_width="40dp"
         android:layout_centerVertical="true"
@@ -43,14 +43,14 @@
         />
 
     <TextView
-        android:id="@+id/bookName_like"
+        android:id="@+id/bookName_item_like"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         tools:text="Bookname"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_alignBottom="@id/imgUser_like"
-        android:layout_toEndOf="@id/imgUser_like"
-        android:layout_toStartOf="@+id/btnRemove_like" />
+        android:layout_alignBottom="@id/imgUser_item_like"
+        android:layout_toEndOf="@id/imgUser_item_like"
+        android:layout_toStartOf="@+id/btnRemove_item_like" />
 </android.support.percent.PercentRelativeLayout>
 
