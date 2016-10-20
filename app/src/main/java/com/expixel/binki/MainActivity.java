@@ -61,10 +61,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setTitle("BINKI");
+        setTitle("Main");
         setSupportActionBar(toolbar);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Main"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.favorite));
         tabLayout.addTab(tabLayout.newTab().setText("My Shelf"));
         tabLayout.addTab(tabLayout.newTab().setText("Liked"));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -73,12 +73,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 if (tab.getPosition() == 0) {
                     loadMainList();
+                    setTitle("Main");
                 }
                 if (tab.getPosition() == 1) {
                     loadShelfList();
+                    setTitle("My Bookshelf");
                 }
                 if (tab.getPosition() == 2) {
                     loadLikedList();
+                    setTitle("My Favorites");
+
                 }
             }
 
