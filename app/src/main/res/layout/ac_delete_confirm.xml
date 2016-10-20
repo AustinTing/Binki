@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="24dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="16dp"
+        android:text="Remove this book from your favorite?"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#494949"/>
+    <TextView
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="NOTICE: Removed books will be sent back to the Main page."/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical|right"
+        android:layout_marginBottom="8dp">
+
+        <Button
+            android:layout_width="64dp"
+            android:layout_height="36dp"
+            android:text="NO"
+            android:background="#00000000"
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/button2" />
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="36dp"
+            android:text="YES"
+            android:background="#00000000"
+            android:textColor="@color/colorPrimaryDark"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
