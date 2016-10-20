@@ -463,8 +463,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 viewHolder.btnRemove.startAnimation(myAnim);
                                 dbRef.child("users").child(getUid()).child("liked").child(key).removeValue();
                                 dbRef.child("users").child(getUid()).child("main").child(key).setValue(postTime);
-
-
                             }
                         });
                     }
