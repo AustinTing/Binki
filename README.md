@@ -17,6 +17,10 @@
 - 2016.10.17
     - 17:00 Add animation in add, like and hide button
     - 12:15 Finish load main list
+- 2016.10.18-19
+    - Redesign database
+- 2016.10.20
+    - 11:50 Finish Liked
 
 ##To-do
     
