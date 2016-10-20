@@ -1,7 +1,9 @@
 package com.expixel.binki;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -64,12 +66,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setTitle("Main");
         setSupportActionBar(toolbar);
 
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.favorite));
-        tabLayout.addTab(tabLayout.newTab().setText("My Shelf"));
-        tabLayout.addTab(tabLayout.newTab().setText("Liked"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.shelf_dark));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.favorite_dark));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
+                tab.getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
                 if (tab.getPosition() == 0) {
                     loadMainList();
@@ -82,12 +86,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 if (tab.getPosition() == 2) {
                     loadLikedList();
                     setTitle("My Favorites");
-
                 }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+                tab.getIcon().setColorFilter(getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
 
             }
 
