@@ -52,6 +52,7 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.ac_login);
         ButterKnife.bind(this);
 
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -62,7 +63,7 @@ public class LoginActivity extends BaseActivity {
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
                         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
                         // be available.
-                        Log.d(TAG, "onConnectionFailed:" + connectionResult);
+                        Log.e(TAG, "onConnectionFailed:" + connectionResult);
                         Toast.makeText(LoginActivity.this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -70,18 +71,34 @@ public class LoginActivity extends BaseActivity {
                 .build();
 //        Set AuthListener
         authListener = new FirebaseAuth.AuthStateListener() {
+
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    nextActivity();
                     Log.d(TAG, "LoginActivity: onAuthStateChanged: signed_IN: " + user.getUid());
                 } else {
-                    Log.w(TAG, "LoginActivity: onCreate: onAuthStateChanged: signed_OUT ");
+                    Log.w(TAG, "LoginActivity: onAuthStateChanged: signed_OUT ");
                 }
             }
         };
 
+        if (auth.getCurrentUser() != null) {
+            Log.v(TAG, "LoginActivity: onAuthStateChanged: signed_IN: " + getUid());
+            nextActivity();
+        } else {
+            Log.w(TAG, "LoginActivity: onAuthStateChanged: signed_OUT ");
+        }
+
+
+    }
+
+    protected void nextActivity() {
+        Log.i(TAG, "LoginActivity: nextActivity: ");
+        Intent intent = new Intent();
+        intent.setClass(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.btn_login_google_sign_in)
@@ -91,17 +108,9 @@ public class LoginActivity extends BaseActivity {
             Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
             LoginActivity.this.startActivityForResult(signInIntent, RC_SIGN_IN);
         } else {
-            Log.d(TAG, "LoginActivity: onClick: mGoogleApiClient is null ? " + googleApiClient.toString());
-            Log.d(TAG, "LoginActivity: onClickSignin: mGoogleApiClient connect ? " + googleApiClient.isConnected());
+            Log.w(TAG, "LoginActivity: onClickSignIn: googleApiClient is null ? " + googleApiClient.toString());
+            Log.w(TAG, "LoginActivity: onClickSignIn: mGoogleApiClient connect ? " + googleApiClient.isConnected());
         }
-    }
-
-
-    protected void nextActivity() {
-        Intent intent = new Intent();
-        intent.setClass(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 
 
@@ -117,6 +126,7 @@ public class LoginActivity extends BaseActivity {
                 firebaseAuthWithGoogle(account);
             } else {
                 // Google Sign In failed, update UI appropriately
+                Log.e(TAG, "LoginActivity: onActivityResult: FAIL: ");
                 Toast.makeText(this, "Oops...Try again plz", Toast.LENGTH_SHORT).show();
             }
         }
@@ -124,7 +134,7 @@ public class LoginActivity extends BaseActivity {
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
 
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        Log.v(TAG, "LoginActivity: firebaseAuthWithGoogle: start: " + acct.getId());
 
         showProgressDialog("Loading...");
 
@@ -133,41 +143,74 @@ public class LoginActivity extends BaseActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "Firebase: signInWithCredential: onComplete: " + task.isSuccessful());
+                        Log.i(TAG, "LoginActivity:: signInWithCredential: onComplete: isSuccess? " + task.isSuccessful());
                         if (task.isSuccessful()) {
                             String name = getUserName();
                             String imgUrl = getUserImgeUrl();
-                            User user = new User(name, imgUrl);
-                            dbRef.child("users").child(getUid()).setValue(user);
 
-                            //  初始化客製化書單
-                            dbRef.child("post").addListenerForSingleValueEvent(new ValueEventListener() {
+                            Map<String, Object> updateProfile = new HashMap<String, Object>();
+                            updateProfile.put("name", name);
+                            updateProfile.put("imgUrl", imgUrl);
+
+                            dbRef.child("users").child(getUid()).updateChildren(updateProfile);
+
+                            dbRef.child("users").child(getUid()).child("lastLoadTime").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    Log.d(TAG, "MainActivity: Download and Upload: data have " + dataSnapshot.getChildrenCount() + "children");
-                                    Long lastLoadTime = Long.valueOf(0);
-                                    Map<String, Long> mainValues = new HashMap<>();
-                                    for (DataSnapshot postData : dataSnapshot.getChildren()){
-                                        // (key, postTime)
-                                        mainValues.put(postData.getKey(), postData.child("postTime").getValue(Long.class));
-                                        //  記錄最後一筆
-                                        lastLoadTime = postData.child("postTime").getValue(Long.class);
+                                    Log.d(TAG, "LoginActivity: lastLoadTime == " + dataSnapshot.getValue());
+                                    if (dataSnapshot.getValue() == null) {//    第一次登入
+                                        Log.i(TAG, "LoginActivity: start: 初始化客製化書單");
+                                        dbRef.child("post").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                Log.i(TAG, "LoginActivity: Download and Upload: data have "+dataSnapshot.getChildrenCount());
+                                                Long lastLoadTime = Long.valueOf(0);
+                                                Map<String, Long> mainValues = new HashMap<>();
+                                                for (DataSnapshot postData : dataSnapshot.getChildren()) {
+                                                    // (key, postTime)
+                                                    mainValues.put(postData.getKey(), postData.child("postTime").getValue(Long.class));
+                                                    //  記錄最後一筆
+                                                    lastLoadTime = postData.child("postTime").getValue(Long.class);
+                                                }
+                                                dbRef.child("users").child(getUid()).child("main").setValue(mainValues);
+                                                dbRef.child("users").child(getUid()).child("lastLoadTime").setValue(lastLoadTime).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        Log.i(TAG, "LoginActivity: set lastLoadTime: onComplete: ");
+                                                        LoginActivity.this.nextActivity();
+                                                        hideProgressDialog();
+                                                    }
+                                                });
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+                                                Toast.makeText(LoginActivity.this, "Ops.. there's something wrong.\nPlease try again", Toast.LENGTH_SHORT).show();
+                                                Log.e(TAG, "LoginActivity: Save main post: onCancelled: " + databaseError.getMessage());
+                                            }
+                                        });
+
+                                    }else {//   登入過就跳過吧
+                                        LoginActivity.this.nextActivity();
+                                        hideProgressDialog();
                                     }
-                                    dbRef.child("users").child(getUid()).child("main").setValue(mainValues);
-                                    dbRef.child("users").child(getUid()).child("lastLoadTime").setValue(lastLoadTime);
+
+
                                 }
 
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
-                                    Log.e(TAG, "LoginActivity: Save main post: " + databaseError.getMessage());
+                                    Log.e(TAG, "LoginActivity:loadLastTime: onCancelled: "+databaseError.getMessage());
                                 }
                             });
 
 
-                            LoginActivity.this.nextActivity();
-                            LoginActivity.this.finish();
+
+
                         } else {
-                            Log.w(TAG, "signInWithCredential", task.getException());
+                            Log.e(TAG, "signInWithCredential FAIL: ", task.getException());
+                            Toast.makeText(LoginActivity.this, "Ops.. there's something wrong.\nPlease try again ", Toast.LENGTH_SHORT).show();
                         }
                         hideProgressDialog();
                     }
@@ -188,7 +231,5 @@ public class LoginActivity extends BaseActivity {
             auth.removeAuthStateListener(authListener);
         }
     }
-
-
 }
 

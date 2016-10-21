@@ -68,6 +68,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setTitle("Main");
         setSupportActionBar(toolbar);
 
+
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.shelf_dark));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.favorite_dark));
@@ -78,14 +79,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 tab.getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
                 if (tab.getPosition() == 0) {
+                    Log.i(TAG, "MainActivity: tab Main :");
                     loadMainList();
                     setTitle("Main");
                 }
                 if (tab.getPosition() == 1) {
+                    Log.i(TAG, "MainActivity: tab Shelf :");
                     loadShelfList();
                     setTitle("My Bookshelf");
                 }
                 if (tab.getPosition() == 2) {
+                    Log.i(TAG, "MainActivity: tab Liked :");
+
                     loadLikedList();
                     setTitle("My Favorites");
                 }
@@ -136,6 +141,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         myAnim.setInterpolator(interpolator);
         fab.startAnimation(myAnim);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        switch (tabLayout.getSelectedTabPosition()) {
+            case 0:
+                loadMainList();
+                break;
+            case 1:
+                loadShelfList();
+                break;
+            case 2:
+                loadLikedList();
+                break;
+            default:
+                Log.e(TAG, "MainActivity: onStart: wrong Selected Tab");
+        }
     }
 
     private void setAlpha(float alpha, View... views) {
@@ -220,16 +243,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(this, "setting", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.logout_menu:
-                auth.signOut();
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                logout();
                 return true;
 
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void logout() {
+        Log.d(TAG, "MainActivity: logout: ");
+        auth.signOut();
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.fab)
@@ -256,16 +284,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startActivity(intent);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        loadMainList();
-
-    }
 
 
     private void loadMainList() {
+        Log.i(TAG, "MainActivity: loadMainList: ");
         FirebaseRecyclerAdapter<Long, MainItemViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Long, MainItemViewHolder>(
                         Long.class,
@@ -285,7 +307,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.getChildrenCount() != 0) {
                                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                        Log.i(TAG, "MainActivity: loadMain: item: " + postSnapshot.getKey());
                                         Post post = postSnapshot.getValue(Post.class);
                                         viewHolder.userName.setText(post.userName);
                                         Glide.with(MainActivity.this)
@@ -352,7 +373,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             //  把post裡面，自己的書踢掉
                             if (!getUserName().equals(postSnapshot.child("userName").getValue())) {
-                                Log.i(TAG, "MainActivity: loadMainList: refresh main: " + postSnapshot.getKey());
                                 childUpdates.put(postSnapshot.getKey(), postSnapshot.child("postTime").getValue(Long.class));
                                 lastLoadTime = postSnapshot.child("postTime").getValue(Long.class);
                             }
@@ -381,6 +401,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     private void loadShelfList() {
+        Log.i(TAG, "MainActivity: loadShelfList: ");
         FirebaseRecyclerAdapter<Long, ShelfItemViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Long, ShelfItemViewHolder>(
                         Long.class,
@@ -393,8 +414,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         dbRef.child("post").orderByKey().equalTo(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
+                                //TODO:有沒有可能撈不到自己的書
                                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                    Log.i(TAG, "MainActivity: loadShelf: item: " + postSnapshot.getKey());
                                     Post post = postSnapshot.getValue(Post.class);
                                     viewHolder.bookName.setText(post.bookName);
                                     viewHolder.likeCount.setText(String.valueOf(post.starCount));
@@ -428,6 +449,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     private void loadLikedList() {
+        Log.i(TAG, "MainActivity: loadLikedList: ");
         FirebaseRecyclerAdapter<Long, LikedItemViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Long, LikedItemViewHolder>(
                         Long.class,
@@ -443,7 +465,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.getChildrenCount() != 0) {
                                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                        Log.i(TAG, "MainActivity: loadMain: item: " + postSnapshot.getKey());
                                         Post post = postSnapshot.getValue(Post.class);
                                         viewHolder.userName.setText(post.userName);
                                         Glide.with(MainActivity.this)

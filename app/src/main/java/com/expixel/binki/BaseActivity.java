@@ -54,8 +54,11 @@ public class BaseActivity extends AppCompatActivity {
         Log.d(TAG, this.getClass().getSimpleName() + ": onCreate");
 
         auth = FirebaseAuth.getInstance();
+        if (auth == null) Log.w(TAG, this.getClass().getSimpleName() + ": onCreate: auth == null");
         dbRef = FirebaseDatabase.getInstance().getReference();
+        if(dbRef == null) Log.w(TAG, this.getClass().getSimpleName() + ": onCreate: dbRef == null");
         analytics = FirebaseAnalytics.getInstance(this);
+        if(analytics == null) Log.w(TAG, this.getClass().getSimpleName() + ": onCreate: analytics == null");
 
     }
 
