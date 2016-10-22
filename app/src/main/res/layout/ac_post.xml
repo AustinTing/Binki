@@ -45,6 +45,7 @@
         android:paddingLeft="8dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
+        android:maxLines="1"
         />
 
     <EditText

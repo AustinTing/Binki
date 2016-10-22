@@ -43,6 +43,7 @@
         tools:text="Bookname"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:maxLines="1"
         android:layout_alignBottom="@id/imgUser_item_like"
         android:layout_toEndOf="@id/imgUser_item_like"
         android:layout_toStartOf="@+id/btnRemove_item_like" />

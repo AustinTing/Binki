@@ -409,6 +409,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         ShelfItemViewHolder.class,
                         dbRef.child("users").child(getUid()).child("shelf")
                 ) {
+                    //TODO:第二階段同步失敗
                     @Override
                     protected void populateViewHolder(final ShelfItemViewHolder viewHolder, Long postTime, int position) {
                         dbRef.child("post").orderByKey().equalTo(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
