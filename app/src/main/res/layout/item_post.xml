@@ -64,7 +64,7 @@
         android:id="@+id/bookName_main"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:hint="bookname"
+        tools:text="bookname"
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_marginRight="16dp"

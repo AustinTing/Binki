@@ -183,7 +183,6 @@ public class LoginActivity extends BaseActivity {
                                                 });
 
                                             }
-
                                             @Override
                                             public void onCancelled(DatabaseError databaseError) {
                                                 Toast.makeText(LoginActivity.this, "Ops.. there's something wrong.\nPlease try again", Toast.LENGTH_SHORT).show();

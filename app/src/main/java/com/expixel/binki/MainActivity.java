@@ -295,19 +295,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         MainItemViewHolder.class,
                         dbRef.child("users").child(getUid()).child("main")
                 ) {
+                    Post thisPost;
                     @Override
-                    protected void populateViewHolder(final MainItemViewHolder viewHolder, final Long postTime, int position) {
+                    protected void populateViewHolder(final MainItemViewHolder viewHolder, final Long postTime, final int position) {
 //                        TODO: 刪除的方法重複寫了三次,一樣的動畫也寫了多次
                         //  取得這個item的key
                         //  getRef(position).getKey()
                         final String key = getRef(position).getKey();
                         //  撈這個post的資料
+
                         dbRef.child("post").orderByKey().equalTo(key).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.getChildrenCount() != 0) {
                                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                                         Post post = postSnapshot.getValue(Post.class);
+                                        thisPost = post;
                                         viewHolder.userName.setText(post.userName);
                                         Glide.with(MainActivity.this)
                                                 .load(post.userImg)
@@ -336,8 +339,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
                                 myAnim.setInterpolator(interpolator);
                                 viewHolder.btnLike.startAnimation(myAnim);
-                                dbRef.child("users").child(getUid()).child("main").child(key).removeValue();
-                                dbRef.child("users").child(getUid()).child("liked").child(key).setValue(postTime);
+
+                                if(thisPost != null){
+
+                                    Intent intent = new Intent();
+                                    intent.setClass(MainActivity.this, LikedMessageActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("userImg", thisPost.userImg);
+                                    bundle.putString("userName", thisPost.userName);
+                                    bundle.putString("bookName", thisPost.bookName);
+                                    bundle.putString("key", key);
+                                    bundle.putLong("postTime", postTime);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }else {
+                                    Toast.makeText(MainActivity.this, "Please try again later", Toast.LENGTH_SHORT).show();
+                                }
+
+//
                             }
 
                         });
