@@ -2,6 +2,8 @@ package com.expixel.binki;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Menu;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +34,7 @@ public class LikedMessageActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_message_liked);
         ButterKnife.bind(this);
@@ -47,6 +50,8 @@ public class LikedMessageActivity extends BaseActivity {
 
 
     }
+
+
 
     @OnClick(R.id.btnOK_message_liked)
     public void onClick() {
