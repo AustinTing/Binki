@@ -34,7 +34,7 @@ public class LikedMessageActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme_NoActionBar);
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_message_liked);
         ButterKnife.bind(this);
