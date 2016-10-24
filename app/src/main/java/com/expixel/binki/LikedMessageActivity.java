@@ -2,7 +2,9 @@ package com.expixel.binki;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,6 +30,8 @@ public class LikedMessageActivity extends BaseActivity {
     TextView userName;
     @BindView(R.id.bookName_message_liked)
     TextView bookName;
+    @BindView(R.id.toolbar_message_liked)
+    Toolbar toolbar;
 
     String key;
     String postTime;
@@ -60,4 +64,20 @@ public class LikedMessageActivity extends BaseActivity {
 //        dbRef.child("users").child(getUid()).child("main").child(key).removeValue();
 //        dbRef.child("users").child(getUid()).child("liked").child(key).setValue(postTime);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_message_liked, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return super.onOptionsItemSelected(item);
+    }
+
 }

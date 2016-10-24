@@ -37,6 +37,7 @@
         <activity android:name=".LikedMessageActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
+
             />
     </application>
 
