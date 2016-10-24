@@ -21,7 +21,7 @@
         android:id="@+id/userName_item_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        tools:text="Username"
         android:textSize="14sp"
         android:layout_alignTop="@id/imgUser_item_like"
         android:layout_toEndOf="@id/imgUser_item_like"

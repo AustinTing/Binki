@@ -66,7 +66,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setTitle("Main");
         setSupportActionBar(toolbar);
 

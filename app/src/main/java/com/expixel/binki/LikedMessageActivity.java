@@ -3,6 +3,10 @@ package com.expixel.binki;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,12 +40,18 @@ public class LikedMessageActivity extends BaseActivity {
     EditText etMessage;
     String bookKey;
     Long postTime;
+    @BindView(R.id.toolbar_message_liked)
+    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_message_liked);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+
         Bundle bundle = getIntent().getExtras();
         bookKey = bundle.getString("key");
         postTime = bundle.getLong("postTime");
@@ -54,6 +64,8 @@ public class LikedMessageActivity extends BaseActivity {
 
 
     }
+
+
 
     @OnClick(R.id.btnOK_message_liked)
     public void onClick() {
@@ -95,4 +107,20 @@ public class LikedMessageActivity extends BaseActivity {
         }
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_message_liked, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return super.onOptionsItemSelected(item);
+    }
+
 }
