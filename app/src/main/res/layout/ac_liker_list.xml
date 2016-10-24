@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/title_liked_shelf"
+        android:id="@+id/title_liker_list"
         android:layout_height="48dp"
         android:layout_width="match_parent"
         android:text="PEOPLE WHO LIKE"
@@ -19,7 +19,7 @@
         android:padding="8dp"
         />
     <TextView
-        android:id="@+id/bookName_liked_shelf"
+        android:id="@+id/bookName_liker_list"
         tools:text="蘋果橘子經濟學"
         android:layout_height="32dp"
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
         android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:maxLines="1"
-        android:layout_below="@id/title_liked_shelf"
+        android:layout_below="@id/title_liker_list"
         android:padding="8dp"
         />
 

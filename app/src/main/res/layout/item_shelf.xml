@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="72dp">
@@ -9,40 +8,41 @@
         android:id="@+id/bookName_shelf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
-        tools:text="國家為什麼會失敗"
+        android:layout_marginStart="16dp"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="16dp"/>
+        tools:text="國家為什麼會失敗" />
 
     <RelativeLayout
         android:id="@+id/showLikedLayout_shelf"
-        android:layout_height="match_parent"
         android:layout_width="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp">
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:visibility="invisible">
 
         <ImageView
             android:id="@+id/imgLike_shelf"
-            android:layout_height="25dp"
             android:layout_width="25dp"
-            android:src="@drawable/like_clicked"
+            android:layout_height="25dp"
             android:layout_centerVertical="true"
-            />
+            android:src="@drawable/like_clicked" />
+
         <TextView
             android:id="@+id/likeCount_shelf"
             android:layout_width="56dp"
             android:layout_height="wrap_content"
-            tools:text="999+"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imgLike_shelf"
+            android:textAlignment="center"
+            android:textColor="#555555"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="#555555"
-            android:layout_toRightOf="@+id/imgLike_shelf"
-            android:layout_centerVertical="true"
-            android:textAlignment="center"/>
+            tools:text="999+" />
 
 
     </RelativeLayout>
