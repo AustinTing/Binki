@@ -67,6 +67,7 @@
         android:textSize="16sp"
         android:paddingLeft="16dp"/>
     <EditText
+        android:id="@+id/etMessage_message_liked"
         android:padding="16dp"
         android:textSize="16sp"
         android:layout_width="match_parent"

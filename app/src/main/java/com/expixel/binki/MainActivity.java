@@ -33,6 +33,8 @@ import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
@@ -245,8 +247,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.logout_menu:
                 logout();
                 return true;
-
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -353,7 +353,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                     intent.putExtras(bundle);
                                     startActivity(intent);
                                 }else {
-                                    Toast.makeText(MainActivity.this, "Please try again later", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
                                 }
 
 //
@@ -479,7 +479,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 ) {
                     @Override
                     protected void populateViewHolder(final LikedItemViewHolder viewHolder, final Long postTime, final int position) {
-                        final String key = getRef(position).getKey();
+                        final String bookKey = getRef(position).getKey();
                         dbRef.child("post").orderByKey().equalTo(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -494,7 +494,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                         viewHolder.bookName.setText(post.bookName);
                                     }
                                 } else { //  可能被刪掉了
-                                    dbRef.child("users").child(getUid()).child("liked").child(key).removeValue();
+                                    dbRef.child("users").child(getUid()).child("liked").child(bookKey).removeValue();
                                 }
                             }
 
@@ -519,8 +519,41 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int i) {
-                                        dbRef.child("users").child(getUid()).child("liked").child(key).removeValue();
-                                        dbRef.child("users").child(getUid()).child("main").child(key).setValue(postTime);
+
+                                        if (!FastClickSensor.isFastDoubleClick()) {
+                                            dbRef.child("post").child(bookKey).runTransaction(new Transaction.Handler() {
+                                                @Override
+                                                public Transaction.Result doTransaction(MutableData mutableData) {
+                                                    Post post = mutableData.getValue(Post.class);
+                                                    if (post == null) {
+                                                        return Transaction.success(mutableData);
+                                                    }
+                                                    if (post.likers.containsKey(getUid())) {
+                                                        post.starCount = post.starCount - 1;
+                                                        post.likers.remove(getUid());
+                                                        dbRef.child("users").child(getUid()).child("liked").child(bookKey).removeValue();
+                                                        dbRef.child("users").child(getUid()).child("main").child(bookKey).setValue(postTime);
+
+                                                    } else {
+                                                        Log.e(TAG, "MainActivity: loadLikedList: AlertDialog: remove: likers doesn't containsKey");
+                                                    }
+
+                                                    mutableData.setValue(post);
+                                                    return Transaction.success(mutableData);
+                                                }
+
+                                                @Override
+                                                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                                                    if (databaseError == null) {
+                                                        Log.i(TAG, "MainActivity: loadLikedList: doTransaction: onComplete: ");
+                                                        Toast.makeText(MainActivity.this, "Done", Toast.LENGTH_SHORT).show();
+                                                    }else {
+                                                        Log.e(TAG, "MainActivity: loadLikedList: AlertDialog: onComplete: error = "+databaseError);
+                                                    }
+                                                }
+                                            });
+                                        }
+
                                         dialog.dismiss();
                                     }
                                 });

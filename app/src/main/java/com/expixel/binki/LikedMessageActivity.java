@@ -2,11 +2,17 @@ package com.expixel.binki;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,9 +32,10 @@ public class LikedMessageActivity extends BaseActivity {
     TextView userName;
     @BindView(R.id.bookName_message_liked)
     TextView bookName;
-
-    String key;
-    String postTime;
+    @BindView(R.id.etMessage_message_liked)
+    EditText etMessage;
+    String bookKey;
+    Long postTime;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,8 +43,8 @@ public class LikedMessageActivity extends BaseActivity {
         setContentView(R.layout.ac_message_liked);
         ButterKnife.bind(this);
         Bundle bundle = getIntent().getExtras();
-        key = bundle.getString("key");
-        postTime = bundle.getString("postTime");
+        bookKey = bundle.getString("key");
+        postTime = bundle.getLong("postTime");
         Glide.with(this)
                 .load(bundle.getString("userImg"))
                 .crossFade()
@@ -50,9 +57,42 @@ public class LikedMessageActivity extends BaseActivity {
 
     @OnClick(R.id.btnOK_message_liked)
     public void onClick() {
-        Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+        if (!FastClickSensor.isFastDoubleClick()) {
+            dbRef.child("post").child(bookKey).runTransaction(new Transaction.Handler() {
+                @Override
+                public Transaction.Result doTransaction(MutableData mutableData) {
+                    Post post = mutableData.getValue(Post.class);
+                    if (post == null) {
+                        return Transaction.success(mutableData);
+                    }
 
-//        dbRef.child("users").child(getUid()).child("main").child(key).removeValue();
-//        dbRef.child("users").child(getUid()).child("liked").child(key).setValue(postTime);
+                    if (!post.likers.containsKey(getUid())) {
+                        post.starCount = post.starCount + 1;
+                        post.likers.put(getUid(), System.currentTimeMillis());
+                        dbRef.child("users").child(getUid()).child("main").child(bookKey).removeValue();
+                        dbRef.child("users").child(getUid()).child("liked").child(bookKey).setValue(postTime);
+                    } else {
+                        Log.e(TAG, "LikedMessageActivity: doTransaction: likers containsKey before like");
+                    }
+
+                    mutableData.setValue(post);
+                    return Transaction.success(mutableData);
+                }
+
+                @Override
+                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                    if (databaseError == null) {
+                        Log.i(TAG, "LikedMessageActivity: onComplete: ");
+                        Toast.makeText(LikedMessageActivity.this, "Done", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Log.e(TAG, "LikedMessageActivity: onComplete: error: "+ databaseError);
+                    }
+                }
+            });
+
+            this.finish();
+
+        }
+
     }
 }
