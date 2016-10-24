@@ -6,6 +6,7 @@ import android.util.Log;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,6 +52,7 @@ public class LikedMessageActivity extends BaseActivity {
         ButterKnife.bind(this);
         setTitle("Send Message");
         setSupportActionBar(toolbar);
+
         Bundle bundle = getIntent().getExtras();
         bookKey = bundle.getString("key");
         postTime = bundle.getLong("postTime");
@@ -62,50 +64,17 @@ public class LikedMessageActivity extends BaseActivity {
         bookName.setText(bundle.getString("bookName"));
 
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//            }
+//        });
+
+
     }
-
-
-
-//    @OnClick(R.id.btnOK_message_liked)
-//    public void onClick() {
-//        if (!FastClickSensor.isFastDoubleClick()) {
-//            dbRef.child("post").child(bookKey).runTransaction(new Transaction.Handler() {
-//                @Override
-//                public Transaction.Result doTransaction(MutableData mutableData) {
-//                    Post post = mutableData.getValue(Post.class);
-//                    if (post == null) {
-//                        return Transaction.success(mutableData);
-//                    }
-//
-//                    if (!post.likers.containsKey(getUid())) {
-//                        post.starCount = post.starCount + 1;
-//                        post.likers.put(getUid(), System.currentTimeMillis());
-//                        dbRef.child("users").child(getUid()).child("main").child(bookKey).removeValue();
-//                        dbRef.child("users").child(getUid()).child("liked").child(bookKey).setValue(postTime);
-//                    } else {
-//                        Log.e(TAG, "LikedMessageActivity: doTransaction: likers containsKey before like");
-//                    }
-//
-//                    mutableData.setValue(post);
-//                    return Transaction.success(mutableData);
-//                }
-//
-//                @Override
-//                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-//                    if (databaseError == null) {
-//                        Log.i(TAG, "LikedMessageActivity: onComplete: ");
-//                        Toast.makeText(LikedMessageActivity.this, "Done", Toast.LENGTH_SHORT).show();
-//                    }else {
-//                        Log.e(TAG, "LikedMessageActivity: onComplete: error: "+ databaseError);
-//                    }
-//                }
-//            });
-//
-//            this.finish();
-//
-//        }
-//
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,6 +88,44 @@ public class LikedMessageActivity extends BaseActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        if (item.getItemId() == R.id.btnOK_message_liked) {
+            if (!FastClickSensor.isFastDoubleClick()) {
+                dbRef.child("post").child(bookKey).runTransaction(new Transaction.Handler() {
+                    @Override
+                    public Transaction.Result doTransaction(MutableData mutableData) {
+                        Post post = mutableData.getValue(Post.class);
+                        if (post == null) {
+                            return Transaction.success(mutableData);
+                        }
+
+                        if (!post.likers.containsKey(getUid())) {
+                            post.starCount = post.starCount + 1;
+                            post.likers.put(getUid(), System.currentTimeMillis());
+                            dbRef.child("users").child(getUid()).child("main").child(bookKey).removeValue();
+                            dbRef.child("users").child(getUid()).child("liked").child(bookKey).setValue(postTime);
+                        } else {
+                            Log.e(TAG, "LikedMessageActivity: doTransaction: likers containsKey before like");
+                        }
+
+                        mutableData.setValue(post);
+                        return Transaction.success(mutableData);
+                    }
+
+                    @Override
+                    public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                        if (databaseError == null) {
+                            Log.i(TAG, "LikedMessageActivity: onComplete: ");
+                            Toast.makeText(LikedMessageActivity.this, "Done", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.e(TAG, "LikedMessageActivity: onComplete: error: " + databaseError);
+                        }
+                    }
+                });
+
+                this.finish();
+
+            }
+        }
         return super.onOptionsItemSelected(item);
     }
 

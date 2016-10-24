@@ -21,7 +21,6 @@
             android:contentInsetStart="12dp"
             app:contentInsetLeft="12dp"
             app:contentInsetStart="12dp"
-            app:navigationIcon="@drawable/back"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:titleTextColor="#FFFFFF">
         </android.support.v7.widget.Toolbar>

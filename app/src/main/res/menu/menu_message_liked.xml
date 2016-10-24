@@ -6,7 +6,8 @@
         android:id="@+id/btnOK_message_liked"
         android:icon="@drawable/ok_button"
         app:showAsAction="ifRoom|withText"
-        android:title="OK">
+        android:title="OK"
+        >
     </item>
 
 

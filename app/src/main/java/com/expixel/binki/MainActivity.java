@@ -284,7 +284,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-
     private void loadMainList() {
         Log.i(TAG, "MainActivity: loadMainList: ");
         FirebaseRecyclerAdapter<Long, MainItemViewHolder> adapter =
@@ -295,6 +294,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         dbRef.child("users").child(getUid()).child("main")
                 ) {
                     Post thisPost;
+
                     @Override
                     protected void populateViewHolder(final MainItemViewHolder viewHolder, final Long postTime, final int position) {
 //                        TODO: 刪除的方法重複寫了三次,一樣的動畫也寫了多次
@@ -339,7 +339,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 myAnim.setInterpolator(interpolator);
                                 viewHolder.btnLike.startAnimation(myAnim);
 
-                                if(thisPost != null){
+                                if (thisPost != null) {
 
                                     Intent intent = new Intent();
                                     intent.setClass(MainActivity.this, LikedMessageActivity.class);
@@ -351,7 +351,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                     bundle.putLong("postTime", postTime);
                                     intent.putExtras(bundle);
                                     startActivity(intent);
-                                }else {
+                                } else {
                                     Toast.makeText(MainActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
                                 }
 
@@ -384,7 +384,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 lastLoadTime = dataSnapshot.getValue(Long.class);
-                dbRef.child("post").orderByChild("postTime").startAt(lastLoadTime+1).addListenerForSingleValueEvent(new ValueEventListener() {
+                dbRef.child("post").orderByChild("postTime").startAt(lastLoadTime + 1).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Map<String, Object> childUpdates = new HashMap<>();
@@ -429,17 +429,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 ) {
                     //TODO:第二階段同步失敗
                     @Override
-                    protected void populateViewHolder(final ShelfItemViewHolder viewHolder, Long postTime, int position) {
+                    protected void populateViewHolder(final ShelfItemViewHolder viewHolder, Long postTime, final int position) {
                         dbRef.child("post").orderByKey().equalTo(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                //TODO:有沒有可能撈不到自己的書
-                                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                    Post post = postSnapshot.getValue(Post.class);
-                                    viewHolder.bookName.setText(post.bookName);
-                                    viewHolder.likeCount.setText(String.valueOf(post.starCount));
-
+                                Log.d(TAG, "MainActivity: onDataChange: ");
+                                if (dataSnapshot != null) {
+                                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                        Post post = postSnapshot.getValue(Post.class);
+                                        viewHolder.bookName.setText(post.bookName);
+                                        if (post.starCount != 0) {
+                                            viewHolder.showLikedLayout.setVisibility(View.VISIBLE);
+                                            viewHolder.likeCount.setText(String.valueOf(post.starCount));
+                                        }else {
+                                            viewHolder.showLikedLayout.setVisibility(View.INVISIBLE);
+                                        }
+                                    }
+                                }else {
+                                    Log.e(TAG, "MainActivity: loadShelfList: load post by key = null");
                                 }
+
                             }
 
                             @Override
@@ -456,7 +465,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
                                 myAnim.setInterpolator(interpolator);
                                 viewHolder.showLikedLayout.startAnimation(myAnim);
-
+                                Log.d(TAG, "MainActivity: onClick: ");
 
 
                             }
@@ -546,8 +555,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                                     if (databaseError == null) {
                                                         Log.i(TAG, "MainActivity: loadLikedList: doTransaction: onComplete: ");
                                                         Toast.makeText(MainActivity.this, "Done", Toast.LENGTH_SHORT).show();
-                                                    }else {
-                                                        Log.e(TAG, "MainActivity: loadLikedList: AlertDialog: onComplete: error = "+databaseError);
+                                                    } else {
+                                                        Log.e(TAG, "MainActivity: loadLikedList: AlertDialog: onComplete: error = " + databaseError);
                                                     }
                                                 }
                                             });
@@ -603,7 +612,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         TextView likeCount;
 
         public ShelfItemViewHolder(View view) {
-
             super(view);
             bookName = (TextView) view.findViewById(R.id.bookName_shelf);
             showLikedLayout = (RelativeLayout) view.findViewById(R.id.showLikedLayout_shelf);
