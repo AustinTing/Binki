@@ -53,6 +53,13 @@
             tools:text="username" />
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimaryLight"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
+
     <TextView
         android:id="@+id/bookName_message_liked"
         android:layout_width="match_parent"
@@ -62,6 +69,13 @@
         android:textSize="16sp"
         tools:text="BookName" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimaryLight"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"/>
+
     <EditText
         android:id="@+id/etMessage_message_liked"
         android:layout_width="match_parent"
@@ -70,6 +84,6 @@
         android:hint="Say something to the owner...."
         android:padding="16dp"
         android:textSize="16sp"
-        android:background="#11111111"/>
+        android:background="#FFFFFF"/>
 
 </LinearLayout>
