@@ -14,7 +14,7 @@ public class Post {
     public String bookInfo;
     public Long postTime;
     public int starCount = 0;
-    public Map<String, Boolean> likers = new HashMap<>();
+    public Map<String, Long> likers = new HashMap<>();
 
     public Post() {
     }
