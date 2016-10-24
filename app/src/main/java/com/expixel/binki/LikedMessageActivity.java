@@ -28,8 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class LikedMessageActivity extends BaseActivity {
-    @BindView(R.id.btnOK_message_liked)
-    Button btnOK;
+
     @BindView(R.id.imgUser_message_liked)
     CircleImageView imgUser;
     @BindView(R.id.userName_message_liked)
@@ -50,8 +49,8 @@ public class LikedMessageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_message_liked);
         ButterKnife.bind(this);
+        setTitle("Send Message");
         setSupportActionBar(toolbar);
-
         Bundle bundle = getIntent().getExtras();
         bookKey = bundle.getString("key");
         postTime = bundle.getLong("postTime");
@@ -67,46 +66,46 @@ public class LikedMessageActivity extends BaseActivity {
 
 
 
-    @OnClick(R.id.btnOK_message_liked)
-    public void onClick() {
-        if (!FastClickSensor.isFastDoubleClick()) {
-            dbRef.child("post").child(bookKey).runTransaction(new Transaction.Handler() {
-                @Override
-                public Transaction.Result doTransaction(MutableData mutableData) {
-                    Post post = mutableData.getValue(Post.class);
-                    if (post == null) {
-                        return Transaction.success(mutableData);
-                    }
-
-                    if (!post.likers.containsKey(getUid())) {
-                        post.starCount = post.starCount + 1;
-                        post.likers.put(getUid(), System.currentTimeMillis());
-                        dbRef.child("users").child(getUid()).child("main").child(bookKey).removeValue();
-                        dbRef.child("users").child(getUid()).child("liked").child(bookKey).setValue(postTime);
-                    } else {
-                        Log.e(TAG, "LikedMessageActivity: doTransaction: likers containsKey before like");
-                    }
-
-                    mutableData.setValue(post);
-                    return Transaction.success(mutableData);
-                }
-
-                @Override
-                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                    if (databaseError == null) {
-                        Log.i(TAG, "LikedMessageActivity: onComplete: ");
-                        Toast.makeText(LikedMessageActivity.this, "Done", Toast.LENGTH_SHORT).show();
-                    }else {
-                        Log.e(TAG, "LikedMessageActivity: onComplete: error: "+ databaseError);
-                    }
-                }
-            });
-
-            this.finish();
-
-        }
-
-    }
+//    @OnClick(R.id.btnOK_message_liked)
+//    public void onClick() {
+//        if (!FastClickSensor.isFastDoubleClick()) {
+//            dbRef.child("post").child(bookKey).runTransaction(new Transaction.Handler() {
+//                @Override
+//                public Transaction.Result doTransaction(MutableData mutableData) {
+//                    Post post = mutableData.getValue(Post.class);
+//                    if (post == null) {
+//                        return Transaction.success(mutableData);
+//                    }
+//
+//                    if (!post.likers.containsKey(getUid())) {
+//                        post.starCount = post.starCount + 1;
+//                        post.likers.put(getUid(), System.currentTimeMillis());
+//                        dbRef.child("users").child(getUid()).child("main").child(bookKey).removeValue();
+//                        dbRef.child("users").child(getUid()).child("liked").child(bookKey).setValue(postTime);
+//                    } else {
+//                        Log.e(TAG, "LikedMessageActivity: doTransaction: likers containsKey before like");
+//                    }
+//
+//                    mutableData.setValue(post);
+//                    return Transaction.success(mutableData);
+//                }
+//
+//                @Override
+//                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+//                    if (databaseError == null) {
+//                        Log.i(TAG, "LikedMessageActivity: onComplete: ");
+//                        Toast.makeText(LikedMessageActivity.this, "Done", Toast.LENGTH_SHORT).show();
+//                    }else {
+//                        Log.e(TAG, "LikedMessageActivity: onComplete: error: "+ databaseError);
+//                    }
+//                }
+//            });
+//
+//            this.finish();
+//
+//        }
+//
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

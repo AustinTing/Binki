@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:icon="@drawable/searcher"
+        android:id="@+id/btnOK_message_liked"
+        android:icon="@drawable/ok_button"
         app:showAsAction="ifRoom|withText"
-        android:title="Search">
+        android:title="OK">
     </item>
 
 
