@@ -467,6 +467,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 viewHolder.showLikedLayout.startAnimation(myAnim);
                                 Log.d(TAG, "MainActivity: onClick: ");
 
+
                             }
                         });
                     }
