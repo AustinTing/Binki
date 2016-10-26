@@ -293,7 +293,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         MainItemViewHolder.class,
                         dbRef.child("users").child(getUid()).child("main")
                 ) {
-                    Post thisPost;
+
 
                     @Override
                     protected void populateViewHolder(final MainItemViewHolder viewHolder, final Long postTime, final int position) {
@@ -301,21 +301,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         //  取得這個item的key
                         //  getRef(position).getKey()
                         final String key = getRef(position).getKey();
-                        //  撈這個post的資料
 
+                        final Post[] finalArrPost = new Post[1];
+                        //  撈這個post的資料
+//                        final Post[] finalArrPost = arrPost;
                         dbRef.child("post").orderByKey().equalTo(key).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.getChildrenCount() != 0) {
                                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                                         Post post = postSnapshot.getValue(Post.class);
-                                        thisPost = post;
+//                                        finalPost = post;
+                                        finalArrPost[0] = post;
+//                                        setPost(finalArrPost, post);
                                         viewHolder.userName.setText(post.userName);
                                         Glide.with(MainActivity.this)
                                                 .load(post.userImg)
                                                 .crossFade()
                                                 .into(viewHolder.imgUser);
                                         viewHolder.bookName.setText(post.bookName);
+
                                     }
                                 } else { //  可能被刪掉了
                                     dbRef.child("users").child(getUid()).child("main").child(key).removeValue();
@@ -323,11 +328,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                             }
 
+
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
                                 Log.e(TAG, "MainActivity: loadMainList(): DB: onCancelled: " + databaseError.getMessage());
 
                             }
+
+//                            public void setPost(Post[] gettedPost, Post innnerPost ){
+//                                gettedPost[0] = innnerPost;
+//
+//                            }
                         });
 
                         viewHolder.btnLike.setOnClickListener(new View.OnClickListener() {
@@ -339,14 +350,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 myAnim.setInterpolator(interpolator);
                                 viewHolder.btnLike.startAnimation(myAnim);
 
-                                if (thisPost != null) {
+                                if (finalArrPost[0]!= null) {
 
                                     Intent intent = new Intent();
                                     intent.setClass(MainActivity.this, LikedMessageActivity.class);
                                     Bundle bundle = new Bundle();
-                                    bundle.putString("userImg", thisPost.userImg);
-                                    bundle.putString("userName", thisPost.userName);
-                                    bundle.putString("bookName", thisPost.bookName);
+                                    bundle.putString("userImg", finalArrPost[0].userImg);
+                                    bundle.putString("userName", finalArrPost[0].userName);
+                                    bundle.putString("bookName", finalArrPost[0].bookName);
                                     bundle.putString("key", key);
                                     bundle.putLong("postTime", postTime);
                                     intent.putExtras(bundle);
