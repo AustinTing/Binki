@@ -84,7 +84,8 @@ public class HidedListActivity extends BaseActivity {
                                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                                         Post post = postSnapshot.getValue(Post.class);
                                         viewHolder.userName.setText(post.userName);
-                                        Glide.with(HidedListActivity.this)
+                                        //  http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0823/3353.html
+                                        Glide.with(HidedListActivity.this.getApplicationContext())
                                                 .load(post.userImg)
                                                 .crossFade()
                                                 .into(viewHolder.imgUser);
