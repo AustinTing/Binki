@@ -63,8 +63,9 @@ public class LikedMessageActivity extends BaseActivity {
         userName.setText(bundle.getString("userName"));
         bookName.setText(bundle.getString("bookName"));
 
-        //  TODO: new MainActivity when it back
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 //        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
 //            @Override

@@ -238,6 +238,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(this, "message", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.hide_menu:
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, HidedListActivity.class);
+                startActivity(intent);
                 Toast.makeText(this, "hide", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.settings_menu:
