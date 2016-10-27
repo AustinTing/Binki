@@ -1,10 +1,8 @@
 package com.expixel.binki;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,14 +12,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
@@ -125,7 +120,7 @@ public class HiddenListActivity extends BaseActivity {
 
     public static class HidedItemViewHolder extends RecyclerView.ViewHolder {
 
-        public final static int layoutResId = R.layout.item_like;
+        public final static int layoutResId = R.layout.item_liked;
 
         CircleImageView imgUser;
         TextView userName;

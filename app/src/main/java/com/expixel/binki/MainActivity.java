@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -444,7 +443,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     //TODO:第二階段同步失敗
                     @Override
                     protected void populateViewHolder(final ShelfItemViewHolder viewHolder, Long postTime, final int position) {
-                        dbRef.child("post").orderByKey().equalTo(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
+                        final String bookKey = getRef(position).getKey();
+                        dbRef.child("post").orderByKey().equalTo(bookKey).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Log.d(TAG, "MainActivity: onDataChange: ");
@@ -480,7 +480,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 myAnim.setInterpolator(interpolator);
                                 viewHolder.showLikedLayout.startAnimation(myAnim);
                                 Log.d(TAG, "MainActivity: onClick: ");
-
+                                Intent intent = new Intent();
+                                intent.setClass(MainActivity.this, LikerListActivity.class);
+                                intent.putExtra("bookKey", bookKey);
+                                startActivity(intent);
 
                             }
                         });
@@ -635,7 +638,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     public static class LikedItemViewHolder extends RecyclerView.ViewHolder {
 
-        public final static int layoutResId = R.layout.item_like;
+        public final static int layoutResId = R.layout.item_liked;
 
         CircleImageView imgUser;
         TextView userName;
