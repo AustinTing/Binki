@@ -54,7 +54,7 @@ public class LikedMessageActivity extends BaseActivity {
         ButterKnife.bind(this);
         setTitle("Send Message");
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle bundle = getIntent().getExtras();
         bookKey = bundle.getString("key");
         postTime = bundle.getLong("postTime");
@@ -64,12 +64,9 @@ public class LikedMessageActivity extends BaseActivity {
                 .into(imgUser);
         userName.setText(bundle.getString("userName"));
         bookName.setText(bundle.getString("bookName"));
-
         //  TODO: new MainActivity when it back
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

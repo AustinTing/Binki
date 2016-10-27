@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             }
         });
-
+//        RecyclerView
         linearLayoutManager = new LinearLayoutManager(this);
         // 讓列表資料反轉 THIS ALSO SETS setStackFromBottom to true
         linearLayoutManager.setReverseLayout(true);
@@ -238,6 +238,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(this, "message", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.hide_menu:
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, HidedListActivity.class);
+                startActivity(intent);
                 Toast.makeText(this, "hide", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.settings_menu:
@@ -499,7 +502,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     @Override
                     protected void populateViewHolder(final LikedItemViewHolder viewHolder, final Long postTime, final int position) {
                         final String bookKey = getRef(position).getKey();
-                        dbRef.child("post").orderByKey().equalTo(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
+                        dbRef.child("post").orderByKey().equalTo(bookKey).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.getChildrenCount() != 0) {
