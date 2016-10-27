@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             }
         });
-
+//        RecyclerView
         linearLayoutManager = new LinearLayoutManager(this);
         // 讓列表資料反轉 THIS ALSO SETS setStackFromBottom to true
         linearLayoutManager.setReverseLayout(true);
@@ -502,7 +502,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     @Override
                     protected void populateViewHolder(final LikedItemViewHolder viewHolder, final Long postTime, final int position) {
                         final String bookKey = getRef(position).getKey();
-                        dbRef.child("post").orderByKey().equalTo(getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
+                        dbRef.child("post").orderByKey().equalTo(bookKey).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.getChildrenCount() != 0) {
