@@ -1,7 +1,9 @@
 package com.expixel.binki;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -64,14 +66,16 @@ public class LikedMessageActivity extends BaseActivity {
         bookName.setText(bundle.getString("bookName"));
 
         //  TODO: new MainActivity when it back
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                finish();
-//            }
-//        });
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
     }
