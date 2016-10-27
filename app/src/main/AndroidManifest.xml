@@ -36,7 +36,7 @@
             android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             />
-        <activity android:name=".HidedListActivity"
+        <activity android:name=".HiddenListActivity"
             android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             />

@@ -32,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by cellbody on 2016/10/27.
  */
 
-public class HidedListActivity extends BaseActivity {
+public class HiddenListActivity extends BaseActivity {
     @BindView(R.id.toolbar_hided)
     Toolbar toolbar;
     @BindView(R.id.appBar_hided)
@@ -85,7 +85,7 @@ public class HidedListActivity extends BaseActivity {
                                         Post post = postSnapshot.getValue(Post.class);
                                         viewHolder.userName.setText(post.userName);
                                         //  http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0823/3353.html
-                                        Glide.with(HidedListActivity.this.getApplicationContext())
+                                        Glide.with(HiddenListActivity.this.getApplicationContext())
                                                 .load(post.userImg)
                                                 .crossFade()
                                                 .into(viewHolder.imgUser);
@@ -105,7 +105,7 @@ public class HidedListActivity extends BaseActivity {
                         viewHolder.btnRemove.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                final Animation myAnim = AnimationUtils.loadAnimation(HidedListActivity.this, R.anim.bounce);
+                                final Animation myAnim = AnimationUtils.loadAnimation(HiddenListActivity.this, R.anim.bounce);
                                 // Use bounce interpolator with amplitude 0.2 and frequency 20
                                 BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
                                 myAnim.setInterpolator(interpolator);
