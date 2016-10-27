@@ -48,7 +48,7 @@ public class HidedListActivity extends BaseActivity {
         setContentView(R.layout.ac_hided_list);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Hided List");
+        getSupportActionBar().setTitle("Hidden Books");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
