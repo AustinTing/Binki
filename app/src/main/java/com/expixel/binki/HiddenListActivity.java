@@ -104,7 +104,7 @@ public class HiddenListActivity extends BaseActivity {
                                 // Use bounce interpolator with amplitude 0.2 and frequency 20
                                 BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
                                 myAnim.setInterpolator(interpolator);
-                                viewHolder.btnRemove.startAnimation(myAnim);
+                                view.startAnimation(myAnim);
 
                                 dbRef.child("users").child(getUid()).child("hided").child(bookKey).removeValue();
                                 dbRef.child("users").child(getUid()).child("main").child(bookKey).setValue(postTime);

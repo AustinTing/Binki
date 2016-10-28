@@ -30,7 +30,7 @@
         android:layout_marginRight="8dp"
         />
     <ImageView
-        android:id="@+id/imgLink_liked_shelf"
+        android:id="@+id/imgLink_item_liker"
         android:layout_height="16dp"
         android:layout_width="16dp"
         android:layout_centerVertical="true"
@@ -42,7 +42,7 @@
     <!--TODO:看過訊息後把圖換成android:src="@drawable/read"-->
 
     <ImageView
-        android:id="@+id/imgChat_liked_shelf"
+        android:id="@+id/imgChat_item_liker"
         android:layout_height="32dp"
         android:layout_width="32dp"
         android:src="@drawable/unread"
