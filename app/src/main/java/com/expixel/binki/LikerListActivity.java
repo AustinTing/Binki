@@ -75,7 +75,11 @@ public class LikerListActivity extends BaseActivity {
                 ) {
                     @Override
                     protected void populateViewHolder(final LikerItemViewHolder viewHolder, final String chatKey, int position) {
-                        String likerKey = getRef(position).getKey();
+                        final String likerKey = getRef(position).getKey();
+
+                        Log.d(TAG, "LikerListActivity: populateViewHolder: likerKey: "+likerKey);
+                        Log.d(TAG, "LikerListActivity: populateViewHolder: chatKey: "+chatKey);
+
                         dbRef.child("users").child(likerKey).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -113,8 +117,11 @@ public class LikerListActivity extends BaseActivity {
                                 BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
                                 myAnim.setInterpolator(interpolator);
                                 view.startAnimation(myAnim);
+
                                 Intent intent = new Intent();
                                 intent.setClass(LikerListActivity.this, LikerInfoActivity.class);
+                                intent.putExtra("likerKey", likerKey);
+                                intent.putExtra("chatKey", chatKey);
                                 startActivity(intent);
                             }
                         });

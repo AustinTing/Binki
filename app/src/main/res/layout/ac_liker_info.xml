@@ -12,13 +12,13 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_height="40dp"
         android:layout_width="40dp"
-        android:id="@+id/imgUser_liker"
+        android:id="@+id/imgUser_liker_info"
         tools:src="@color/authui_colorAccent"
         android:layout_marginLeft="16dp"
         />
 
     <TextView
-        android:id="@+id/userName_liker"
+        android:id="@+id/userName_liker_info"
         android:layout_height="40dp"
         android:layout_width="wrap_content"
         android:layout_marginLeft="72dp"
@@ -28,13 +28,13 @@
         tools:text="陳豐盟"/>
 
     <RelativeLayout
-        android:id="@+id/link_liker"
+        android:id="@+id/link_liker_info"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_below="@id/imgUser_liker"
+        android:layout_below="@id/imgUser_liker_info"
         android:layout_marginTop="8dp">
         <ImageView
-            android:id="@+id/imgLink_liker"
+            android:id="@+id/imgLink_liker_info"
             android:src="@drawable/link"
             android:layout_height="40dp"
             android:layout_width="40dp"
@@ -44,21 +44,21 @@
             android:layout_marginLeft="16dp"
             />
         <TextView
-            android:id="@+id/bookLinkTitle_liker"
-            android:layout_toEndOf="@id/imgLink_liker"
+            android:id="@+id/bookLinkTitle_liker_info"
+            android:layout_toEndOf="@id/imgLink_liker_info"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_alignTop="@id/imgLink_liker"
+            android:layout_alignTop="@id/imgLink_liker_info"
             android:textSize="14sp"
             tools:text="Owner of this book you liked:"
             />
         <TextView
-            android:id="@+id/bookLink_liker"
-            android:layout_below="@id/bookLinkTitle_liker"
-            android:layout_alignLeft="@id/bookLinkTitle_liker"
+            android:id="@+id/bookLink_liker_info"
+            android:layout_below="@id/bookLinkTitle_liker_info"
+            android:layout_alignLeft="@id/bookLinkTitle_liker_info"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_alignBottom="@id/imgLink_liker"
+            android:layout_alignBottom="@id/imgLink_liker_info"
             android:gravity="center_vertical"
             android:textSize="14sp"
             tools:text="西線無戰事"
@@ -68,8 +68,8 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/message_liker"
-        android:layout_below="@id/link_liker"
+        android:id="@+id/message_liker_info"
+        android:layout_below="@id/link_liker_info"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
