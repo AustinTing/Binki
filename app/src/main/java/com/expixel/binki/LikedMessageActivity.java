@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -89,8 +91,11 @@ public class LikedMessageActivity extends BaseActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         if (item.getItemId() == R.id.btnOK_message_liked) {
+
             if (!FastClickSensor.isFastDoubleClick()) {
+
                 dbRef.child("post").child(bookKey).runTransaction(new Transaction.Handler() {
                     @Override
                     public Transaction.Result doTransaction(MutableData mutableData) {
@@ -101,9 +106,20 @@ public class LikedMessageActivity extends BaseActivity {
 
                         if (!post.likers.containsKey(getUid())) {
                             post.starCount = post.starCount + 1;
-                            post.likers.put(getUid(), System.currentTimeMillis());
+
+                            String chatKey = dbRef.child("chat").push().getKey();
+                            String messageKey = dbRef.child("chat").child(chatKey).push().getKey();
+
+                            HashMap<String, Object> content = new HashMap<>();
+                            content.put("uid", getUid());
+                            content.put("time", System.currentTimeMillis());
+                            content.put("content", etMessage.getEditableText().toString());
+                            dbRef.child("chat").child(chatKey).child(messageKey).setValue(content);
+
+                            post.likers.put(getUid(), chatKey);
                             dbRef.child("users").child(getUid()).child("main").child(bookKey).removeValue();
-                            dbRef.child("users").child(getUid()).child("liked").child(bookKey).setValue(postTime);
+                            dbRef.child("users").child(getUid()).child("liked").child(bookKey).setValue(System.currentTimeMillis());
+
                         } else {
                             Log.e(TAG, "LikedMessageActivity: doTransaction: likers containsKey before like");
                         }
