@@ -44,7 +44,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity{
 
     @BindView(R.id.recyclerView_main)
     RecyclerView recyclerView;
@@ -56,8 +56,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    private ShowcaseView showcaseView;
-    private int counter = 0;
+
     Long lastLoadTime;
 
     @Override
@@ -67,8 +66,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         ButterKnife.bind(this);
         setTitle("Main");
         setSupportActionBar(toolbar);
-
-
+        //tabs
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.shelf_dark));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.favorite_dark));
@@ -105,7 +103,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
 //        RecyclerView
@@ -117,24 +114,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
 
-//        Tutorial
-        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-        lps.setMargins(margin, margin, margin, margin);
-        showcaseView = new ShowcaseView.Builder(this)
-                .setTarget(new ViewTarget(fab))
-                .setOnClickListener(this)
-//                .setStyle(R.style.CustomShowcaseTheme2)
-                .build();
-        showcaseView.setContentTitle("Add Button");
-        showcaseView.setContentText("Add a book to your shelf");
-//        showcaseView.forceTextPosition(ShowcaseView.AB);
-        showcaseView.setButtonPosition(lps);
-        showcaseView.setButtonText(getString(R.string.next));
-        setAlpha(0.1f, findViewById(R.id.recyclerView_main));
-        setAlpha(0.1f, findViewById(R.id.appBar_main));
 
         //  fab animation
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
@@ -170,55 +149,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (counter) {
-            case 0:
-                setAlpha(0.1f, fab);
-//                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.toolbar)), true);
-//                showcaseView.setShowcaseX(10);
-                setAlpha(1.0f, findViewById(R.id.appBar_main));
-                showcaseView.setContentTitle("My Shelf");
-                showcaseView.setContentText("Check your shelf here");
-                showcaseView.setShowcase(new Target() {
-                    @Override
-                    public Point getPoint() {
-                        // Get approximate position of home icon's center
-                        int actionBarHeight = toolbar.getHeight();
-                        int actionBarWidth = toolbar.getWidth();
-                        int x = actionBarWidth / 2;
-                        int y = actionBarHeight * 2;
-                        return new Point(x, y);
-                    }
-                }, true);
-                break;
-
-//            case 1:
-//                showcaseView.setShowcase(new ViewTarget(fab), true);
-//                break;
-
-//            case 2:
-//                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.liked)), true);
-//                break;
-//
-//            case 2:
-//                showcaseView.setTarget(Target.NONE);
-//                showcaseView.setContentTitle("Check it out");
-//                showcaseView.setContentText("You don't always need a target to showcase");
-//                showcaseView.setButtonText(getString(R.string.close));
-//                setAlpha(0.4f, textView1, textView2, textView3);
-//                break;
-//
-            case 1:
-                setAlpha(1.0f, findViewById(R.id.recyclerView_main));
-
-                setAlpha(1.0f, fab);
-                showcaseView.hide();
-//                setAlpha(1.0f, textView1, textView2, textView3);
-                break;
-        }
-        counter++;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -520,7 +450,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                         .setItems(list, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                Toast.makeText(MainActivity.this, "Delete", Toast.LENGTH_SHORT).show();
                                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                                 builder.setTitle("Are you sure ?");
                                                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -528,6 +457,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                                     public void onClick(DialogInterface dialog, int i) {
                                                         dbRef.child("post").child(bookKey).removeValue();
                                                         dbRef.child("users").child(getUid()).child("shelf").child(bookKey).removeValue();
+                                                        Toast.makeText(MainActivity.this, "Delete", Toast.LENGTH_SHORT).show();
                                                         dialog.dismiss();
                                                     }
                                                 });
