@@ -86,16 +86,16 @@ public class LikerListActivity extends BaseActivity {
             }
         });
 
-        FirebaseRecyclerAdapter<Long, LikerItemViewHolder> adapter =
-                new FirebaseRecyclerAdapter<Long, LikerItemViewHolder>(
-                        Long.class,
+        FirebaseRecyclerAdapter<String, LikerItemViewHolder> adapter =
+                new FirebaseRecyclerAdapter<String, LikerItemViewHolder>(
+                        String.class,
                         LikerItemViewHolder.layoutResId,
                         LikerItemViewHolder.class,
                         dbRef.child("post").child(bookKey).child("likers")
 
                 ) {
                     @Override
-                    protected void populateViewHolder(final LikerItemViewHolder viewHolder, final Long postTime, int position) {
+                    protected void populateViewHolder(final LikerItemViewHolder viewHolder, final String chatKey, int position) {
                         String likerKey = getRef(position).getKey();
                         dbRef.child("users").child(likerKey).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
