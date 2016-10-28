@@ -82,17 +82,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     Log.i(TAG, "MainActivity: tab Main :");
                     loadMainList();
                     setTitle("Main");
+                    fab.setVisibility(View.VISIBLE);
                 }
                 if (tab.getPosition() == 1) {
                     Log.i(TAG, "MainActivity: tab Shelf :");
                     loadShelfList();
                     setTitle("My Bookshelf");
+                    fab.setVisibility(View.VISIBLE);
                 }
                 if (tab.getPosition() == 2) {
                     Log.i(TAG, "MainActivity: tab Liked :");
-
                     loadLikedList();
                     setTitle("My Favorites");
+                    fab.setVisibility(View.GONE);
                 }
             }
 
