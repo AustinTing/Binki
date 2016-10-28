@@ -97,6 +97,7 @@ public class MainActivity extends BaseActivity{
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+                Log.d(TAG, "MainActivity: onTabUnselected: "+tab.getPosition());
                 tab.getIcon().setColorFilter(getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
 
             }
@@ -126,14 +127,25 @@ public class MainActivity extends BaseActivity{
     @Override
     protected void onStart() {
         super.onStart();
-        switch (tabLayout.getSelectedTabPosition()) {
+
+        int tabPosition = tabLayout.getSelectedTabPosition();
+
+        tabLayout.getTabAt(0).getIcon().setColorFilter(getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(1).getIcon().setColorFilter(getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(2).getIcon().setColorFilter(getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
+
+        switch (tabPosition) {
+
             case 0:
+                tabLayout.getTabAt(tabPosition).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
                 loadMainList();
                 break;
             case 1:
+                tabLayout.getTabAt(tabPosition).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
                 loadShelfList();
                 break;
             case 2:
+                tabLayout.getTabAt(tabPosition).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
                 loadLikedList();
                 break;
             default:
@@ -141,13 +153,6 @@ public class MainActivity extends BaseActivity{
         }
     }
 
-    private void setAlpha(float alpha, View... views) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            for (View view : views) {
-                view.setAlpha(alpha);
-            }
-        }
-    }
 
 
     @Override
