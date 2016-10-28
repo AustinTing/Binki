@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -28,8 +31,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class LikerListActivity extends BaseActivity {
-    @BindView(R.id.bookName_liker_list)
-    TextView bookName;
+    @BindView(R.id.toolbar_liker)
+    Toolbar toolbar;
+    @BindView(R.id.appBar_liker)
+    AppBarLayout appBar;
     @BindView(R.id.recyclerView_liker_list)
     RecyclerView recyclerView;
 
@@ -40,6 +45,15 @@ public class LikerListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_liker_list);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         linearLayoutManager = new LinearLayoutManager(this);
         // 讓列表資料反轉 THIS ALSO SETS setStackFromBottom to true
@@ -56,7 +70,14 @@ public class LikerListActivity extends BaseActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Post post = dataSnapshot.getValue(Post.class);
-                bookName.setText(post.bookName);
+                getSupportActionBar().setTitle(post.bookName);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
             }
 
             @Override
