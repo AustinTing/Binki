@@ -524,7 +524,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                         .setItems(list, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                Toast.makeText(MainActivity.this, "Delete", Toast.LENGTH_SHORT).show();
                                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                                 builder.setTitle("Are you sure ?");
                                                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -532,6 +531,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                                     public void onClick(DialogInterface dialog, int i) {
                                                         dbRef.child("post").child(bookKey).removeValue();
                                                         dbRef.child("users").child(getUid()).child("shelf").child(bookKey).removeValue();
+                                                        Toast.makeText(MainActivity.this, "Delete", Toast.LENGTH_SHORT).show();
                                                         dialog.dismiss();
                                                     }
                                                 });
