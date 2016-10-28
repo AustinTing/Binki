@@ -40,6 +40,14 @@
             android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             />
+        <activity android:name=".LikerListActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity"
+            />
+        <activity android:name=".LikerInfoActivity"
+            android:screenOrientation="portrait"
+            />
+
 
     </application>
 
