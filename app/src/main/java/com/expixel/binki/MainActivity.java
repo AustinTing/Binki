@@ -129,7 +129,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                .setStyle(R.style.CustomShowcaseTheme2)
                 .build();
         showcaseView.setContentTitle("Add Button");
-        showcaseView.setContentText("Add your book to exchange");
+        showcaseView.setContentText("Add a book to your shelf");
 //        showcaseView.forceTextPosition(ShowcaseView.AB);
         showcaseView.setButtonPosition(lps);
         showcaseView.setButtonText(getString(R.string.next));
@@ -178,8 +178,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                showcaseView.setShowcase(new ViewTarget(findViewById(R.id.toolbar)), true);
 //                showcaseView.setShowcaseX(10);
                 setAlpha(1.0f, findViewById(R.id.appBar_main));
-                showcaseView.setContentTitle("Book added in Here");
-                showcaseView.setContentText("");
+                showcaseView.setContentTitle("My Shelf");
+                showcaseView.setContentText("Check your shelf here");
                 showcaseView.setShowcase(new Target() {
                     @Override
                     public Point getPoint() {
@@ -515,10 +515,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                             @Override
                             public boolean onLongClick(View view) {
-                                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
-                                BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
-                                myAnim.setInterpolator(interpolator);
-                                view.startAnimation(myAnim);
                                 String[] list = new String[]{"Delete"};
                                 new AlertDialog.Builder(MainActivity.this)
                                         .setItems(list, new DialogInterface.OnClickListener() {
