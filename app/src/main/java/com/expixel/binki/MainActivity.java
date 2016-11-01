@@ -117,6 +117,10 @@ public class MainActivity extends BaseActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
 
+        recyclerView.setClickable(true);
+        recyclerView.setFocusable(true);
+        recyclerView.setFocusableInTouchMode(true);
+
         //  fab animation
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
         BounceInterpolator interpolator = new BounceInterpolator(0.5, 20); // Use bounce interpolator with amplitude 0.2 and frequency 20
@@ -242,6 +246,8 @@ public class MainActivity extends BaseActivity {
                         final Post[] finalArrPost = new Post[1];
                         //  撈這個post的資料
 //                        final Post[] finalArrPost = arrPost;
+                        viewHolder.bookName.setSelected(true);
+                        Log.d(TAG, "MainActivity: populateViewHolder: "+viewHolder.bookName.isSelected());
                         dbRef.child("post").orderByKey().equalTo(key).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -324,8 +330,6 @@ public class MainActivity extends BaseActivity {
 
                     }
                 };
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
 
         recyclerView.setAdapter(adapter);
 
@@ -580,6 +584,7 @@ public class MainActivity extends BaseActivity {
                 };
 
         recyclerView.setAdapter(adapter);
+
 
     }
 

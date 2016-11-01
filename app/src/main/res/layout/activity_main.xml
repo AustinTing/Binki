@@ -17,6 +17,11 @@
         android:paddingRight="0dp"
         android:paddingTop="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         />
     <!--<include layout="@layout/content_main" />-->
 
