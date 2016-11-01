@@ -117,8 +117,6 @@ public class MainActivity extends BaseActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
 
-//
-
         //  fab animation
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
         BounceInterpolator interpolator = new BounceInterpolator(0.5, 20); // Use bounce interpolator with amplitude 0.2 and frequency 20
@@ -178,7 +176,6 @@ public class MainActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, HiddenListActivity.class);
                 startActivity(intent);
-                Toast.makeText(this, "hide", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.settings_menu:
                 Toast.makeText(this, "setting", Toast.LENGTH_SHORT).show();
@@ -227,14 +224,6 @@ public class MainActivity extends BaseActivity {
     private void loadMainList() {
         Log.i(TAG, "MainActivity: loadMainList: ");
 
-        if (recyclerView != null) {
-            if (recyclerView.getAnimation() != null) {
-                recyclerView.getAnimation().cancel();
-                recyclerView.clearAnimation();
-            }
-        }
-
-
         FirebaseRecyclerAdapter<Long, MainItemViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Long, MainItemViewHolder>(
                         Long.class,
@@ -263,7 +252,7 @@ public class MainActivity extends BaseActivity {
                                         finalArrPost[0] = post;
 //                                        setPost(finalArrPost, post);
                                         viewHolder.userName.setText(post.userName);
-                                        Glide.with(MainActivity.this)
+                                        Glide.with(getApplicationContext())
                                                 .load(post.userImg)
                                                 .crossFade()
                                                 .into(viewHolder.imgUser);
@@ -335,6 +324,9 @@ public class MainActivity extends BaseActivity {
 
                     }
                 };
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+
         recyclerView.setAdapter(adapter);
 
         //  把之前紀錄最後一筆更新的時間之後的書單再撈進main
@@ -362,7 +354,6 @@ public class MainActivity extends BaseActivity {
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
                                 Log.e(TAG, "MainActivity: loadLastTime: refresh main: " + databaseError.getMessage());
-
                             }
                         });
                     }
@@ -373,7 +364,6 @@ public class MainActivity extends BaseActivity {
 
                     }
                 }
-
         );
 
     }
@@ -480,6 +470,7 @@ public class MainActivity extends BaseActivity {
 
                     }
                 };
+
         recyclerView.setAdapter(adapter);
     }
 
@@ -491,7 +482,7 @@ public class MainActivity extends BaseActivity {
                         Long.class,
                         LikedItemViewHolder.layoutResId,
                         LikedItemViewHolder.class,
-                        dbRef.child("users").child(getUid()).child("liked")
+                        dbRef.child("users").child(getUid()).child("liked").orderByValue()
                 ) {
                     @Override
                     protected void populateViewHolder(final LikedItemViewHolder viewHolder, final Long postTime, final int position) {
@@ -503,7 +494,7 @@ public class MainActivity extends BaseActivity {
                                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                                         Post post = postSnapshot.getValue(Post.class);
                                         viewHolder.userName.setText(post.userName);
-                                        Glide.with(MainActivity.this)
+                                        Glide.with(getApplicationContext())
                                                 .load(post.userImg)
                                                 .crossFade()
                                                 .into(viewHolder.imgUser);
@@ -587,7 +578,9 @@ public class MainActivity extends BaseActivity {
                         });
                     }
                 };
+
         recyclerView.setAdapter(adapter);
+
     }
 
     public static class MainItemViewHolder extends RecyclerView.ViewHolder {

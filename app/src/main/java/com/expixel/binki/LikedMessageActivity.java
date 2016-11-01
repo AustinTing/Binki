@@ -60,7 +60,7 @@ public class LikedMessageActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         bookKey = bundle.getString("key");
         postTime = bundle.getLong("postTime");
-        Glide.with(this)
+        Glide.with(getApplicationContext())
                 .load(bundle.getString("userImg"))
                 .crossFade()
                 .into(imgUser);
