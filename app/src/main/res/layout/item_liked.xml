@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentRelativeLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/SelectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:background="@drawable/shape_item_post">
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -46,6 +47,9 @@
         android:maxLines="1"
         android:layout_alignBottom="@id/imgUser_item_like"
         android:layout_toEndOf="@id/imgUser_item_like"
-        android:layout_toStartOf="@+id/btnRemove_item_like" />
-</android.support.percent.PercentRelativeLayout>
+        android:layout_toStartOf="@+id/btnRemove_item_like"
+        android:layout_marginRight="16dp"
+        android:ellipsize="marquee"
+        />
+</RelativeLayout>
 

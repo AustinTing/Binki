@@ -591,6 +591,8 @@ public class MainActivity extends BaseActivity {
             imgUser = (CircleImageView) view.findViewById(R.id.imgUser_main);
             userName = (TextView) view.findViewById(R.id.userName_main);
             bookName = (TextView) view.findViewById(R.id.bookName_main);
+            btnLike = (Button) view.findViewById(R.id.btnLike_main);
+            btnHide = (Button) view.findViewById(R.id.btnHide_main);
         }
     }
 
