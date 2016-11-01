@@ -34,4 +34,4 @@
 - UX
     - 圖片解析度
     - 書名過長的solution
-    - 表單load太慢    
+    - 表單load太慢    
