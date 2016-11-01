@@ -23,9 +23,6 @@
     - 11:50 Finish Liked
 - 2016.10.21
     - 17:00 Fix login problem
-
-
-
 ##To-do
 
 - Bugs    
