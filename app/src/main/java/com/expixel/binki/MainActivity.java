@@ -118,7 +118,7 @@ public class MainActivity extends BaseActivity{
 
         //  fab animation
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
-        BounceInterpolator interpolator = new BounceInterpolator(0.5, 20); // Use bounce interpolator with amplitude 0.2 and frequency 20
+        BounceInterpolator interpolator = new BounceInterpolator(0.2, 20); // Use bounce interpolator with amplitude 0.2 and frequency 20
         myAnim.setInterpolator(interpolator);
         fab.startAnimation(myAnim);
 
