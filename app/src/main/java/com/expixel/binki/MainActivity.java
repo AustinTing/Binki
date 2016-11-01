@@ -66,8 +66,7 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         setTitle("Main");
         setSupportActionBar(toolbar);
-
-
+        //tabs
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.shelf_dark));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.favorite_dark));
@@ -105,7 +104,6 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
 //        RecyclerView
@@ -117,13 +115,9 @@ public class MainActivity extends BaseActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
 
-        recyclerView.setClickable(true);
-        recyclerView.setFocusable(true);
-        recyclerView.setFocusableInTouchMode(true);
-
         //  fab animation
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
-        BounceInterpolator interpolator = new BounceInterpolator(0.5, 20); // Use bounce interpolator with amplitude 0.2 and frequency 20
+        BounceInterpolator interpolator = new BounceInterpolator(0.2, 20); // Use bounce interpolator with amplitude 0.2 and frequency 20
         myAnim.setInterpolator(interpolator);
         fab.startAnimation(myAnim);
 
@@ -433,10 +427,6 @@ public class MainActivity extends BaseActivity {
                         viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                             @Override
                             public boolean onLongClick(View view) {
-                                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
-                                BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
-                                myAnim.setInterpolator(interpolator);
-                                view.startAnimation(myAnim);
                                 String[] list = new String[]{"Delete"};
                                 new AlertDialog.Builder(MainActivity.this)
                                         .setItems(list, new DialogInterface.OnClickListener() {
