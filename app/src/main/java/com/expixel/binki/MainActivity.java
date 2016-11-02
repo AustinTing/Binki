@@ -64,7 +64,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setTitle("Main");
+        setTitle(getString(R.string.title_main));
         setSupportActionBar(toolbar);
         //tabs
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home));
@@ -78,19 +78,19 @@ public class MainActivity extends BaseActivity {
                 if (tab.getPosition() == 0) {
                     Log.i(TAG, "MainActivity: tab Main :");
                     loadMainList();
-                    setTitle("Main");
+                    setTitle(getString(R.string.title_main));
                     fab.setVisibility(View.VISIBLE);
                 }
                 if (tab.getPosition() == 1) {
                     Log.i(TAG, "MainActivity: tab Shelf :");
                     loadShelfList();
-                    setTitle("My Bookshelf");
+                    setTitle(getString(R.string.myBookshelf_main));
                     fab.setVisibility(View.VISIBLE);
                 }
                 if (tab.getPosition() == 2) {
                     Log.i(TAG, "MainActivity: tab Liked :");
                     loadLikedList();
-                    setTitle("My Favorites");
+                    setTitle(getString(R.string.myFavorite_main));
                     fab.setVisibility(View.GONE);
                 }
             }

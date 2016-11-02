@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="20dp">
-
+<!--TODO: 做成scrollview-->
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -27,12 +27,25 @@
         android:textColor="@color/bodyTextColor"
         tools:text="陳豐盟"/>
 
+    <TextView
+        android:id="@+id/contact_liker_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userName_liker_info"
+        android:text="This user didn't leave any contact ways..."
+        android:textSize="14sp"
+        android:padding="16dp"/>
+
+    <!--TODO: 互有喜歡的書才會顯示下面這個layout-->
+
+
+
     <RelativeLayout
         android:id="@+id/link_liker_info"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_below="@id/imgUser_liker_info"
-        android:layout_marginTop="8dp">
+        android:layout_below="@+id/contact_liker_info"
+        android:layout_alignParentStart="true">
         <ImageView
             android:id="@+id/imgLink_liker_info"
             android:src="@drawable/link"
@@ -50,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_alignTop="@id/imgLink_liker_info"
             android:textSize="14sp"
-            tools:text="Owner of this book you liked:"
+            android:text="@string/txtLinkTitle_liker_info"
             />
         <TextView
             android:id="@+id/bookLink_liker_info"
