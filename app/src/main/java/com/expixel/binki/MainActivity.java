@@ -114,6 +114,7 @@ public class MainActivity extends BaseActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
+
         //  fab animation
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
         BounceInterpolator interpolator = new BounceInterpolator(0.2, 20); // Use bounce interpolator with amplitude 0.2 and frequency 20
@@ -321,8 +322,6 @@ public class MainActivity extends BaseActivity {
 
                     }
                 };
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
 
         recyclerView.setAdapter(adapter);
 
@@ -573,6 +572,7 @@ public class MainActivity extends BaseActivity {
                 };
 
         recyclerView.setAdapter(adapter);
+
 
     }
 

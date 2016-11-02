@@ -1,82 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/SelectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="72dp"
+
     android:paddingLeft="16dp"
     android:background="?attr/selectableItemBackground"
     android:clickable="true">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_height="40dp"
-        android:layout_width="40dp"
         android:id="@+id/imgUser_main"
-        tools:src="@color/authui_colorAccent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_centerVertical="true"
-        />
-
-
+        tools:src="@color/authui_colorAccent" />
 
 
     <TextView
         android:id="@+id/userName_main"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        tools:text="username"
-        android:textSize="14sp"
-        android:layout_marginLeft="56dp"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@id/imgUser_main"
-        android:gravity="center_vertical" />
-
-
+        android:layout_marginLeft="56dp"
+        android:gravity="center_vertical"
+        android:textSize="14sp"
+        tools:text="username" />
 
 
     <Button
         android:id="@+id/btnLike_main"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_centerVertical="true"
-        android:background="@drawable/like_clicked"
-        android:textSize="20sp"
-        android:textColor="#EEEEEE"
-        android:textStyle="bold"
-        android:gravity="center"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
-        />
+        android:background="@drawable/like_clicked"
+        android:gravity="center"
+        android:textColor="#EEEEEE"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnHide_main"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:textAllCaps="false"
-        android:textColor="#555555"
-        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="72dp"
         android:background="@drawable/hide"
-         />
+
+
+        />
+
 
     <TextView
         android:id="@+id/bookName_main"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        tools:text="bookname"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imgUser_main"
+        android:layout_marginLeft="56dp"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@id/btnHide_main"
+        android:ellipsize="middle"
+
+        android:gravity="center_vertical"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:maxLines="1"
+
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="56dp"
-        android:gravity="center_vertical"
-        android:layout_toLeftOf="@id/btnHide_main"
-        android:layout_alignBottom="@+id/imgUser_main"
-        android:scrollHorizontally="true"
-        android:maxLines="1"
-        android:ellipsize="marquee"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:focusableInTouchMode="true"
-        android:focusable="true"/>
+        tools:text="bookname" />
 
 </RelativeLayout>
