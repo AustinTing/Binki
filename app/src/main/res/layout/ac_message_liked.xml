@@ -75,14 +75,25 @@
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"/>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <EditText
         android:id="@+id/etMessage_message_liked"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="start"
-        android:hint="Say something to the owner...."
+        android:hint="和書的主人說點話，並留下你的聯絡方式吧"
         android:padding="16dp"
         android:textSize="16sp"
         android:background="#FFFFFF"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="在文中加入Gmail"
+            />
+
+    </FrameLayout>
 </LinearLayout>

@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_alignTop="@id/imgLink_liker_info"
             android:textSize="14sp"
-            tools:text="Owner of this book you liked:"
+            android:text="這個人也有你喜歡的書喔！"
             />
         <TextView
             android:id="@+id/bookLink_liker_info"
