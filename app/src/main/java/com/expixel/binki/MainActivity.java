@@ -240,8 +240,6 @@ public class MainActivity extends BaseActivity {
                         final Post[] finalArrPost = new Post[1];
                         //  撈這個post的資料
 //                        final Post[] finalArrPost = arrPost;
-                        viewHolder.bookName.setSelected(true);
-                        Log.d(TAG, "MainActivity: populateViewHolder: "+viewHolder.bookName.isSelected());
                         dbRef.child("post").orderByKey().equalTo(key).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {

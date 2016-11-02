@@ -65,11 +65,11 @@
         android:layout_marginLeft="56dp"
         android:layout_marginRight="16dp"
         android:layout_toLeftOf="@id/btnHide_main"
-        android:ellipsize="marquee"
+        android:ellipsize="middle"
 
         android:gravity="center_vertical"
         android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"
+        android:maxLines="1"
 
         android:textSize="16sp"
         android:textStyle="bold"
