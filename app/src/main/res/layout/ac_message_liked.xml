@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
 
@@ -75,25 +76,53 @@
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"/>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="72dp">
+
+        <EditText
+            android:id="@+id/etContact_message_liked"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:hint="@string/etContactHint_message_liked"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:background="#FFFFFF"
+            android:textColorHint="@color/hintColor"/>
+
+        <ImageView
+            android:id="@+id/imgGmail_message_liked"
+            android:src="@drawable/google_gmail"
+            android:backgroundTint="#ed1c24"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            />
+<!--TODO: 按下去後新增Gmail帳號-->
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimaryLight"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"/>
 
     <EditText
         android:id="@+id/etMessage_message_liked"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="start"
-        android:hint="和書的主人說點話，並留下你的聯絡方式吧"
+        android:hint="@string/etHint_message_liked"
         android:padding="16dp"
         android:textSize="16sp"
+        android:textColorHint="@color/hintColor"
         android:background="#FFFFFF"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="在文中加入Gmail"
-            />
 
-    </FrameLayout>
+
 </LinearLayout>

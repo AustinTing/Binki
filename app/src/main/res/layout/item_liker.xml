@@ -29,6 +29,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="8dp"
         />
+    <!--TODO: 互有喜歡的書才會出現連結標誌-->
     <ImageView
         android:id="@+id/imgLink_item_liker"
         android:layout_height="16dp"

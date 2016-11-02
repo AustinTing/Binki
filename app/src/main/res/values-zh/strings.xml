@@ -2,4 +2,13 @@
 <resources>
     <string name="app_name">binki</string>
     <string name="action_settings">設定</string>
+    <string name="etHint_message_liked">想和書的主人說些什麼嗎？</string>
+    <string name="txtAddGmail_message_liked">加入Gmail</string>
+    <string name="etContactHint_message_liked">留下你的聯絡方式吧！</string>
+    <string name="txtLinkTitle_liker_info">這個人也有你喜歡的書喔！</string>
+    <string name="etHint_bookname_post">輸入書名</string>
+    <string name="etHint_bookInfo_post">關於這本書...</string>
+    <string name="myBookshelf_main">我的書櫃</string>
+    <string name="myFavorite_main">喜歡的書</string>
+    <string name="title_main">大圖書館</string>
 </resources>
