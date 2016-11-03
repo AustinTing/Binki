@@ -320,6 +320,15 @@ public class MainActivity extends BaseActivity {
                             }
                         });
 
+                        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                new AlertDialog.Builder(MainActivity.this)
+                                        .setMessage(finalArrPost[0].bookName+"\n\n"+finalArrPost[0].bookInfo)
+                                        .create().show();
+                            }
+                        });
+
                     }
                 };
 
@@ -454,8 +463,6 @@ public class MainActivity extends BaseActivity {
                                             }
                                         })
                                         .show();
-
-
                                 return false;
                             }
                         });
