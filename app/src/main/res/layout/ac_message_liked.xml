@@ -80,17 +80,6 @@
         android:layout_width="match_parent"
         android:layout_height="72dp">
 
-        <EditText
-            android:id="@+id/etContact_message_liked"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:hint="@string/etContactHint_message_liked"
-            android:padding="16dp"
-            android:textSize="16sp"
-            android:background="#FFFFFF"
-            android:textColorHint="@color/hintColor"/>
-
         <ImageView
             android:id="@+id/imgGmail_message_liked"
             android:src="@drawable/google_gmail"
@@ -101,6 +90,20 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
             />
+
+        <EditText
+            android:id="@+id/etContact_message_liked"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:hint="@string/etContactHint_message_liked"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:background="#FFFFFF"
+            android:textColorHint="@color/hintColor"
+            android:layout_toStartOf="@id/imgGmail_message_liked"/>
+
+
 <!--TODO: 按下去後新增Gmail帳號-->
 
     </RelativeLayout>
