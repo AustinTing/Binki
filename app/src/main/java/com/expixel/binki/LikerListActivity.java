@@ -112,12 +112,15 @@ public class LikerListActivity extends BaseActivity {
                         Log.d(TAG, "LikerListActivity: populateViewHolder: likerKey: " + likerKey);
                         Log.d(TAG, "LikerListActivity: populateViewHolder: chatKey: " + chatKey);
 
+                        final String[] userData = new String[2];
+
                         //  分開撈是因為不用撈user全部
                         dbRef.child("users").child(likerKey).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 String userName = dataSnapshot.getValue(String.class);
                                 viewHolder.userName.setText(userName);
+                                userData[0] = userName;
 
                             }
 
@@ -134,6 +137,7 @@ public class LikerListActivity extends BaseActivity {
                                 Glide.with(LikerListActivity.this.getApplicationContext())
                                         .load(imgUrl)
                                         .into(viewHolder.imgUser);
+                                userData[1] = imgUrl;
                             }
 
                             @Override
@@ -174,6 +178,8 @@ public class LikerListActivity extends BaseActivity {
 
                                 Intent intent = new Intent();
                                 intent.setClass(LikerListActivity.this, LikerInfoActivity.class);
+                                intent.putExtra("userName", userData[0]);
+                                intent.putExtra("userImgUrl", userData[1]);
                                 intent.putExtra("likerKey", likerKey);
                                 intent.putExtra("chatKey", chatKey);
                                 startActivity(intent);

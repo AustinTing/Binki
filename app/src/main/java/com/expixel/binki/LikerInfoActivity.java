@@ -40,38 +40,13 @@ public class LikerInfoActivity extends BaseActivity {
         Intent intent = this.getIntent();
         String likerKey = intent.getStringExtra("likerKey");
         final String chatKey = intent.getStringExtra("chatKey");
+        String userName = intent.getStringExtra("userName");
+        String imgUrl = intent.getStringExtra("userImgUrl");
+        this.userName.setText(userName);
+        Glide.with(LikerInfoActivity.this.getApplicationContext())
+                .load(imgUrl)
+                .into(imgUser);
 
-
-
-        dbRef.child("users").child(likerKey).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.getValue(String.class);
-                userName.setText(name);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "LikerInfoActivity: load username: onCancelled: " + databaseError);
-
-            }
-        });
-        dbRef.child("users").child(likerKey).child("imgUrl").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String imgUrl = dataSnapshot.getValue(String.class);
-                Glide.with(LikerInfoActivity.this.getApplicationContext())
-                        .load(imgUrl)
-                        .into(imgUser);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "LikerInfoActivity: load username: onCancelled: " + databaseError);
-
-            }
-        });
 
         dbRef.child("chat").child(chatKey).orderByChild("time").addValueEventListener(new ValueEventListener() {
             @Override

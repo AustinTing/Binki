@@ -52,6 +52,7 @@
             android:padding="8dp"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
+            android:visibility="gone"
             />
         <TextView
             android:id="@+id/bookLinkTitle_liker_info"
@@ -61,6 +62,7 @@
             android:layout_alignTop="@id/imgLink_liker_info"
             android:textSize="14sp"
             android:text="@string/txtLinkTitle_liker_info"
+            android:visibility="gone"
             />
         <TextView
             android:id="@+id/bookLink_liker_info"
@@ -73,6 +75,7 @@
             android:textSize="14sp"
             tools:text="西線無戰事"
             android:textStyle="bold"
+            android:visibility="gone"
             />
 
     </RelativeLayout>
