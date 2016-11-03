@@ -8,6 +8,7 @@ public class Message {
     public String uid;
     public String content;
     public Long time;
+    public String contact;
 
     public Message() {
     }

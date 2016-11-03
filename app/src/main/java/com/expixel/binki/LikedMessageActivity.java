@@ -111,7 +111,7 @@ public class LikedMessageActivity extends BaseActivity {
                             HashMap<String, Object> content = new HashMap<>();
                             content.put("uid", getUid());
                             content.put("time", System.currentTimeMillis());
-                            content.put("mail", etContact.getEditableText().toString());
+                            content.put("contact", etContact.getEditableText().toString());
                             content.put("content", etMessage.getEditableText().toString());
 
                             dbRef.child("chat").child(chatKey).child(messageKey).setValue(content);

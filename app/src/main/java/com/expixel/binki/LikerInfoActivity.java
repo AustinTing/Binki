@@ -27,7 +27,9 @@ public class LikerInfoActivity extends BaseActivity {
     @BindView(R.id.bookLink_liker_info)
     TextView bookLink;
     @BindView(R.id.message_liker_info)
-    TextView txtMessage;
+    TextView message;
+    @BindView(R.id.contact_liker_info)
+    TextView contact;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class LikerInfoActivity extends BaseActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "LikerInfoActivity: load username: onCancelled: "+databaseError );
+                Log.e(TAG, "LikerInfoActivity: load username: onCancelled: " + databaseError);
 
             }
         });
@@ -64,7 +66,7 @@ public class LikerInfoActivity extends BaseActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "LikerInfoActivity: load username: onCancelled: "+databaseError );
+                Log.e(TAG, "LikerInfoActivity: load username: onCancelled: " + databaseError);
 
             }
         });
@@ -72,16 +74,16 @@ public class LikerInfoActivity extends BaseActivity {
         dbRef.child("chat").child(chatKey).orderByChild("time").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for ( DataSnapshot msgSnapshot: dataSnapshot.getChildren()){
-                    Message message = msgSnapshot.getValue(Message.class);
-                    txtMessage.setText(message.content);
-
+                for (DataSnapshot msgSnapshot : dataSnapshot.getChildren()) {
+                    Message thisMessage = msgSnapshot.getValue(Message.class);
+                    message.setText(thisMessage.content);
+                    contact.setText(thisMessage.contact);
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "LikerInfoActivity: load chat: onCancelled: "+databaseError );
+                Log.e(TAG, "LikerInfoActivity: load chat: onCancelled: " + databaseError);
 
             }
         });
