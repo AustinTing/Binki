@@ -429,7 +429,7 @@ public class MainActivity extends BaseActivity {
 
                             }
                         });
-                        //  TODO:作短按動畫
+                        //  TODO:作短按動畫，但做短按動畫在動畫完成前切換會出狀況
                         // http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/1217/3782.html
                         viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                             @Override

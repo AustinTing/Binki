@@ -25,6 +25,7 @@ public class Post {
         this.bookName = bookName;
         this.bookInfo = bookInfo;
         this.postTime = postTime;
+
     }
 
 

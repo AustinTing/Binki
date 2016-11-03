@@ -1,17 +1,14 @@
 package com.expixel.binki;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +22,6 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -46,6 +42,10 @@ public class LikedMessageActivity extends BaseActivity {
     Long postTime;
     @BindView(R.id.toolbar_message_liked)
     Toolbar toolbar;
+    @BindView(R.id.etContact_message_liked)
+    EditText etContact;
+    @BindView(R.id.imgGmail_message_liked)
+    ImageView imgGmail;
 
 
     @Override
@@ -66,8 +66,6 @@ public class LikedMessageActivity extends BaseActivity {
                 .into(imgUser);
         userName.setText(bundle.getString("userName"));
         bookName.setText(bundle.getString("bookName"));
-        //  TODO: new MainActivity when it back
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +111,9 @@ public class LikedMessageActivity extends BaseActivity {
                             HashMap<String, Object> content = new HashMap<>();
                             content.put("uid", getUid());
                             content.put("time", System.currentTimeMillis());
+                            content.put("mail", etContact.getEditableText().toString());
                             content.put("content", etMessage.getEditableText().toString());
+
                             dbRef.child("chat").child(chatKey).child(messageKey).setValue(content);
 
                             post.likers.put(getUid(), chatKey);

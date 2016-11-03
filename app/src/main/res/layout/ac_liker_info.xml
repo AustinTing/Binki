@@ -38,8 +38,6 @@
 
     <!--TODO: 互有喜歡的書才會顯示下面這個layout-->
 
-
-
     <RelativeLayout
         android:id="@+id/link_liker_info"
         android:layout_height="wrap_content"
