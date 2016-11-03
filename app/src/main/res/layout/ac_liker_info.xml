@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/userName_liker_info"
-        android:text="This user didn't leave any contact ways..."
+        android:text="@string/txtContact_liker_info"
         android:textSize="14sp"
         android:padding="16dp"/>
 
