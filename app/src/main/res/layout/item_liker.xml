@@ -40,13 +40,13 @@
         android:layout_marginRight="72dp"
         />
 
-    <!--TODO:看過訊息後把圖換成android:src="@drawable/read"-->
+    <!--TODO:看過訊息後把圖換成android:src="@drawable/chat_read"-->
 
     <ImageView
         android:id="@+id/imgChat_item_liker"
         android:layout_height="32dp"
         android:layout_width="32dp"
-        android:src="@drawable/unread"
+        android:src="@drawable/chat_unread"
         android:layout_alignTop="@+id/imgUser_item_liker"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="16dp"/>

@@ -39,7 +39,9 @@ public class LikerInfoActivity extends BaseActivity {
 
         Intent intent = this.getIntent();
         String likerKey = intent.getStringExtra("likerKey");
-        String chatKey = intent.getStringExtra("chatKey");
+        final String chatKey = intent.getStringExtra("chatKey");
+
+
 
         dbRef.child("users").child(likerKey).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -78,6 +80,10 @@ public class LikerInfoActivity extends BaseActivity {
                     Message thisMessage = msgSnapshot.getValue(Message.class);
                     message.setText(thisMessage.content);
                     contact.setText(thisMessage.contact);
+
+                    Log.d(TAG, "LikerInfoActivity: messageker: "+msgSnapshot.getKey());
+                    thisMessage.check = true;
+                    dbRef.child("chat").child(chatKey).child(msgSnapshot.getKey()).setValue(thisMessage);
                 }
             }
 

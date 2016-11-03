@@ -97,7 +97,6 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                Log.d(TAG, "MainActivity: onTabUnselected: " + tab.getPosition());
                 tab.getIcon().setColorFilter(getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
 
             }

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -40,6 +41,7 @@ public class LikerListActivity extends BaseActivity {
 
     LinearLayoutManager linearLayoutManager;
     String bookKey;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +88,15 @@ public class LikerListActivity extends BaseActivity {
             }
         });
 
+
+
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onStart();
         FirebaseRecyclerAdapter<String, LikerItemViewHolder> adapter =
                 new FirebaseRecyclerAdapter<String, LikerItemViewHolder>(
                         String.class,
@@ -98,9 +109,10 @@ public class LikerListActivity extends BaseActivity {
                     protected void populateViewHolder(final LikerItemViewHolder viewHolder, final String chatKey, int position) {
                         final String likerKey = getRef(position).getKey();
 
-                        Log.d(TAG, "LikerListActivity: populateViewHolder: likerKey: "+likerKey);
-                        Log.d(TAG, "LikerListActivity: populateViewHolder: chatKey: "+chatKey);
+                        Log.d(TAG, "LikerListActivity: populateViewHolder: likerKey: " + likerKey);
+                        Log.d(TAG, "LikerListActivity: populateViewHolder: chatKey: " + chatKey);
 
+                        //  分開撈是因為不用撈user全部
                         dbRef.child("users").child(likerKey).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -111,7 +123,7 @@ public class LikerListActivity extends BaseActivity {
 
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
-                                Log.e(TAG, "LikerListActivity: load username: onCancelled: "+databaseError );
+                                Log.e(TAG, "LikerListActivity: load username: onCancelled: " + databaseError);
 
                             }
                         });
@@ -126,10 +138,31 @@ public class LikerListActivity extends BaseActivity {
 
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
-                                Log.e(TAG, "LikerListActivity: load username: onCancelled: "+databaseError );
+                                Log.e(TAG, "LikerListActivity: load username: onCancelled: " + databaseError);
 
                             }
                         });
+
+
+                        dbRef.child("chat").child(chatKey).orderByChild("time").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot msgSnapshot : dataSnapshot.getChildren()) {
+                                    Message thisMessage = msgSnapshot.getValue(Message.class);
+                                    if(thisMessage.check) {
+                                        viewHolder.imgChat.setImageResource(R.drawable.chat_read);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e(TAG, "LikerListActivity: load chat check: onCancelled: " + databaseError);
+
+                            }
+                        });
+
+
                         viewHolder.imgChat.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -147,25 +180,30 @@ public class LikerListActivity extends BaseActivity {
                             }
                         });
 
+
                     }
                 };
 
-        recyclerView.setAdapter(adapter);
+        synchronized(recyclerView){
+            recyclerView.setAdapter(adapter);
+        }
 
     }
 
-    public static class LikerItemViewHolder extends RecyclerView.ViewHolder{
+
+
+    public static class LikerItemViewHolder extends RecyclerView.ViewHolder {
 
         public final static int layoutResId = R.layout.item_liker;
         CircleImageView imgUser;
         TextView userName;
-        View imgChat;
+        ImageView imgChat;
 
         public LikerItemViewHolder(View view) {
             super(view);
             imgUser = (CircleImageView) view.findViewById(R.id.imgUser_item_liker);
             userName = (TextView) view.findViewById(R.id.userName_item_liker);
-            imgChat = view.findViewById(R.id.imgChat_item_liker);
+            imgChat = (ImageView) view.findViewById(R.id.imgChat_item_liker);
         }
 
     }

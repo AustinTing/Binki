@@ -113,6 +113,7 @@ public class LikedMessageActivity extends BaseActivity {
                             content.put("time", System.currentTimeMillis());
                             content.put("contact", etContact.getEditableText().toString());
                             content.put("content", etMessage.getEditableText().toString());
+                            content.put("check", false);
 
                             dbRef.child("chat").child(chatKey).child(messageKey).setValue(content);
 
@@ -133,13 +134,14 @@ public class LikedMessageActivity extends BaseActivity {
                         if (databaseError == null) {
                             Log.i(TAG, "LikedMessageActivity: onComplete: ");
                             Toast.makeText(LikedMessageActivity.this, "Done", Toast.LENGTH_SHORT).show();
+                            LikedMessageActivity.this.finish();
                         } else {
                             Log.e(TAG, "LikedMessageActivity: onComplete: error: " + databaseError);
                         }
                     }
                 });
 
-                this.finish();
+
 
             }
         }

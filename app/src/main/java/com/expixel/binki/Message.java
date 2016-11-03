@@ -9,6 +9,7 @@ public class Message {
     public String content;
     public Long time;
     public String contact;
+    public boolean check;
 
     public Message() {
     }
