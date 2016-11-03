@@ -11,4 +11,5 @@
     <string name="myBookshelf_main">我的書櫃</string>
     <string name="myFavorite_main">喜歡的書</string>
     <string name="title_main">大圖書館</string>
+    <string name="txtContact_liker_info">這個無禮之人竟然沒有留下聯絡資料！</string>
 </resources>
