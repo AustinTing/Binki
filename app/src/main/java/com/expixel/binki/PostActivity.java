@@ -49,7 +49,7 @@ public class PostActivity extends BaseDialogActivity {
             String key = dbRef.child("post").push().getKey();
             String userName = getUserName();
             String userImg = getUserImgeUrl();
-            Post post = new Post(userName, userImg, bookName, bookInfo, System.currentTimeMillis());
+            Post post = new Post(getUid(), userName, userImg, bookName, bookInfo, System.currentTimeMillis());
             Map<String, Object> postValues = post.toMap();
 
 

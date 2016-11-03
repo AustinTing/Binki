@@ -112,6 +112,19 @@ public class LikerListActivity extends BaseActivity {
                         Log.d(TAG, "LikerListActivity: populateViewHolder: likerKey: " + likerKey);
                         Log.d(TAG, "LikerListActivity: populateViewHolder: chatKey: " + chatKey);
 
+                        dbRef.child("users").child(getUid()).child("link").orderByKey().equalTo(likerKey).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Log.d(TAG, "LikerListActivity: link: "+dataSnapshot);
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e(TAG, "LikerListActivity: link: onCancelled: "+databaseError );
+                            }
+                        });
+
                         final String[] userData = new String[2];
 
                         //  分開撈是因為不用撈user全部

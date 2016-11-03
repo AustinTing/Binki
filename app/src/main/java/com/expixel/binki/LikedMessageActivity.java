@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,14 +40,18 @@ public class LikedMessageActivity extends BaseActivity {
     TextView bookName;
     @BindView(R.id.etMessage_message_liked)
     EditText etMessage;
-    String bookKey;
-    Long postTime;
     @BindView(R.id.toolbar_message_liked)
     Toolbar toolbar;
     @BindView(R.id.etContact_message_liked)
     EditText etContact;
     @BindView(R.id.imgGmail_message_liked)
     ImageView imgGmail;
+
+    String bookKey;
+    String bkName;
+    Long postTime;
+    String userId;
+
 
 
     @Override
@@ -59,18 +65,32 @@ public class LikedMessageActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle bundle = getIntent().getExtras();
         bookKey = bundle.getString("key");
+        userId = bundle.getString("userId");
         postTime = bundle.getLong("postTime");
+        bkName = bundle.getString("bookName");
         Glide.with(getApplicationContext())
                 .load(bundle.getString("userImg"))
                 .crossFade()
                 .into(imgUser);
         userName.setText(bundle.getString("userName"));
-        bookName.setText(bundle.getString("bookName"));
+        bookName.setText(bkName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        imgGmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Animation myAnim = AnimationUtils.loadAnimation(LikedMessageActivity.this, R.anim.bounce);
+                // Use bounce interpolator with amplitude 0.2 and frequency 20
+                BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+                myAnim.setInterpolator(interpolator);
+                view.startAnimation(myAnim);
+                etContact.setText(auth.getCurrentUser().getEmail());
             }
         });
 
@@ -103,7 +123,7 @@ public class LikedMessageActivity extends BaseActivity {
                         }
 
                         if (!post.likers.containsKey(getUid())) {
-                            post.starCount = post.starCount + 1;
+                            Log.d(TAG, "LikedMessageActivity: doTransaction: containsKey");
 
                             String chatKey = dbRef.child("chat").push().getKey();
                             String messageKey = dbRef.child("chat").child(chatKey).push().getKey();
@@ -114,10 +134,13 @@ public class LikedMessageActivity extends BaseActivity {
                             content.put("contact", etContact.getEditableText().toString());
                             content.put("content", etMessage.getEditableText().toString());
                             content.put("check", false);
-
                             dbRef.child("chat").child(chatKey).child(messageKey).setValue(content);
 
+                            post.starCount = post.starCount + 1;
                             post.likers.put(getUid(), chatKey);
+
+                            dbRef.child("users").child(getUid()).child("link").child(userId).child(bookKey).setValue(bkName);
+
                             dbRef.child("users").child(getUid()).child("main").child(bookKey).removeValue();
                             dbRef.child("users").child(getUid()).child("liked").child(bookKey).setValue(System.currentTimeMillis());
 
@@ -141,7 +164,7 @@ public class LikedMessageActivity extends BaseActivity {
                     }
                 });
 
-
+                
 
             }
         }

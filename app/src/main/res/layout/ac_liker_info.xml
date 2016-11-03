@@ -42,7 +42,9 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_below="@+id/contact_liker_info"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:visibility="gone"
+        >
         <ImageView
             android:id="@+id/imgLink_liker_info"
             android:src="@drawable/link"
@@ -52,22 +54,20 @@
             android:padding="8dp"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
-            android:visibility="gone"
             />
         <TextView
-            android:id="@+id/bookLinkTitle_liker_info"
+            android:id="@+id/title_liker_info"
             android:layout_toEndOf="@id/imgLink_liker_info"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_alignTop="@id/imgLink_liker_info"
             android:textSize="14sp"
             android:text="@string/txtLinkTitle_liker_info"
-            android:visibility="gone"
             />
         <TextView
             android:id="@+id/bookLink_liker_info"
-            android:layout_below="@id/bookLinkTitle_liker_info"
-            android:layout_alignLeft="@id/bookLinkTitle_liker_info"
+            android:layout_below="@id/title_liker_info"
+            android:layout_alignLeft="@id/title_liker_info"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_alignBottom="@id/imgLink_liker_info"
@@ -75,7 +75,6 @@
             android:textSize="14sp"
             tools:text="西線無戰事"
             android:textStyle="bold"
-            android:visibility="gone"
             />
 
     </RelativeLayout>

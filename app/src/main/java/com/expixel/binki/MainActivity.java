@@ -237,6 +237,7 @@ public class MainActivity extends BaseActivity {
                         final String key = getRef(position).getKey();
 
                         final Post[] finalArrPost = new Post[1];
+
                         //  撈這個post的資料
 //                        final Post[] finalArrPost = arrPost;
                         dbRef.child("post").orderByKey().equalTo(key).addValueEventListener(new ValueEventListener() {
@@ -288,6 +289,7 @@ public class MainActivity extends BaseActivity {
                                     Intent intent = new Intent();
                                     intent.setClass(MainActivity.this, LikedMessageActivity.class);
                                     Bundle bundle = new Bundle();
+                                    bundle.putString("userId", finalArrPost[0].userId);
                                     bundle.putString("userImg", finalArrPost[0].userImg);
                                     bundle.putString("userName", finalArrPost[0].userName);
                                     bundle.putString("bookName", finalArrPost[0].bookName);

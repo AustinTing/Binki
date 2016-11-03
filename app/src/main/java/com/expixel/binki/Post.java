@@ -8,6 +8,7 @@ import java.util.Map;
  */
 
 public class Post {
+    public String userId;
     public String userName;
     public String userImg;
     public String bookName;
@@ -19,7 +20,8 @@ public class Post {
     public Post() {
     }
 
-    public Post(String userName, String userImg, String bookName, String bookInfo, Long postTime) {
+    public Post(String userId, String userName, String userImg, String bookName, String bookInfo, Long postTime) {
+        this.userId =userId;
         this.userImg = userImg;
         this.userName = userName;
         this.bookName = bookName;
@@ -31,6 +33,7 @@ public class Post {
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
+        result.put("userId", userId);
         result.put("userName", userName);
         result.put("userImg", userImg);
         result.put("bookName", bookName);
