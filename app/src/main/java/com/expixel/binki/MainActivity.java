@@ -166,16 +166,10 @@ public class MainActivity extends BaseActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         switch (id) {
-            case R.id.message_menu:
-                Toast.makeText(this, "message", Toast.LENGTH_SHORT).show();
-                return true;
             case R.id.hide_menu:
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, HiddenListActivity.class);
                 startActivity(intent);
-                return true;
-            case R.id.settings_menu:
-                Toast.makeText(this, "setting", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.logout_menu:
                 logout();
@@ -521,9 +515,9 @@ public class MainActivity extends BaseActivity {
                                 viewHolder.btnRemove.startAnimation(myAnim);
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                                builder.setTitle("Remove this book from your favorite?");
-                                builder.setMessage("NOTICE: Removed books will be sent back to the Main page.");
-                                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                builder.setTitle(R.string.removeTitle_main);
+                                builder.setMessage(R.string.removeMessage_main);
+                                builder.setPositiveButton(R.string.txtYes_main, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int i) {
 

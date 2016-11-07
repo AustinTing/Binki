@@ -11,4 +11,7 @@
     <string name="myBookshelf_main">My Bookshelf</string>
     <string name="myFavorite_main">My Favorites</string>
     <string name="txtContact_liker_info">This user didn\'t leave any contact ways...</string>
+    <string name="removeTitle.main">Remove this book from your favorite?</string>
+    <string name="removeMessage_main">NOTICE: Removed books will be sent back to the Main page.</string>
+    <string name="txtYes_main">Yes</string>
 </resources>

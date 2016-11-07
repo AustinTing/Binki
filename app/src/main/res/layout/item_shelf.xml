@@ -48,6 +48,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         tools:text="國家為什麼會失敗"
+        android:textColor="@color/colorAccent"
         android:layout_toLeftOf="@id/showLikedLayout_shelf"
         android:maxLines="1"
         android:ellipsize="marquee"/>

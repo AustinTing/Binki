@@ -12,4 +12,7 @@
     <string name="myFavorite_main">喜歡的書</string>
     <string name="title_main">大圖書館</string>
     <string name="txtContact_liker_info">這個無禮之人竟然沒有留下聯絡資料！</string>
+    <string name="removeMessage_main">我們會把被刪除的書送回大圖書館</string>
+    <string name="removeTitle.main">要將這本書從最愛裡刪除嗎？</string>
+    <string name="txtYes_main">好的</string>
 </resources>

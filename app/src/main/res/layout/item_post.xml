@@ -28,6 +28,7 @@
         android:layout_marginLeft="56dp"
         android:gravity="center_vertical"
         android:textSize="14sp"
+        android:textColor="@color/colorPrimary"
         tools:text="username" />
 
 
@@ -66,13 +67,12 @@
         android:layout_marginRight="16dp"
         android:layout_toLeftOf="@id/btnHide_main"
         android:ellipsize="middle"
-
         android:gravity="center_vertical"
         android:marqueeRepeatLimit="marquee_forever"
         android:maxLines="1"
-
         android:textSize="16sp"
         android:textStyle="bold"
+        android:textColor="@color/colorAccent"
         tools:text="bookname" />
 
 </RelativeLayout>

@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         tools:text="Username"
         android:textSize="14sp"
+        android:textColor="@color/colorPrimary"
         android:layout_alignTop="@id/imgUser_item_like"
         android:layout_toEndOf="@id/imgUser_item_like"
         android:gravity="center_vertical" />
@@ -42,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         tools:text="Bookname"
+        android:textColor="@color/colorAccent"
         android:textSize="16sp"
         android:textStyle="bold"
         android:maxLines="1"
