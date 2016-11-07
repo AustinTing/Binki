@@ -421,6 +421,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     protected void populateViewHolder(final ShelfItemViewHolder viewHolder, Long postTime, final int position) {
                         final String bookKey = getRef(position).getKey();
+                        final Post[] arrPost = new Post[1];
                         dbRef.child("post").orderByKey().equalTo(bookKey).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -428,6 +429,7 @@ public class MainActivity extends BaseActivity {
                                 if (dataSnapshot != null) {
                                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                                         Post post = postSnapshot.getValue(Post.class);
+                                        arrPost[0] = post;
                                         viewHolder.bookName.setText(post.bookName);
                                         if (post.starCount != 0) {
                                             viewHolder.showLikedLayout.setVisibility(View.VISIBLE);
@@ -464,6 +466,16 @@ public class MainActivity extends BaseActivity {
 
                             }
                         });
+
+                        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                new AlertDialog.Builder(MainActivity.this)
+                                        .setMessage(arrPost[0].bookName + "\n\n" + arrPost[0].bookInfo)
+                                        .create().show();
+                            }
+                        });
+
                         //  TODO:作短按動畫，但做短按動畫在動畫完成前切換會出狀況
                         // http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/1217/3782.html
                         viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -522,7 +534,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     protected void populateViewHolder(final LikedItemViewHolder viewHolder, final Long postTime, final int position) {
                         final String bookKey = getRef(position).getKey();
-                        final Post[] postArr = new Post[1];
+                        final Post[] arrPost = new Post[1];
                         dbRef.child("post").orderByKey().equalTo(bookKey).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -535,7 +547,7 @@ public class MainActivity extends BaseActivity {
                                                 .crossFade()
                                                 .into(viewHolder.imgUser);
                                         viewHolder.bookName.setText(post.bookName);
-                                        postArr[0] = post;
+                                        arrPost[0] = post;
                                     }
                                 } else { //  可能被刪掉了
                                     dbRef.child("users").child(getUid()).child("liked").child(bookKey).removeValue();
@@ -546,6 +558,15 @@ public class MainActivity extends BaseActivity {
                             public void onCancelled(DatabaseError databaseError) {
                                 Log.e(TAG, "MainActivity: loadMainList(): DB: onCancelled: " + databaseError.getMessage());
 
+                            }
+                        });
+
+                        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                new AlertDialog.Builder(MainActivity.this)
+                                        .setMessage(arrPost[0].bookName + "\n\n" + arrPost[0].bookInfo)
+                                        .create().show();
                             }
                         });
                         viewHolder.btnRemove.setOnClickListener(new View.OnClickListener() {
@@ -578,7 +599,7 @@ public class MainActivity extends BaseActivity {
                                                         dbRef.child("users").child(getUid()).child("liked").child(bookKey).removeValue();
                                                         dbRef.child("users").child(getUid()).child("main").child(bookKey).setValue(postTime);
 
-                                                        dbRef.child("users").child(getUid()).child("link").child(postArr[0].userId).child(bookKey).removeValue();
+                                                        dbRef.child("users").child(getUid()).child("link").child(arrPost[0].userId).child(bookKey).removeValue();
 
                                                     } else {
                                                         Log.e(TAG, "MainActivity: loadLikedList: AlertDialog: remove: likers doesn't containsKey");
