@@ -439,6 +439,7 @@ public class MainActivity extends BaseActivity {
                                                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int i) {
+                                                        // TODO: 記得link那邊也要刪除
                                                         dbRef.child("post").child(bookKey).removeValue();
                                                         dbRef.child("users").child(getUid()).child("shelf").child(bookKey).removeValue();
                                                         Toast.makeText(MainActivity.this, "Delete", Toast.LENGTH_SHORT).show();
@@ -481,6 +482,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     protected void populateViewHolder(final LikedItemViewHolder viewHolder, final Long postTime, final int position) {
                         final String bookKey = getRef(position).getKey();
+                        final Post[] postArr = new Post[1];
                         dbRef.child("post").orderByKey().equalTo(bookKey).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -493,6 +495,7 @@ public class MainActivity extends BaseActivity {
                                                 .crossFade()
                                                 .into(viewHolder.imgUser);
                                         viewHolder.bookName.setText(post.bookName);
+                                        postArr[0] = post;
                                     }
                                 } else { //  可能被刪掉了
                                     dbRef.child("users").child(getUid()).child("liked").child(bookKey).removeValue();
@@ -534,6 +537,8 @@ public class MainActivity extends BaseActivity {
                                                         post.likers.remove(getUid());
                                                         dbRef.child("users").child(getUid()).child("liked").child(bookKey).removeValue();
                                                         dbRef.child("users").child(getUid()).child("main").child(bookKey).setValue(postTime);
+
+                                                        dbRef.child("users").child(getUid()).child("link").child(postArr[0].userId).child(bookKey).removeValue();
 
                                                     } else {
                                                         Log.e(TAG, "MainActivity: loadLikedList: AlertDialog: remove: likers doesn't containsKey");

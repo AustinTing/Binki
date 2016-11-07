@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -30,6 +32,8 @@ public class LikerInfoActivity extends BaseActivity {
     TextView message;
     @BindView(R.id.contact_liker_info)
     TextView contact;
+    @BindView(R.id.link_liker_info)
+    RelativeLayout linkRelativeLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +51,24 @@ public class LikerInfoActivity extends BaseActivity {
                 .load(imgUrl)
                 .into(imgUser);
 
+        dbRef.child("users").child(getUid()).child("link").child(likerKey).orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    linkRelativeLayout.setVisibility(View.VISIBLE);
+                    for (DataSnapshot lastLikeBook : dataSnapshot.getChildren()) {
+
+                        bookLink.setText(lastLikeBook.getValue(String.class));
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         dbRef.child("chat").child(chatKey).orderByChild("time").addValueEventListener(new ValueEventListener() {
             @Override
@@ -56,7 +78,7 @@ public class LikerInfoActivity extends BaseActivity {
                     message.setText(thisMessage.content);
                     contact.setText(thisMessage.contact);
 
-                    Log.d(TAG, "LikerInfoActivity: messageker: "+msgSnapshot.getKey());
+                    Log.d(TAG, "LikerInfoActivity: messageker: " + msgSnapshot.getKey());
                     thisMessage.check = true;
                     dbRef.child("chat").child(chatKey).child(msgSnapshot.getKey()).setValue(thisMessage);
                 }
