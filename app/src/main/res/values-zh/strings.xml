@@ -18,4 +18,6 @@
     <string name="suggestions_menu">問題與建議</string>
     <string name="hiddenBooks_menu">隱藏書單</string>
     <string name="logout_menu">登出</string>
+    <string name="toast_recommand_main">寫些建議再送出吧</string>
+    <string name="toast_thank_report_main">非常感謝您的意見與回饋！</string>
 </resources>

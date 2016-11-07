@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -171,6 +172,45 @@ public class MainActivity extends BaseActivity {
                 intent.setClass(MainActivity.this, HiddenListActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.feedback_menu:
+                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                dialogBuilder.setTitle("意見與回饋");
+                final EditText editText = new EditText(MainActivity.this);
+                dialogBuilder.setView(editText);
+                dialogBuilder.setPositiveButton("OK", null);
+                dialogBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                AlertDialog dialog = dialogBuilder.create();
+
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+                    @Override
+                    public void onShow(final DialogInterface dialog) {
+
+                        Button b = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                        b.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String feedbackContent = editText.getText().toString();
+                                if (feedbackContent.equals("")) {
+                                    Toast.makeText(MainActivity.this, R.string.toast_recommand_main, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    String feedbackKey = dbRef.child("feedback").push().getKey();
+                                    dbRef.child("feedback").child(feedbackKey).child(getUid()).setValue(feedbackContent);
+                                    Toast.makeText(MainActivity.this, R.string.toast_thank_report_main, Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }
+                            }
+                        });
+                    }
+                });
+
+                dialog.show();
+
+                return true;
             case R.id.logout_menu:
                 logout();
                 return true;
@@ -319,7 +359,7 @@ public class MainActivity extends BaseActivity {
                             @Override
                             public void onClick(View view) {
                                 new AlertDialog.Builder(MainActivity.this)
-                                        .setMessage(finalArrPost[0].bookName+"\n\n"+finalArrPost[0].bookInfo)
+                                        .setMessage(finalArrPost[0].bookName + "\n\n" + finalArrPost[0].bookInfo)
                                         .create().show();
                             }
                         });
