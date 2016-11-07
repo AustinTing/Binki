@@ -14,4 +14,7 @@
     <string name="removeTitle.main">Remove this book from your favorite?</string>
     <string name="removeMessage_main">NOTICE: Removed books will be sent back to the Main page.</string>
     <string name="txtYes_main">Yes</string>
+    <string name="hiddenBooks_menu">Hidden Books</string>
+    <string name="suggestions_menu">Suggestions</string>
+    <string name="logout_menu">Logout</string>
 </resources>

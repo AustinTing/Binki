@@ -15,4 +15,7 @@
     <string name="removeMessage_main">我們會把被刪除的書送回大圖書館</string>
     <string name="removeTitle.main">要將這本書從最愛裡刪除嗎？</string>
     <string name="txtYes_main">好的</string>
+    <string name="suggestions_menu">問題與建議</string>
+    <string name="hiddenBooks_menu">隱藏書單</string>
+    <string name="logout_menu">登出</string>
 </resources>

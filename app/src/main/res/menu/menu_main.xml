@@ -6,14 +6,22 @@
 
     <item
         android:id="@+id/hide_menu"
-        android:orderInCategory="2"
-        android:title="Hidden Books"
+        android:orderInCategory="1"
+        android:title="@string/hiddenBooks_menu"
         app:showAsAction="never"
         />
     <item
-        android:id="@+id/logout_menu"
-        android:orderInCategory="4"
-        android:title="Logout"
+        android:id="@+id/feedback_menu"
+        android:orderInCategory="2"
+        android:title="@string/suggestions_menu"
         app:showAsAction="never"
         />
+
+    <item
+        android:id="@+id/logout_menu"
+        android:orderInCategory="3"
+        android:title="@string/logout_menu"
+        app:showAsAction="never"
+        />
+
 </menu>
