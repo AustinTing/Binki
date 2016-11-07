@@ -17,4 +17,6 @@
     <string name="hiddenBooks_menu">Hidden Books</string>
     <string name="suggestions_menu">Suggestions</string>
     <string name="logout_menu">Logout</string>
+    <string name="toast_recommand_main">Write some suggestion</string>
+    <string name="toast_thank_report_main">Thank you for reporting</string>
 </resources>
