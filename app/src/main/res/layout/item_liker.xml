@@ -38,6 +38,7 @@
         android:src="@drawable/link"
         android:layout_toEndOf="@id/userName_item_liker"
         android:layout_marginRight="72dp"
+        android:visibility="gone"
         />
 
     <!--TODO:看過訊息後把圖換成android:src="@drawable/chat_read"-->

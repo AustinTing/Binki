@@ -112,11 +112,37 @@ public class LikerListActivity extends BaseActivity {
                         Log.d(TAG, "LikerListActivity: populateViewHolder: likerKey: " + likerKey);
                         Log.d(TAG, "LikerListActivity: populateViewHolder: chatKey: " + chatKey);
 
+//                        dbRef.child("post").orderByKey().equalTo(bookKey).addValueEventListener(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                if (dataSnapshot.getChildrenCount() != 0) {
+//                                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+//                                        Post post = postSnapshot.getValue(Post.class);
+//                                        viewHolder.userName.setText(post.userName);
+//                                        Glide.with(getApplicationContext())
+//                                                .load(post.userImg)
+//                                                .crossFade()
+//                                                .into(viewHolder.imgUser);
+//                                        viewHolder.bookName.setText(post.bookName);
+//                                    }
+//                                } else { //  可能被刪掉了
+//                                    dbRef.child("users").child(getUid()).child("liked").child(bookKey).removeValue();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(DatabaseError databaseError) {
+//                                Log.e(TAG, "MainActivity: loadMainList(): DB: onCancelled: " + databaseError.getMessage());
+//
+//                            }
+//                        });
+
                         dbRef.child("users").child(getUid()).child("link").orderByKey().equalTo(likerKey).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                Log.d(TAG, "LikerListActivity: link: "+dataSnapshot);
-
+                                if (dataSnapshot.getValue() != null){
+                                    viewHolder.imgLink.setVisibility(View.VISIBLE);
+                                }
                             }
 
                             @Override
@@ -143,6 +169,7 @@ public class LikerListActivity extends BaseActivity {
 
                             }
                         });
+
                         dbRef.child("users").child(likerKey).child("imgUrl").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -160,7 +187,7 @@ public class LikerListActivity extends BaseActivity {
                             }
                         });
 
-
+                        //  已讀
                         dbRef.child("chat").child(chatKey).orderByChild("time").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -217,12 +244,14 @@ public class LikerListActivity extends BaseActivity {
         CircleImageView imgUser;
         TextView userName;
         ImageView imgChat;
+        ImageView imgLink;
 
         public LikerItemViewHolder(View view) {
             super(view);
             imgUser = (CircleImageView) view.findViewById(R.id.imgUser_item_liker);
             userName = (TextView) view.findViewById(R.id.userName_item_liker);
             imgChat = (ImageView) view.findViewById(R.id.imgChat_item_liker);
+            imgLink = (ImageView) view.findViewById(R.id.imgLink_item_liker);
         }
 
     }
