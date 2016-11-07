@@ -47,7 +47,8 @@
         android:id="@+id/imgChat_item_liker"
         android:layout_height="32dp"
         android:layout_width="32dp"
-        android:src="@drawable/chat_unread"
+        android:background="@drawable/chat_unread"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:layout_alignTop="@+id/imgUser_item_liker"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="16dp"/>

@@ -194,7 +194,7 @@ public class LikerListActivity extends BaseActivity {
                                 for (DataSnapshot msgSnapshot : dataSnapshot.getChildren()) {
                                     Message thisMessage = msgSnapshot.getValue(Message.class);
                                     if(thisMessage.check) {
-                                        viewHolder.imgChat.setImageResource(R.drawable.chat_read);
+                                        viewHolder.imgChat.setBackgroundResource(R.drawable.chat_read);
                                     }
                                 }
                             }
