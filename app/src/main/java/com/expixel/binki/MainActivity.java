@@ -31,12 +31,15 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,6 +129,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
 
         int tabPosition = tabLayout.getSelectedTabPosition();
 
@@ -241,10 +245,14 @@ public class MainActivity extends BaseActivity {
 //        dialogPuls.show();
 
         // Use bounce interpolator with amplitude 0.2 and frequency 20
+
+
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
         BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
         myAnim.setInterpolator(interpolator);
         fab.startAnimation(myAnim);
+
+        analytics.logEvent("click_add", analyticParams);
 
         Intent intent = new Intent();
         intent.setClass(this, PostActivity.class);

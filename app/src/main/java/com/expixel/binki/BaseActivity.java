@@ -28,24 +28,8 @@ public class BaseActivity extends AppCompatActivity {
     protected FirebaseAuth auth;
     protected DatabaseReference dbRef;
 
-    private FirebaseAnalytics analytics;
-
-    public void showProgressDialog(String message) {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage(message);
-            progressDialog.setIndeterminate(true);
-        }
-        progressDialog.show();
-    }
-
-    public void hideProgressDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-            Log.i(TAG, this.getClass().getSimpleName() + ": hideProgressDialog");
-
-        }
-    }
+    protected FirebaseAnalytics analytics;
+    protected Bundle analyticParams;
 
 
     @Override
@@ -59,6 +43,9 @@ public class BaseActivity extends AppCompatActivity {
         if(dbRef == null) Log.w(TAG, this.getClass().getSimpleName() + ": onCreate: dbRef == null");
         analytics = FirebaseAnalytics.getInstance(this);
         if(analytics == null) Log.w(TAG, this.getClass().getSimpleName() + ": onCreate: analytics == null");
+
+        analyticParams = new Bundle();
+        analyticParams.putString(FirebaseAnalytics.Param.START_DATE, String.valueOf(System.currentTimeMillis()));
 
     }
 
@@ -87,6 +74,23 @@ public class BaseActivity extends AppCompatActivity {
         }
 
         return auth.getCurrentUser().getPhotoUrl().toString();
+    }
+
+    public void showProgressDialog(String message) {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage(message);
+            progressDialog.setIndeterminate(true);
+        }
+        progressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+            Log.i(TAG, this.getClass().getSimpleName() + ": hideProgressDialog");
+
+        }
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -20,6 +21,12 @@ public class BaseDialogActivity extends Activity {
 
     protected FirebaseAuth auth;
     protected DatabaseReference dbRef;
+
+    protected FirebaseAnalytics analytics;
+
+    protected Bundle analyticParams;
+
+
 
     public void showProgressDialog(String message) {
         if (progressDialog == null) {
@@ -73,7 +80,17 @@ public class BaseDialogActivity extends Activity {
         Log.d(TAG, this.getClass().getSimpleName() + ": onCreate");
 
         auth = FirebaseAuth.getInstance();
+        if (auth == null) Log.w(TAG, this.getClass().getSimpleName() + ": onCreate: auth == null");
         dbRef = FirebaseDatabase.getInstance().getReference();
+        if(dbRef == null) Log.w(TAG, this.getClass().getSimpleName() + ": onCreate: dbRef == null");
+
+        analytics = FirebaseAnalytics.getInstance(this);
+        if(analytics == null) Log.w(TAG, this.getClass().getSimpleName() + ": onCreate: analytics == null");
+
+
+        analyticParams = new Bundle();
+        analyticParams.putString(FirebaseAnalytics.Param.START_DATE, String.valueOf(System.currentTimeMillis()));
+
 
     }
 

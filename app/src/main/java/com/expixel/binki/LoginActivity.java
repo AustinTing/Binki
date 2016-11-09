@@ -18,6 +18,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +28,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,8 +86,11 @@ public class LoginActivity extends BaseActivity {
             }
         };
 
+
+
         if (auth.getCurrentUser() != null) {
             Log.v(TAG, "LoginActivity: onAuthStateChanged: signed_IN: " + getUid());
+            analytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, analyticParams);
             nextActivity();
         } else {
             Log.w(TAG, "LoginActivity: onAuthStateChanged: signed_OUT ");
@@ -105,6 +111,7 @@ public class LoginActivity extends BaseActivity {
     public void onClick() {
         Log.d(TAG, "LoginActivity: onClickSignIn: ");
         if (googleApiClient != null && googleApiClient.isConnected()) {
+            analytics.logEvent(FirebaseAnalytics.Param.SIGN_UP_METHOD, analyticParams);
             Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
             LoginActivity.this.startActivityForResult(signInIntent, RC_SIGN_IN);
         } else {
@@ -126,7 +133,7 @@ public class LoginActivity extends BaseActivity {
                 firebaseAuthWithGoogle(account);
             } else {
                 // Google Sign In failed, update UI appropriately
-                Log.e(TAG, "LoginActivity: onActivityResult: FAIL: ");
+                Log.e(TAG, "LoginActivity: onActivityResult: FAIL: "+result.toString());
                 Toast.makeText(this, "Oops...Try again plz", Toast.LENGTH_SHORT).show();
             }
         }
@@ -177,6 +184,9 @@ public class LoginActivity extends BaseActivity {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         Log.i(TAG, "LoginActivity: set lastLoadTime: onComplete: ");
+
+                                                        analytics.logEvent("finish_sign_up", analyticParams);
+
                                                         LoginActivity.this.nextActivity();
                                                         hideProgressDialog();
                                                     }

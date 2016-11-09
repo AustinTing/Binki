@@ -10,6 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -52,9 +56,10 @@ public class PostActivity extends BaseDialogActivity {
             Post post = new Post(getUid(), userName, userImg, bookName, bookInfo, System.currentTimeMillis());
             Map<String, Object> postValues = post.toMap();
 
-
             dbRef.child("post").child(key).setValue(postValues);
             dbRef.child("users").child(getUid()).child("shelf").child(key).setValue(post.postTime);
+
+            analytics.logEvent("finish_add_book", analyticParams);
             Toast.makeText(this, "Book Added", Toast.LENGTH_SHORT).show();
             this.finish();
         }
